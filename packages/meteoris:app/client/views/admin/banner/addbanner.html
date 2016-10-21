@@ -1,0 +1,86 @@
+<template name="meteoris_addbanner">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<form>
+					<h3>ADD BANNER</h3>
+					<div class="form-group">
+					    <label for="">Select Page</label>
+					   
+					  	<select class="form-control" id="pagename">
+					  		<option value="">select Page</option>
+						    <option>homepage</option>
+						    <option>favorite</option>
+						    <option>webzine</option>
+						    <option>Tuto</option>
+						    <option value="category">Category</option>
+						 </select>
+					    
+					</div>
+					<div class="form-group">
+					    <label for="">Type Of Banner </label>
+					   
+					  	<select class="form-control" id="typebanner">
+					  		<option value="">Select Type</option>
+						    <option value="slidebanner">slidebanner</option>
+						    <option>favorite</option>
+						    <option>webzine</option>
+						    <option>Tuto</option>
+						    <option></option>
+						 </select>
+					    
+					</div>
+					<div class="form-group">
+					    <label for="">Position </label>
+					   
+					  	<select class="form-control" id="position">
+					  		<option value="">Select Position</option>
+						    <option>Top</option>
+						    <option>Buttom</option>
+						    <option>Left</option>
+						    <option>Right</option>
+						    <option>Middle</option>
+						 </select>
+					    
+					</div>
+					<div class="form-group">
+					    <label for="">Order Number </label>
+					   
+					  	<select class="form-control" id="selorder">
+						    <option value="">Select Order</option>
+						    <option>1</option>
+						    <option>2</option>
+						    <option>3</option>
+						    <option>4</option>
+						 </select>
+					    
+					</div>
+					<div class="form-group" id="hideform">
+					    <label for="">Add Product</label>
+					    <input type="text" class="form-control" id="txtaddproduct" placeholder="enter your product name" autocomplete="off">
+					    <ul id="result" class="result-pro"></ul>
+					    <button class="btn btn-primary" id="btnaddpro">Add Product</button>
+
+					    
+					</div>
+					<div class="form-group">
+					    <label for="">Description</label><br/>
+					    <textarea cols="80" rows="5" id="description"></textarea>  
+					</div>
+					<div class="form-group">
+					    <label for="">Link URL</label>
+					    <input type="text" class="form-control" id="linkurl" placeholder="enter your link url">
+					    
+					</div>
+					<div class="form-group">
+					    <label for="">Image</label>
+					    <button class ="btn" id="fileimage">addimage</button>
+					    
+					</div>
+					<button class="btn btn-success" id="btnaddbanner"> Add Banner</button>
+				</form>
+			</div>
+		</div>
+	</div>
+{{> meteoris_flash}}
+</template>

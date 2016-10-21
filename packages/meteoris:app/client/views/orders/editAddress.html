@@ -1,0 +1,98 @@
+<template name="editAddress">
+	<div class="container">
+        <!--{{> buyingStep}}-->
+        {{#if Template.subscriptionsReady}}
+	        {{#with getAddressById }}
+		      	<div class="row">
+		      		<div class="col-md-8" style="border-right:solid 1px #ddd;">
+				 	<form class="editAddressBookForm buying" id="editAddressBookForm" method="post" novalidate="novalidate">
+		    
+		    	<fieldset>
+		      	<div class="row">
+		      	<div class="col-md-12 form-group"><strong>Choose Shipping Address</strong></div>
+		      	<div class="col-md-12 form-group"><div style="height:1px;background:#ddd;"></div></div>
+		      	<div class="col-md-12 form-group">
+		  		 <a href="/chooseAddress" class="btn btn-default selectAddress" data-i18n="app.cancel">Select your default address</a>
+		  		 <a href="/completeProfile" class="btn btn-default completeProfile" data-i18n="app.cancel">Complete your profile to earn points</a>
+
+		  		 	
+		  		</div>
+		  		
+				<div class="col-md-6 form-group">
+			    	<label class="control-label">Full name</label>
+			    	<input type="text" name="fullName" value="{{fullName}}" required="" class="form-control"> 
+				</div>
+				<div class="col-md-6 form-group">
+				    <label class="control-label">Email</label>
+				    <input type="text" name="email" value="{{email}}" required="" class="form-control"> 
+				</div>
+				<div class="col-md-6 form-group">
+		    		<label class="control-label">Mobile Number</label>
+		    		<input type="text" name="mphone" value="{{mobilephone}}" class="form-control">
+		  		</div>
+		  		<div class="col-md-6 form-group">
+		    		<label class="control-label">Home Number</label>
+		    		<input type="text" name="hphone" value="{{homephone}}" class="form-control">
+		  		</div>
+		  		<div class="col-md-6 form-group">
+			      	<label class="control-label">Address</label>
+			    	<input type="text" name="address1" value="{{address1}}" class="form-control"> 
+			  	</div>
+			  	<div class="col-md-6 form-group">
+			    	<label class="control-label">Address</label>
+			    	<input type="text" name="address2" value="{{address2}}" class="form-control">
+			  	</div>
+		  		<div class="col-md-4 form-group">
+					<label class="control-label">Province</label>
+					<select id="province" name="province" autocomplete="off" class="form-control">
+			    	<option value="{{province}}">{{#with getProvinceById province}}{{province}}{{/with}}</option>
+			    	{{#each getallProvince}}
+                        <option value="{{_id}}">{{province}}</option>
+                    {{/each}}
+			  		</select> 
+				</div>
+				<div class="col-md-4 form-group">
+			    	<label class="control-label">City</label>
+			    	<select id="city" class="form-control">
+
+                        {{#with getCity province}}
+                        	<option value="{{_id}}">{{city}}</option>
+                        {{/with}}
+                    </select> 
+			  	</div>
+			  	<div class="col-md-4 form-group">
+			    	<label class="control-label">Postal</label>
+			    	<input type="text" name="postal" value="{{postal}}" data-schema-key="postal" class="form-control">
+			  	</div>
+			</div>	
+			
+
+			<div class="row">
+			  	<div class="form-group">
+				    <div class="checkbox">
+					    <label>
+					      <input type="checkbox" name="isShippingDefault" id="isShippingDefault">
+					      Make this your default shipping address?
+					    </label>
+				  	</div>
+			  	</div>
+			</div>
+		    <div class="row text-right">
+		      	<div class="col-md-12 form-group">
+		        
+		        <a href="/chooseAddress" class="btn btn-default">Cancel</a>
+		        <button type="submit" class="btn btn-primary" data-i18n="app.saveAndContinue" data-event-action="saveAddress">Update Address</button>
+		    	</div>
+		      </div>
+		    </fieldset>
+		  
+		  </form>
+		  </div>
+		  <div class="col-md-4">
+		  	<!--{{> recapBuyingProcess}}-->
+		  </div>
+		</div>
+		{{/with}}
+	{{/if}}
+    </div>
+</template>

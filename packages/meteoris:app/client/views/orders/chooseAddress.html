@@ -1,0 +1,72 @@
+<template name="chooseAddress">
+	<style>.container-fa .align-right{text-align: right;}</style>
+	<div class="container {{directionContainer}}">
+        <!--{{> buyingStep}}-->
+      	<div class="row">
+      		<div class="col-md-8">
+		 	<form class="chooseaddressBookForm buying" id="chooseaddressBookForm" method="post" novalidate="novalidate">
+    
+    	<fieldset>
+      	<div class="row">
+	      	<div class="col-md-12 form-group {{alignright}}"><strong>{{_"Choose Shipping Address"}}</strong></div>
+	      	<div class="col-md-12 form-group"><div style="height:3px;background:#333;"></div></div>
+	      	<div class="col-md-6 form-group">
+	  		 	<a href="/addnewAddress" class="selectAddress" data-i18n="app.cancel">{{_"Add default address"}}</a>
+	  		</div>
+	  		<div class="col-md-6 form-group" style="text-align:right">
+	  			
+	  		</div>
+	  	
+	  		<div class="col-md-12 form-group">
+		  		<table class="table table-inverse">
+					<tbody>
+						{{#if isCurrentLangEng}}
+							{{#each getListAddress}}
+								<tr>
+									<td><input type="radio" value="{{_id}}" name="shippingAddress" {{isDefaultAddress isShippingDefault}}> </td>
+									<td style="text-align:left"><p>{{fullName}}</p><p>{{address1}}</p><p>{{mobilephone}}</p></td>
+									<td><a href="/editaddress/{{_id}}">{{_"Edit"}}</a> | <a href="#delete" id="delete">{{_"Delete"}}</a></td>
+								</tr>
+			  				{{/each}}
+						{{else}}
+							{{#each getListAddress}}
+								<tr>
+									<td><a href="#delete" id="delete">{{_"Delete"}}</a> | <a href="/editaddress/{{_id}}">{{_"Edit"}}</a> </td>
+									<td style="text-align:right"><p>{{fullName}}</p><p>{{address1}}</p><p>{{mobilephone}}</p></td>
+									<td><input type="radio" value="{{_id}}" name="shippingAddress" {{isDefaultAddress isShippingDefault}}> </td>
+								</tr>
+		  					{{/each}}
+						{{/if}}
+						
+						
+						
+					</tbody>
+				</table>
+		  		
+			</div>
+
+		  	
+		  	{{> shippingMethod}}
+		  	
+		</div>	
+	
+
+	    <div class="row">
+	      	<div class="col-md-12 form-group">
+	        
+		        
+		        <button type="submit" class="btn-safir {{directionButton}}" data-event-action="saveAddress">{{_"CONTINUE"}}</button>
+		        <a href="/checkout" class="btn-backward {{directionButton}}" data-event-action="cancelAddressEdit">{{_"Update Cart"}}</a>
+	    	</div>
+	    </div>
+	  </fieldset>
+	  
+	</form>
+  </div>
+  <div class="col-md-4">
+  	<!--{{> buyingSummary}}-->
+  </div>
+</div>
+</div>
+    <!--{{> completeprofile}}-->
+</template>

@@ -1,0 +1,90 @@
+<template name="productIndex">
+    <section class="content-header">
+        <h1>User</h1>
+        <ol class="breadcrumb">
+            <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/meteoris/user">User</a></li>
+            <li class="active">index</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <div class="toolbar">
+                    <div class="pull-left">
+                        <a class="btn btn-success" href="/product/insert">Insert</a>
+                        <a id="btnRemoveAll" class="btn btn-danger">Remove Selection</a>
+                        <!-- {{#if currentUser}}
+                        <a id="btnLogout" class="btn btn-danger">Logout</a>
+                        <a href="/meteoris/user/profile/{{currentUser._id}}" class="btn btn-success">Profile</a>
+                        {{/if}} -->
+                    </div>  
+                    
+                    <div class="quick-search pull-right col-xs-12 col-md-3">
+                        <div class="input-group">
+                            <input type="text" id="search" class="form-control" placeholder="Type Here to Search">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="pull-right col-xs-12 col-md-3"> 
+                        <select class="form-control" id="chooseCategory"> 
+                            <option value="">Choose Category</option>
+                            {{#each getParentCategories }}
+                                <option value="{{_id}}">{{title}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+
+                {{#if Template.subscriptionsReady}}    
+                    {{#if isEmpty}}
+                        <p>No Data Found</p>
+                    {{else}}
+                    <div class=" table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30px;"><input type="checkbox" id="checkAll"/></th>                        
+                                    <th id="btnSortEmail" class="{{meteoris_gridViewSortClass 'email'}}">Product Name</th>
+                                    <th id="btnSortMugenRoleGroupId" class="{{meteoris_gridViewSortClass 'group'}}">Category</th>
+                                    <th id="btnSortName" class="{{meteoris_gridViewSortClass 'name'}}">Image</th>
+                                    <th>Created At</th>
+                                    <th style="width: 145px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        
+                               {{#each getListProductsHelper}}
+                                <tr>
+                                    <td><input type="checkbox" class="checkAll" value="{{_id}}"/></td>
+                                    <td>{{title}}</td>
+                                    <td>{{#with getCategoryByID category}}{{title}}{{/with}}</td>
+                                    <td><img src="{{getProductImage _id 'true'}}" style="width:32px;height:32px;"></td>
+                                    <td>{{date_formater date}}</td>
+                                    <td>
+                                        <a href="/product/view/{{_id}}" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                        <a href="/product/update/{{_id}}" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i></a>
+                                        <a id="btnRemove" data-id="{{_id}}" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        <ul id="pagination"></ul>
+                    </div>
+                      
+                    {{/if}}        
+                {{else}}  
+                    {{> spinner}}
+                {{/if}}
+
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+
+    </section><!-- /.content -->  
+</template>

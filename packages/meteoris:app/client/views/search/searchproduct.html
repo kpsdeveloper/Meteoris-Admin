@@ -1,0 +1,66 @@
+<template name="searchproduct">
+    <style type="text/css">
+    .form-group label { float: left; text-align: left; font-weight: normal;}
+    .form-group select { display: inline-block; width: auto; padding:0 15px; vertical-align: middle;}
+    .tools{ margin:15px 0;}
+    .nav-tabs { border-bottom: 2px solid #DDD; }
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover { border-width: 0; }
+    .nav-tabs > li > a { border: none; color: #666; }
+    .nav-tabs > li.active > a, .nav-tabs > li > a:hover { border: none; color: #4285F4 !important; background: transparent; }
+    .nav-tabs > li > a::after { content: ""; background: #4285F4; height: 2px; position: absolute; width: 100%; left: 0px; bottom: -1px; transition: all 250ms ease 0s; transform: scale(0); }
+    .nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after { transform: scale(1); }
+    .tab-nav > li > a::after { background: #21527d none repeat scroll 0% 0%; color: #fff; }
+   
+
+    </style>
+    <div class="content">
+        {{#if Template.subscriptionsReady}}
+            {{#with searchResult}}
+                <div class="box">
+                    <div class="box-body product-list">
+                        <div class="row">
+                            <div class="col-md-12">
+                                    <!-- Nav tabs -->
+                                <div class="card">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        {{{groupHtml}}}
+                                    </ul>
+
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane {{content.productActive}}" id="product">
+                                            <div class="col-md-6 col-xs-12"><div class="tools">Show {{show}} of {{count}} Products Found : "{{keyword}}"</div></div>
+                                            <div class="col-md-6 col-xs-12">
+                                                <div class="pull-right tools">
+                                                    <label>Sort By</label>
+                                                    <select id="sort" name="sort" class="form-control inline"><option value="title">Title</option><option value="price">Price</option></select>
+                                                    <label>View</label>
+                                                    <select id="view" name="view" class="form-control inline">{{{getViewBy count}}}</select>
+                                                </div>
+                                            </div>
+                                            {{#each results}}
+                                                {{{getOneProductHelper this 'true'}}}
+                                            {{/each}}
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane {{content.webzActive}}" id="webzine">
+                                            {{#each resWebzine}}
+                                                {{{getOneContentHelper this}}}
+                                            {{/each}}
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane {{content.tutoActive}}" id="tuto">
+                                            {{#each resTuto}}
+                                                {{{getOneContentHelper this}}}
+                                            {{/each}}
+                                        </div>
+                                
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            {{/with}}
+        {{/if}}
+    </div>
+</template>

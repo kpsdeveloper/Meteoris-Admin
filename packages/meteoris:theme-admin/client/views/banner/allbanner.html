@@ -1,0 +1,31 @@
+<template name="meteoris_allbanner">
+	<h3>All Banner >>> <a href="/banner/add">ADD NEW BANNER</a></h3>
+	<div class="container">
+		<table class="table">
+		  <thead>
+		    <tr>
+		      <th>Image</th>
+		      <th>pagename</th>
+		      <th>type banner</th>
+		      <th>Position</th>
+		      <th>Order</th>
+		      <th>Link URL</th>
+		      <th>Action</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	{{#each getAllBanners}}
+		    <tr>
+		      <th scope="row"><img width="65px" height="48px" src="{{imageurl}}"></th>
+		      <td>{{pagename}}</td>
+		      <td>{{typebanner}}</td>
+		      <td>{{position}}</td>
+		      <td>{{order}}</td>
+		      <td>{{linkurl}}</td>
+		      <td><a href="/banner/edit/{{this._id}}">edit</a>|<a href="#" data-id="{{this._id}}" id="delete">delete</a></td>
+		    </tr>
+		    {{/each}}
+		  </tbody>
+		</table>
+	</div>
+</template>

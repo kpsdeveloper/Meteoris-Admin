@@ -1,0 +1,151 @@
+<template name="app_header">
+    <style type="text/css">
+        .searchnew ul.list-inline li a {
+        color: #000;
+        font-size: 16px;
+        font-weight: normal;
+        }
+        
+        .searchnew ul.list-inline li.active a {
+            color: #000;
+            border-bottom: 2px solid #000;
+        }
+    </style>
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="/" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini">Set Logo Mini from /meteoris/theme-admin/setting</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg">Set Logo Large from /meteoris/theme-admin/setting</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Start of header search-->
+            <div class="pull-right searchnew col-md-6 col-sm-6">
+                <ul class="list-inline search-option {{getDiv}}">
+                    <li><a href="#" id="selsect_search" data-group="0">ALL</a></li>
+                    <li class="active"><a href="#" id="selsect_search" data-group="1">Products</a></li>
+                    <li><a href="#" id="selsect_search" data-group="2">WEBZINE</a></li>
+                    <li><a href="#" id="selsect_search" data-group="3">Tutorials</a></li>
+                </ul>
+                <script type="text/javascript">
+                $(document).ready(function() {
+                    var selector = '.searchnew ul li';
+                    $(selector).on('click', function() {
+                        $(selector).removeClass('active');
+                        $(this).addClass('active');
+                    });
+                })
+                </script>
+                <form>
+                    <div class="input-group {{getBtnSearch}}" id="data-group-search" style="">
+                        <input class="form-control input-search {{searching}} mysearchbox" placeholder='Search for...' type="text" id="textToSearch" style="width:100%;height:38px;background:black;border:1px;color:white"> {{#if checkKeywordSeach}}
+                        <ul class="nav ulsearch" style="position:absolute; left:0;right:0;background:#fff;z-index:999999;margin:40px 37px 0px 0px;border-left:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc">
+                            {{#each dataSearch.products}}
+                            <li data-title="{{title}}" class="searchnav"><a class="keyword" href="/details/{{slug title}}">{{{titlebold}}}</a></li>
+                            {{/each}} {{#each dataSearch.contents}}
+                            <li data-title="{{title}}" class="searchnav"><a class="keyword" href="{{checkLinkContent _id}}{{slug title}}">{{{titlebold}}}</a></li>
+                            {{/each}}
+                        </ul>
+                        {{/if}}
+                        <span class="input-group-addon search-btn kesearch"><i class="fa fa-search search-font"></i></span>
+                    </div>
+                </form>
+            </div>
+            <!-- end of header search-->            
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li>
+                        <a href="/checkout" class="dropdown-toggle" >
+                            <span class="glyphicon glyphicon-shopping-cart"></span><span> ({{getTotalItem}}) </span>
+                        </a>
+                    </li>
+                    <li class="dropdown user user-menu">
+
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="/images/user.png" class="user-image" alt="User Image">
+                            <span class="hidden-xs">Admin</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="/images/user.png" class="img-circle" alt="User Image">
+                                <p>
+                                    Admin
+                                </p>
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="#" id="btnLogout" class="btn btn-default btn-flat">Logout</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                </ul>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                {{#each getParentCategories}}
+                <li class="dropdown">
+                    <a href="/category/{{slug}}/1">{{title}} <span class="caret"></span></a>
+                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{title}}<span class="caret"></span></a>-->
+                    <ul class="dropdown-menu">
+                        {{#each getChildrenCategories _id}}
+                            <li class="{{#if hasChildren}}dropdown-submenu{{/if}}">
+                                <a href="/category/{{slug}}/1">{{title}}</a>
+                                {{#if hasChildren}}
+                                    <ul class="dropdown-menu">
+                                        {{#each getChildrenCategories _id}}
+                                            <li><a href="/category/{{slug}}/1">{{title}}</a></li>
+                                        {{/each}}
+                                    </ul>
+                                {{/if}}
+                                
+                            </li>
+                            
+                        {{/each}}
+                    </ul>
+                </li>
+                {{/each}}
+              </ul>
+            </div><!-- /.navbar-collapse -->
+        </nav>
+    </header>
+    <script type="text/javascript">
+    $(function() {
+      $('li.dropdown-submenu').hover( function(event) {
+          event.stopPropagation(); 
+          if ($(this).hasClass('open')){
+              $(this).removeClass('open');
+          }else{
+              $('li.dropdown-submenu').removeClass('open');
+              $(this).addClass('open');
+         }
+      });
+      $('li.dropdown').hover( function(event) {
+          event.stopPropagation(); 
+          if ($(this).hasClass('open')){
+              $(this).removeClass('open');
+          }else{
+              $('li.dropdown').removeClass('open');
+              $(this).addClass('open');
+         }
+      });
+    });
+    </script>
+</template>

@@ -1,0 +1,77 @@
+<template name="productInsert">    
+    <section class="content-header">
+        <h1>Product - Insert</h1>
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><a href="/meteor/user">Product</a></li>
+            <li class="active">insert</li>
+        </ol>
+    </section>
+    
+    <section class="content">
+        <div class="box">
+            <div class="box-body">
+                <div id="basic-form">
+                    <div class="title">
+                        <h3 class="pull-left">Insert Product</h3>
+                    </div>
+                    <div class="clearfix"></div>
+                    <form id="product_form">
+                        <div class="form-group">
+                            <label for="name" class="control-label">Product Name *</label>
+                            <input type="text" id="name" name="name" placeholder="Product Name" class="form-control" autofocus="true">
+                            <span class="help-block"></span>
+                        </div>
+                        <div class="form-group col-md-3 col-xs-12">
+                            <label for="price" class="control-label">Price *</label>
+                            <input type="text" id="price" name="price" placeholder="Price" class="form-control">
+                            <span class="help-block"></span>
+                        </div>
+                        <div class="form-group col-md-3 col-xs-4">
+                            <label for="discount" class="control-label">Discount</label>
+                            <input type="text" id="discount" name="discount" placeholder="Discount" class="form-control">
+                            <span class="help-block"></span>
+                        </div>
+                         <div class="form-group col-md-3 col-xs-4">
+                            <label for="sdate" class="control-label">Start Date</label>
+                            <input type="text" id="sdate" name="sdate" placeholder="Start Date" class="form-control">
+                            <span class="help-block"></span>
+                        </div>
+                         <div class="form-group col-md-3 col-xs-4">
+                            <label for="edate" class="control-label">End date</label>
+                            <input type="text" id="edate" name="edate" placeholder="End Date" class="form-control">
+                            <span class="help-block"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="category" class="control-label">Category *</label>
+                            <select class="form-control" name="category" id="category">
+                                <option value="">Choose Category</option>
+                                {{#each getParentCategories}}
+                                <option value="{{_id}}">{{title}}</option>
+                                {{/each}}
+                            </select>
+                            <span class="help-block"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="control-label">Description</label>
+                            <textarea id="description" name="description" class="form-control" row="5"></textarea>
+                            <span class="help-block"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="metatitle" class="control-label">Meta Title</label>
+                            <textarea id="metatitle" name="metatitle" class="form-control" row="5"></textarea>
+                            <span class="help-block"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="metakey" class="control-label">Meta Key</label>
+                            <textarea id="metakey" name="metakey" class="form-control" row="5"></textarea>
+                            <span class="help-block"></span>
+                        </div>
+                        <button id="btnSave" type="submit" class="btn btn-success">Submit</button>                
+                        <a href="/product/list" class="btn btn-default">Back</a>
+                    </form>
+                </div>  
+            </div>
+        </div>
+    </section> 
+</template>

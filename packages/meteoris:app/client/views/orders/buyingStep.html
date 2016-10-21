@@ -1,0 +1,13 @@
+<template name="buyingStep">
+	<div class="checkout-progress-container">
+	    <ul class="checkout-progress-bar">
+	    	{{#each getBuyingStep}}
+	          <li class="{{attr}}">
+	            <span class="progress-step-badge">{{step}}</span>
+	            <span class="progress-step-label" data-i18n="checkoutProgressBar.shippingBilling">{{title}}</span>
+	          </li>
+	          {{/each}}
+	    </ul>
+	  </div>
+		 
+</template>

@@ -1,0 +1,130 @@
+<template name="meteoris_adddiscount">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+				    <label for="">Type Of Discount</label><br/>
+				    <select class="form-control" id="typedis">
+					    <option value="">Select Type</option>
+					    <option value="bybrand">By Brand</option>
+					    <option value="byprod">By Product</option>
+					    
+					 </select>
+					     
+				</div>
+				<div class="form-group hidden" id="hideBrand">
+				    <label for="">Choose Brand</label><br/>
+				    <select class="form-control" id="selBrand">
+					    <option value="">Select Brand</option>
+					    {{#each getBrand}}
+					    	<option>{{this._id}}</option>
+					    {{/each}}
+					 </select>
+					     
+				</div>
+				<div class="form-group hidden" id="hidetxtpro">
+				    <label for="">Add Product</label>
+				    <input type="text" class="form-control" id="txtaddproduct" placeholder="enter your product name" autocomplete="off">
+				    <ul id="result" class="result-pro"></ul>
+				</div>
+				<div class="form-group">
+				    <label for="">Discount(%)</label>
+				    <input type="number" class="form-control" id="discount" placeholder="enter your discount (Ex: 10,20,30)">
+				    
+				</div>
+				<div class="form-group">
+				    <label for="">Start Date</label>
+				    <!-- <input type="text" class="form-control" id="startdate" placeholder="enter your start date (dd/mm/yyyy)"> -->
+				    <div class="input-group datetimepicker">
+				    	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+				    	<input class="set-due-date form-control" id="startdate" type="text"/>
+				  	</div>
+				    
+				</div>
+				<div class="form-group">
+				    <label for="">End Date</label>
+				    <!-- <input type="text" class="form-control" id="enddate" placeholder="enter your end date (dd/mm/yyyy)"> -->
+				    <div class="input-group datetimepicker">
+				    	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+				    	<input class="set-due-date form-control" id="enddate" type="text"/>
+				  	</div>
+				    
+				</div>
+				<button class="btn btn-success" id="btndiscount"> Add Discount</button>
+			</div>
+			
+		</div>
+		<div class="panel panel-default">
+		    <div class="panel-heading">
+		        <!-- Nav tabs -->
+		        <ul class="nav nav-tabs" role="tablist">
+		            <li class="active"><a href="#bybrand" role="tab" data-toggle="tab">BY BRAND</a></li>
+		            <li><a href="#byproduct" role="tab" data-toggle="tab">BY PRODUCT</a></li>
+		           
+		        </ul>
+
+		    </div>
+
+		    <!-- Tab panes + Panel body -->
+		    <div class="panel-body tab-content">
+		        <div class="tab-pane active" id="bybrand">
+		        <table class="table">
+					  <thead>
+					    <tr>
+					      <th>#</th>
+					      <th>Brand Name</th>
+					      <th>Discount (%)</th>
+					      <th>Start date</th>
+					      <th>End date</th>
+					      <th>Action</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					  	{{#each getadiscountByBrand}}
+					    <tr>
+					      <th scope="row">{{@index}}</th>
+					      <td>{{brand}}</td>
+					      <td>{{discount}}</td>
+					      <td>{{convertMsTimeStamp startdate}}</td>
+					      <td>{{convertMsTimeStamp enddate}}</td>
+					      <td><a href="/discount/edit-brand/{{_id}}">edit</a>|<a href="" id="deletebrand">delete</a></td>
+					    </tr>
+					    {{/each}}
+					    
+					  </tbody>
+					</table>
+			</div>
+		        <div class="tab-pane" id="byproduct">
+		        <table class="table">
+					  <thead>
+					    <tr>
+					      <th>#</th>
+					      <th>Product Title</th>
+					      <th>Discount (%)</th>
+					      <th>Start date</th>
+					      <th>End date</th>
+					      <th>Action</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					  	{{#each getdiscountByProduct }}
+					    <tr>
+					      <th scope="row">{{@index}}</th>
+					      <td>{{title}}</td>
+					      <td>{{discount.discount}}</td>
+					      <td>{{convertMsTimeStamp discount.startdate}}</td>
+					      <td>{{convertMsTimeStamp discount.enddate}}</td>
+					      <td><a href="/discount/edit-product/{{_id}}">edit</a>|<a href="" id="deleteproduct">delete</a></td>
+					    </tr>
+					    {{/each}}
+					    
+					  </tbody>
+					</table>
+				</div>
+		        
+		    </div>
+		</div>
+		
+	</div>
+	{{> meteoris_flash}}
+</template>

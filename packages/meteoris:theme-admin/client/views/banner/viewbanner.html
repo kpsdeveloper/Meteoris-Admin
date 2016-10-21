@@ -1,0 +1,19 @@
+<template name="meteoris_viewbanner">
+	<header>
+		<h3>View Banner</h3>
+	</header>
+	<div>
+		{{#with displayBanner}}
+			<img src="{{imageurl}}">
+		{{/with}}
+	</div>
+	<div>
+		{{#with displayBannerSlide}}
+			{{#each displayProduct products}}
+					{{{getOneProductHelper this "true"}}}
+			{{/each}}
+		{{/with}}
+	</div>
+	
+
+</template>

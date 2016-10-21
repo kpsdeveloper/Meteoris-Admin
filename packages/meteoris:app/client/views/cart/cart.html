@@ -1,0 +1,68 @@
+<template name="showCart">
+    <div class="container showcart" style="padding-top: 25px;">
+        <div class="row">
+        	{{#with getCart}}
+        		{{#if hasCart}}
+		        	<div class="col-md-7">
+		        		{{#with cart}}
+		        		<table class="table">
+		        		<thead>
+		        			<tr>
+		        			<th></th>
+		        			<th>Product Name</th>
+		        			<th>Price</th>
+		    				<th>Qty</th>
+		    				<th>discount</th>
+		    				<th>Subtotal</th>
+		    				</tr>
+		        		</thead>
+		        		<tbody>
+		        		{{#each items}}
+		        			
+		        				<tr id="item-{{index}}">
+		        				{{#with getProductInfo id_product}}
+		        					<td ><img class="img-responsive" src="{{getImgForProductCDN ../id_product 'true'}}"/></td>
+		        					<td class="col-md-5">
+		        						<p>{{title}}</p>
+		        						<i>Attribute</i>:{{../attribute}}
+		    						</td>
+		    						<td class="col-md-2">{{../price}}</td>
+		    						<td class="col-md-1"><input type="text" value="{{../quantity}}" class="updateQty form-control input-number"></td>
+		    						<td>500%</td>
+		    						<td class="col-md-2">{{../subtotal}}&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-remove-circle delete" ></span></td>
+		        				{{/with}}
+		        				</tr>
+		        			
+		        		{{/each}}
+		        				<tr>
+		        					<td colspan="3"></td>
+		        					<td>Total:</td>
+		        					<td>{{total}}</td>
+		        					<button type="button" class="btn btn-danger" id="proceedOrder">Proceed Order</button>
+		        				</tr>
+		        		</tbody>
+		        		</table>
+		        		{{/with}}
+		        	</div>
+		        	<div class="col-md-3">
+		        		<!-- <h3>Order Summary</h3> -->
+		        		<hr>
+		        		<!-- {{#with cart}}
+		        			<p>Total : <span>{{total}}</span></p>
+		        		{{/with}} -->
+		        		<!-- <button type="button" class="btn btn-danger" id="proceedOrder">Proceed Order</button> -->
+		        	</div>
+		        {{else}}
+		        	<div class="col-md-7">
+		        		Your basket is currently empty.
+						{{#if checkIsUserLoggedIn}}
+						{{else}}
+							<i>Please <a href="/meteoris/user/login">sign in</a> if you are trying to retrieve a basket created in the past.</i>
+						{{/if}}
+		        	</div>
+		        	<div class="col-md-3"></div>
+        		{{/if}}
+        	{{/with}}
+     	</div>
+    </div>
+</template>

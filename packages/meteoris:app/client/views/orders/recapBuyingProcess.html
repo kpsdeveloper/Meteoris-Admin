@@ -1,0 +1,23 @@
+<template name="recapBuyingProcess">
+	<div class="buying-step">
+		{{#each buyingResult}}
+			<i class="checkout-step-badge active">{{stepnum}}</i> <h3 class="panel-title">{{title}}</h3><br>
+			{{#with getContent stepnum}}
+				{{{content}}}
+			{{/with}}
+		{{/each}}
+		<!--<i class="checkout-step-badge active">1</i> <h3 class="panel-title">Account Completed</h3><br>
+	  	<p>Welcome, make an order from Safir Store</p>
+	  	<i class="checkout-step-badge active">2</i> <h3 class="panel-title">Address Details</h3><br>
+	  	{{#with getBuyingRecap}}
+	  		<p>{{fullName}}</p>
+	  		<p>{{address1}} {{address2}}</p>
+	  		<p>{{mobilephone}}</p>
+	  	{{/with}}
+	  	<i class="checkout-step-badge active">3</i> <h3 class="panel-title">Shipping Method</h3><br>
+	  	{{#with getShippingMethod}}
+	  		<p>{{option.title}} {{option.price}}</p>
+	  		<p>{{datetime.starttime}} - {{datetime.endtime}} {{datetime.day}} </p>
+	  	{{/with}}-->
+  	</div>
+</template>

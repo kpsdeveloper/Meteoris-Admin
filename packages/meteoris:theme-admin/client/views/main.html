@@ -1,0 +1,30 @@
+<template name="meteoris_themeAdminMain">
+    <div class="skin-blue">
+        <div class="wrapper">
+            {{#if Template.subscriptionsReady}}
+            <!--{{#AdminLTE skin=model.skin fixed=model.fixed sidebarMini=model.sidebarMini}} -->
+    
+            {{> meteoris_themeAdminHeader}}
+            {{> meteoris_themeAdminSidebar}}
+
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">        
+                <!-- Main content -->
+                {{> Template.dynamic template=content}}
+            </div><!-- /.content-wrapper -->                
+
+            {{> meteoris_flash}}
+            {{> meteoris_themeAdminFooter}}
+            {{> meteoris_themeAdminControlSidebar}}
+            <!--{{/AdminLTE}}-->
+            {{/if}}
+        </div>
+    </div>
+<!--
+
+    <script>
+        var vh = $(window).height();
+        var ch = vh - 102;
+        $('.content').css('');
+    </script>-->
+</template>

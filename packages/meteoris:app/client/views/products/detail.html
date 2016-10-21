@@ -1,0 +1,178 @@
+<template name="detail">
+    <div class="container product-details" style="padding-top: 25px;">
+        <div class="row">
+             {{#with getTitleInDetail}}
+            <div class="col-md-3 col-xs-12">
+                <div class="col-md-12">
+                    <img id="zoomimage" onmouseover="zoome()" width="210" height="210" data-zoom-image="{{getImgForProductCDN product._id }}" src="{{getImgForProductCDN product._id 'true'}}">
+                </div>
+            </div>
+
+            <div class="col-md-5 col-xs-12" id="detail_desccription">
+               
+                    <div class="hold_description">
+                        <h3>{{product.title}}</h3>
+                        <p class="brand"><span>Brands:</span>
+                            <span style="color:#dd2a1b">
+                                {{product.Brand}}
+                            </span>
+                        </p>   
+                        <p class="detail-txt" style="padding-top: 20px; text-align: justify;">{{{product.description}}}</p>  
+                        <p><span>Category:</span>
+                            <span style="font-weight:bolder;">
+                                {{getCategoryName product.category}}
+                            </span>
+                        </p>              
+                    </div>
+                
+                {{getCategoryName ../product.category}}
+            </div>
+            <div class="col-md-2 col-xs-12">
+                <h5>Get delivered in all Iran!</h5>
+                <div style="height:3px;background:#000;"></div>
+                {{#if checkdiscount product}}
+                    <p>old price<del>{{product.priceAttr}}</del></p>
+                    <p>discount: <span class="price" id="discount">{{checkdiscount product}}%</span></p>
+                    <h3>ریال <span class="price" >{{getPriceAfterDiscount product.priceAttr}}</span></h3>
+                {{else}}
+                    <h3>ریال <span class="price">{{product.priceAttr}}</span></h3>
+               {{/if}}
+                
+                <div class="block">
+                
+                    <label class="quantity" for="select">Quantity</label>
+                    <select id="qty" name="select" class="quantity" size="1">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                <div class="block attrwrapper">  
+                    {{#each attribute}}
+                        <span data-price="{{price}}" data-attr="{{_id}}" class="btn btn-primary {{active}} attribute">{{value}}</span>
+                    {{/each}}
+                </div>
+                <div class="block">                 
+                    <button class="btn btn-addtocart" id="addToCart"><span class="cart pull-left"></span> ADD TO CART</button>
+                     
+                </div> 
+                 <div class="block"> 
+                   
+                    {{{getButtonAddToFavorite product._id}}}
+                          
+                </div>     
+            </div>
+            <div class="col-md-10 col-xs-12">
+                {{#if isUserLoggedIn }}
+                    <h1 class="title-review">RATINGS &amp; REVIEWS</h1>
+                    <form role="form" class="add-review">
+                        <div class="form-group">
+                          <label for="review-title">Title:</label>
+                          <input type="text" class="form-control" id="review-title">
+                        </div>
+                        <div class="form-group">
+                          <label for="comment">Comment:</label>
+                          <textarea class="form-control" rows="5" id="comment"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-1" class="control-label">Rate This</label>
+                           
+                                <div class="form-group rating">
+                                    <div class="star">
+                                        <div class="rate-star">
+                                            <i class="fa fa-star fa-lg star1 rateStar" data-star="1" id="a"></i>
+                                        </div>
+                                        <div class="rate-star">
+                                            <i class="fa fa-star fa-lg star2 rateStar" data-star="2" id="a"></i>
+                                        </div>
+                                        <div class="rate-star">
+                                            <i class="fa fa-star fa-lg star3 rateStar" data-star="3" id="a"></i>
+                                        </div>
+                                        <div class="rate-star">
+                                            <i class="fa fa-star fa-lg star4 rateStar" data-star="4" id="a"></i>
+                                        </div>
+                                        <div class="rate-star">
+                                            <i class="fa fa-star fa-lg star5 rateStar" data-star="5" id="a"></i>
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                    $(document).ready(function() {
+                                        $("div i.rateStar")
+                                            .mouseover(function(e) {
+                                                var currentStar = $(e.currentTarget).attr('class');
+                                                if (!currentStar.match('yellow-star')) {
+                                                    $(e.currentTarget).addClass('yellow-star');
+                                                    $(e.currentTarget).parent().prevAll('div').children('i').addClass('yellow-star');
+                                                }
+
+                                            })
+                                            .mouseout(function(e) {
+                                                var myparent = $(e.currentTarget).attr('class');
+                                                var mychild = $(e.currentTarget).parent().prevAll('div').children('i').attr('class');
+                                                if (!myparent.match('star_active') || !mychild.match('star_active')) {
+                                                    $(e.currentTarget).removeClass('yellow-star');
+                                                    $(e.currentTarget).parent().prevAll('div').children('i').removeClass('yellow-star');
+                                                }
+                                            });
+                                    });
+                                    </script>
+                                </div>
+                            
+                        </div>
+                        <div class="block"> 
+                            <button class="btn-review pull-right" type="submit">Add Review</button>
+                        </div>
+                    </form>
+                    <div class="block"> 
+                        <table class="table">
+                            <tbody>
+                                {{#each product.reviews}}
+                                <tr>
+                                    <td><img src="/images/profile.png" width="80" height="80"></td>
+                                    <td>{{title}}</td>
+                                    <td>{{description}}</td>
+                                    <td>{{grade}} stars</td>
+                                    <td>{{getHumanDate date}}</td>
+                                </tr>
+                                {{/each}}                  
+                            </tbody>
+                        </table>
+                    </div>
+
+                {{else}}
+                    <h1 class="title-review"> RATINGS &amp; REVIEWS</h1>
+                    <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-2">
+                        <div class="bg-review-comment text-center">
+                            <a href="/meteoris/user/login">
+                                <button class="btn-review" type="button">Login to add reviews</button>
+                            </a>
+                            <p class="text-sm-review">Be the first to add reviews</p>
+                        </div>
+                    </div>
+                {{/if}}
+                <h1>Customers Who Bought This Item Also Bought</h1>
+                {{{getRecommendProducts product.recommended}}}
+
+            </div>
+            {{/with}}
+        </div>
+    </div>
+    <script>
+    function zoome(){
+        $(document).ready(function() {
+            $('#zoomimage').elevateZoom({
+                easing: true,
+                borderSize: 0
+            });
+        })
+    }
+    </script>
+</template>

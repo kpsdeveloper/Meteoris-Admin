@@ -1,0 +1,102 @@
+<template name="paymentDetails">
+    <style>.container-fa .align-right{text-align: right;}</style>
+
+		<div class="container {{directionContainer}} paymentmethod buying">
+        <!--{{> buyingStep}}-->
+      	<div class="row">
+      		<div class="col-md-8">
+          	<fieldset>
+            	<div class="row">
+              	<div class="col-md-12 form-group {{alignright}}"><strong>{{_"Payment Methods"}}</strong></div>
+              	<div class="col-md-12 form-group"><div style="height:3px;background:#333;"></div></div>
+            		{{#if isCurrentLangEng}}
+                  <div class="col-md-6 form-group {{alignright}}">
+                   <img src="/img/imgpsh_fullsize (1).png" width="60">
+                   
+                  </div>
+                  <div class="col-md-6 form-group" style="text-align:right">
+                    <p><i class="fa fa-lock"></i><i>{{_"SECURE CHECKOUT"}}</i></p>
+                    <img src="/img/imgpsh_fullsize.png" width="100">
+                  </div>
+                {{else}}
+
+                  <div class="col-md-6 form-group" style="text-align:right">
+                    <p><i class="fa fa-lock"></i><i>من‬ ‫ا‬ ‫پرداخت‬</i></p>
+                    <img src="/img/imgpsh_fullsize.png" width="100">
+                  </div>
+                  <div class="col-md-6 form-group {{alignright}}">
+                    <img src="/img/imgpsh_fullsize (1).png" width="60">
+                    <p><strong>{{this.orderId}}</strong> <i>اطالعات حساب شما:</i> </p>
+                   
+                  </div>
+                {{/if}}
+                
+                <div class="col-md-12 form-group {{alignright}}">
+                  {{#if isCurrentLangEng}}
+                    <p><input id="onlinepayment" class="choosepayment" type="radio" value="1" {{getCurrentPaymentmethod '1'}} name="paymentmethod"> <label for="onlinepayment">{{_"Online Payment"}}</label> </p>
+                    <div style="padding-left:15px;font-size:12px;">
+                      <p><i>Choose Online Payment method you will be redirect to our bank website to complete your payment</i></p>
+                    </div>
+                    <p> <input id="carttocart" class="choosepayment" type="radio" value="2" {{getCurrentPaymentmethod '2'}} name="paymentmethod"> <label for="carttocart">{{_"From Cart to Cart"}}</label></p>
+                    <div style="padding-left:15px;font-size:12px;">
+                      <p><i>Choose Cart to Cart method you will pay directly to our bank account:</i></p>
+                      <p>Bank Name: <i>Shaparak</i></p>
+                      <p>Address: <i>St. 222 </i></p>
+                      <p>Credit Card Number: <i>2292-4455-2215-5559-0010</i></p>
+
+                    </div>
+                    <p><input id="paycash" class="choosepayment" type="radio" value="3" {{getCurrentPaymentmethod '3'}} name="paymentmethod"> <label for="paycash">{{_"Pay Cash in Place"}}</label> </p>
+                    <div style="padding-left:15px;font-size:12px;">
+                      <p><i>Choose Pay Cash in Place method you will pay cash when your items was arrived:</i></p>
+                    </div>
+                  {{else}}
+                    <p><label for="onlinepayment">{{_"Online Payment"}}</label> <input id="onlinepayment" class="choosepayment" type="radio" value="1" checked name="paymentmethod"></p>
+                    <div style="padding-left:15px;font-size:12px;">
+                      <p><i>Choose Online Payment method you will be redirect to our bank website to complete your payment</i></p>
+                    </div>
+                    <p><label for="carttocart">{{_"From card to card"}}</label> <input id="carttocart" class="choosepayment" type="radio" value="2" name="paymentmethod"></p>
+                    <div style="padding-left:15px;font-size:12px;">
+                      <p><i>Choose Cart to Cart method you will pay directly to our bank account:</i></p>
+                      <p>Bank Name: <i>Shaparak</i></p>
+                      <p>Address: <i>St. 222 </i></p>
+                      <p>Credit Card Number: <i>2292-4455-2215-5559-0010</i></p>
+
+                    </div>
+                    <p><label for="paycash">{{_"Pay cash in place"}}</label> <input id="paycash" class="choosepayment" type="radio" value="3" {{getCurrentPaymentmethod '3'}} name="paymentmethod"></p>
+                    <div style="padding-left:15px;font-size:12px;">
+                      <p><i>Choose Pay Cash in Place method you will pay cash when your items was arrived:</i></p>
+                    </div>
+                  {{/if}}
+                </div>
+               
+                <div class="col-md-12 form-group">
+                  <div class="pull-right">
+                      <button type="button" style="display:none" class="btn-safir btn-loading {{directionButton}}"><i class="fa fa-spinner fa-spin"></i> Loading</button>
+                      {{#if isOnlinePayment}}
+                        <form action='https://sep.shaparak.ir/Payment.aspx' method='POST'>
+                          <input type="hidden" id="Amount" name="Amount" value="6460000">
+                          <input type="hidden" id="MID" name="MID" value="10443844"> 
+                          <input type="hidden" id="ResNum" name="ResNum" value="{{this.orderId}}">
+                          <input type="hidden" id="RedirectURL" name="RedirectURL" value="http://safirperfumery.com/saman"> 
+                          <input type="submit" value="Submit" id="submitpayment" style="display:none">
+                          
+                          <input type="button" value="{{_'ACCESS SECURE SERVER'}}" id="btnPayment" data-id="{{this.orderId}}" class="btn-safir {{directionButton}}">
+                          <a href="/orderReview" class="btn-backward {{directionButton}}" >{{_"BACK"}}</a>
+                      </form>
+                      {{else}}
+                        
+                        <button type="button" class="btn-safir btncompleteOrder {{directionButton}}" order-id="{{this.orderId}}">Complete Order</button>
+                        <a href="/orderReview" class="btn-backward {{directionButton}}" >{{_"BACK"}}</a>
+                      {{/if}}
+
+                  </div>
+                </div>
+      	     </div>	
+          </fieldset>
+        </div>
+        <div class="col-md-4">
+          <!--{{> buyingSummary}}-->
+        </div>
+      </div>
+  </div>
+</template>

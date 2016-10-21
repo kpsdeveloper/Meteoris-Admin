@@ -1,0 +1,47 @@
+<template name="buyingSummary">
+    <style>.container-fa .align-right{text-align: right;}</style>
+    <div class="col-md-12 form-group {{alignright}}">
+        <p>{{_ "Get delivered in all Iran!"}}</p>
+    </div>
+    <div class="col-md-12 form-group"><div style="height:3px;background:#333;"></div></div>
+    <div class="col-md-12 form-group">
+
+        <div style="background-color:#ccc;overflow:hidden;padding:5px;text-align:center;">{{_ "Purchased more than 100,000 toman Free delivery"}}</div>
+    </div>
+    <div class="col-md-12 form-group"><p class="{{alignright}}">{{_"ORDER SUMMARY"}}</p></div>
+    {{#if isCurrentLangEng}}  
+        <div class="col-md-6 form-group">{{_"Initial Price"}}</div><div class="col-md-6 form-group" style="text-align:right">{{getAllTotal}} ریال</div>
+        <div class="col-md-6 form-group">{{_ "Discount"}}</div><div class="col-md-6 form-group" style="text-align:right">{{getDiscount}}</div>
+        <!--<div class="col-md-6 form-group">{{_ "Shipping"}}</div><div class="col-md-6 form-group" style="text-align:right">{{_ "Free"}}</div>
+        <div class="col-md-6 form-group">{{_"Tax"}}</div>
+        <div class="col-md-6 form-group" style="text-align:right">TBD</div>-->
+
+        <div class="col-md-12 form-group"><div style="height:1px;background:#333;"></div></div>
+
+        <div class="col-md-6 form-group">{{_ "Actual Price"}}</div>
+        <div class="col-md-6 form-group" style="text-align:center;">{{getallPriceTotal}} ریال</div>
+        
+    {{else}}
+        <div class="col-md-6 form-group">ریال {{getAllTotal}}</div> <div class="col-md-6 form-group" style="text-align:right"> {{_"Initial Price"}}</div>
+         <div class="col-md-6 form-group">{{getDiscount}}</div> <div class="col-md-6 form-group" style="text-align:right">  {{_ "Discount"}}</div>
+        <!--<div class="col-md-6 form-group">{{_ "Free"}}</div><div class="col-md-6 form-group" style="text-align:right">  {{_ "Shipping"}}</div>
+        <div class="col-md-6 form-group">TBD</div> <div class="col-md-6 form-group" style="text-align:right">  {{_"Tax"}}</div>-->
+
+        
+              
+      
+        <div class="col-md-12 form-group"><div style="height:1px;background:#333;"></div></div>
+        <div class="col-md-6 form-group">ریال {{getallPriceTotal}}</div> <div class="col-md-6 form-group"> : {{_ "Actual Price"}}</div>
+        
+       
+    {{/if}}
+    <div class="col-md-12 form-group">
+        {{#if isCheckoutPage}}
+            {{#if checkIsUserLoggedIn}}
+                <button class="btn-safir btn-checkout" id="goShippingAddress">{{_"Proceed Order"}}</button>
+            {{else}}
+                <button class="btn-safir btn-checkout" data-toggle="modal" data-target="#exampleModal">{{_"Proceed Order"}}</button>
+            {{/if}}
+        {{/if}}
+    </div>
+</template>

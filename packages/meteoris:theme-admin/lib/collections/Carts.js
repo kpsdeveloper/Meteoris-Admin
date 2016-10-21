@@ -1,0 +1,1 @@
+Meteoris.Carts = new Mongo.Collection("cart");

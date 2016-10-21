@@ -1,0 +1,226 @@
+<template name="addressDetails">
+    <div class="container">
+        <!--{{> buyingStep}}-->
+        <h3>Add New Address</h3>
+        <div class="col-md-12 form-group"><div style="height:3px;background:#333;"></div></div>
+        <div class="row">
+            <div class="col-md-8" dir="{{getDirection}}">
+            	{{#if farsi}}
+                <form class="addressBookForm buying" id="addressBookForm" method="post" novalidate="novalidate">
+
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-md-12 form-group"><strong>{{_ "Choose Shipping Address"}}</strong>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <div style="height:3px;background:#ddd;"></div>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <a href="/chooseAddress" class="selectAddress" data-i18n="app.cancel">{{_"Choose your default address"}}</a>
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align:right">
+                                <!--<a href="#" class="completeProfile" data-i18n="app.cancel" data-toggle="modal" data-target="#myModal"><i>{{_"Complete Profile"}}</i></a>-->
+                            </div>
+                            
+                            <div class="col-md-6 form-group">
+                                <label class="control-label">{{_"Email"}}</label>
+                                <input type="text" name="email" autofocus="" required="" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label">{{_"Full name"}}</label>
+                                <input type="text" name="fullName" autofocus="" required="" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label">{{_"Home Phone"}}</label>
+                                <input type="text" name="homephone" required="" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label">{{_"Mobile Phone"}}</label>
+                                <input type="text" name="mphone" required="" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label">{{_"Address"}}2</label>
+                                <input type="text" name="address2" data-schema-key="address2" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label">{{_ "Address"}}</label>
+                                <input type="text" name="address1" required="" data-schema-key="address1" class="form-control">
+                            </div>
+                            
+                            <div class="col-md-4 form-group">
+                                <label class="control-label">{{_"Postal"}}</label>
+                                <input type="text" name="postal" required="" data-schema-key="postal" class="form-control">
+                            </div>
+
+                            
+
+                            <div class="col-md-4 form-group">
+                                <label class="control-label">{{_"City"}}</label>
+                                <select id="city" class="form-control">
+
+                                    <!-- <option value="">{{_"City"}}</option>
+                                    {{#each getAllCity}}
+                                    <option value="{{city}}">{{city}}</option>
+                                    {{/each}} -->
+                                    {{#with getCity}}
+
+                                    <option value="{{_id}}">{{city}}</option>
+
+                                    {{/with}}
+                                </select>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label class="control-label">{{_"Province"}}</label>
+                                <!-- <input type="text" name="city" required="" data-schema-key="city" class="form-control">  -->
+                                <select id="province" name="province" class="form-control">
+                                    <!-- {{#with getProvince}}
+
+                                    <option value="{{province}}">{{province}}</option>
+
+                                    {{/with}} -->
+                                    <option value="">{{_"Province"}}</option>
+                                    {{#each getallProvince}}
+                                        <option value="{{_id}}">{{province}}</option>
+                                    {{/each}}
+
+                                </select>
+                            </div>
+                            
+                            
+                            <div class="col-md-12 form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="isShippingDefault" id="isShippingDefault"> {{_"Make this your default shipping address?"}}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                {{> shippingMethod}}
+                            </div>
+                        </div>
+
+
+                        <div class="row text-left">
+                            <div class="col-md-12 form-group">
+
+                                <a href="/checkout" class="btn-backward" data-i18n="app.cancel" data-event-action="cancelAddressEdit">{{_"Update Cart"}}</a>
+                                <button type="submit" class="btn-safir" data-i18n="app.saveAndContinue" data-event-action="saveAddress">{{_"Save and continue"}}</button>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                </form>
+                {{else}}
+                <form class="addressBookForm buying" id="addressBookForm" method="post" novalidate="novalidate">
+
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-md-12 form-group"><strong>{{_ "Choose Shipping Address"}}</strong>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <div style="height:3px;background:#ddd;"></div>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <a href="/chooseAddress" class="selectAddress" data-i18n="app.cancel">{{_"Choose your default address"}}</a>
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align:right">
+                                <!--<a href="#" class="completeProfile" data-i18n="app.cancel" data-toggle="modal" data-target="#myModal"><i>{{_"Complete Profile"}}</i></a>-->
+                            </div>
+                            <div class="col-md-12 form-group">
+                                {{#with getAddAddressMsg}} {{#if error}}
+                                <div class="alert alert-error">{{{msg}}}</div>
+                                {{/if}} {{/with}}
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label">{{_"Full name"}}</label>
+                                <input type="text" name="fullName" autofocus="" required="" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label">{{_"Email"}}</label>
+                                <input type="text" name="email" autofocus="" required="" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label">{{_"Mobile Phone"}}</label>
+                                <input type="text" name="mphone" required="" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label">{{_"Home Phone"}}</label>
+                                <input type="text" name="homephone" required="" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label">{{_ "Address"}}</label>
+                                <input type="text" name="address1" required="" data-schema-key="address1" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label">{{_"Address"}}2</label>
+                                <input type="text" name="address2" data-schema-key="address2" class="form-control">
+                            </div>
+                            
+                            <div class="col-md-4 form-group">
+                                <label class="control-label">{{_"Province"}}</label>
+                                <!-- <input type="text" name="city" required="" data-schema-key="city" class="form-control">  -->
+                                <select id="province" name="province" class="form-control">
+                                    <!-- {{#with getProvince}}
+
+                                    <option value="{{province}}">{{province}}</option>
+
+                                    {{/with}} -->
+                                    <option value="">{{_"Province"}}</option>
+                                    {{#each getallProvince}}
+                                    <option value="{{_id}}">{{province}}</option>
+                                    {{/each}}
+
+                                </select>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label class="control-label">{{_"City"}}</label>
+                                <select id="city" class="form-control">
+
+                                    <!-- <option value="">{{_"City"}}</option>
+                                    {{#each getAllCity}}
+                                    <option value="{{city}}">{{city}}</option>
+                                    {{/each}} -->
+                                    {{#with getCity}}
+
+                                    <option value="{{_id}}">{{city}}</option>
+
+                                    {{/with}}
+                                </select>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label class="control-label">{{_"Postal"}}</label>
+                                <input type="text" name="postal" required="" data-schema-key="postal" class="form-control">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="isShippingDefault" id="isShippingDefault"> {{_"Make this your default shipping address?"}}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                {{> shippingMethod}}
+                            </div>
+                        </div>
+
+
+                        <div class="row text-right">
+                            <div class="col-md-12 form-group">
+
+                                <a href="/checkout" class="btn-backward" data-i18n="app.cancel" data-event-action="cancelAddressEdit">{{_"Update Cart"}}</a>
+                                <button type="submit" class="btn-safir" data-i18n="app.saveAndContinue" data-event-action="saveAddress">{{_"Save and continue"}}</button>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                </form>
+
+                {{/if}}
+            </div>
+            <div class="col-md-4">
+                <!--{{> recapBuyingProcess}}-->
+            </div>
+        </div>
+    </div>
+    <!--{{> completeprofile}}-->
+</template>

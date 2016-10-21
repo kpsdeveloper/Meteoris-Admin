@@ -1,0 +1,4 @@
+upload/*
+upload/*.DS_store
+.DS_Store
+public/videos/*

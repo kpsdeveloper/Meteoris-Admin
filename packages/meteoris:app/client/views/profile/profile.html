@@ -1,0 +1,98 @@
+<template  name="meteoris_profile">
+	
+	<h2>My Profile</h2>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<button id="uploadImg">UploadImage</button>
+				<form>
+					<div class="form-group">
+						<input type="hidden" name="img" id="imagefile" value="{{getProfileInfo 'imageurl'}}">
+
+					</div>
+					<div class="form-group">
+					    <label for="">UserName</label>
+					    <input type="text" class="form-control" id="username" value="{{getProfileInfo 'username'}}">
+					    
+					</div>
+					<div class="form-group">
+					    <label for="">First Name</label>
+					    <input type="text" class="form-control" id="firstname" value="{{getProfileInfo 'firstname'}}">
+					    
+					</div>
+					
+					<div class="form-group">
+					    <label for="">Last Name</label>
+					    <input type="text" class="form-control" id="lastname" value="{{getProfileInfo 'lastname'}}">
+					    
+					</div>
+					<div class="form-group">
+					    <label for="">DOB</label>
+					    <!-- <input type="text" class="form-control" id="dob" value="{{getProfileInfo 'dob'}}"> -->
+					    <div class="input-group datetimepicker">
+					    	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+					    	<input class="set-due-date form-control" id="dob" value="{{getProfileInfo 'dob'}}" type="text"/>
+					  	</div>
+					    
+					</div>
+					<div class="form-group">
+					    <label for="">Phone</label>
+					    <input type="text" class="form-control" id="phone" value="{{getProfileInfo 'phone'}}">
+					    
+					</div>
+					<div class="form-group">
+					    <label for="">HomePhone</label>
+					    <input type="text" class="form-control" id="homephone" value="{{getProfileInfo 'homephone'}}">
+					    
+					</div>
+
+					<div class="form-group">
+					  <label for="sel1">Select Gender:</label>
+					  <select class="form-control" id="sex">
+					    <option>{{getProfileInfo 'sex'}}</option>
+					    <option>2</option>
+					    <option>3</option>
+					    <option>4</option>
+					  </select>
+					</div>
+					<div class="form-group">
+					  <label for="sel1">Select Province:</label>
+					  <select class="form-control" id="province">
+					    <option>{{getProfileInfo 'province'}}</option>
+					    <option>2</option>
+					    <option>3</option>
+					    <option>4</option>
+					  </select>
+					</div>
+					<div class="form-group">
+					  <label for="sel1">Select City:</label>
+					  <select class="form-control" id="city">
+					    <option>{{getProfileInfo 'city'}}</option>
+					    <option>2</option>
+					    <option>3</option>
+					    <option>4</option>
+					  </select>
+					</div>
+					
+					<div class="form-group">
+					    <label for="exampleInputEmail1">Email address</label>
+					    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" value="{{getProfileInfo 'email'}}">
+					    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+					</div>
+					<div class="form-group">
+					    <label for="">Address</label>
+					     <input type="hidden" class="form-control" id="createdAt" value="{{getProfileInfo 'createdAt'}}">
+					    <textarea class="form-control" id="address" cols="50" rows="5" data-createdAt="">{{getProfileInfo 'address'}}</textarea>
+					    <a href="/changepassword" class="pull-right">Change Password</a>
+					</div>
+
+					<button class="btn btn-success" id="btnUpdateProfile">Update Your Profile</button>
+
+				</form>
+			</div>
+			
+		</div>
+
+	</div>
+	{{> meteoris_flash}}
+</template>
