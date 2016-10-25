@@ -10,14 +10,6 @@ Template.meteoris_themeAdminMain.events({
             FlowRouter.setQueryParams({categoryId: id, page:page});
         }else
             FlowRouter.setQueryParams({page:page, categoryId:null});
-        /*console.log(categoryId);
-        Meteor.subscribe('Products', categoryId, page, limit,function(){
-            Meteor.call('Meteoris.Count.Products', function(err, count){
-                if(!err){
-                    $('#pagination').pagination({ items: count, itemsOnPage: limit, currentPage:page, hrefTextPrefix:'?page=', cssStyle: 'light-theme' });
-                }
-            })
-        })*/    
     },
     'keyup #search': function(e){
         var keyword = $(e.currentTarget).val();
@@ -120,18 +112,23 @@ Template.registerHelper('getHumanDate', function( timestamp ) {
 });
 
 getHumanDate = function( timestamp ){
-  var d = new Date(timestamp),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-        hour = d.getHours();
-        minx = d.getMinutes();
-        min  = (minx.length <= 1)? '0'+minx: minx;
-        secx =  d.getSeconds();
-        sec  = (secx.length <= 1)? '0'+secx: secx;
+    if( timestamp ){
+    var d = new Date(timestamp),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear();
+    hour = d.getHours();
+    minx = d.getMinutes();
+    min  = (minx.length <= 1)? '0'+minx: minx;
+    secx =  d.getSeconds();
+    sec  = (secx.length <= 1)? '0'+secx: secx;
 
     if (month.length < 2) month = '0' + month;
     if (day.length < 2) day = '0' + day;
+    if( year )
+    var mydate = [year, month, day].join('-')+' '+hour+':'+min;
 
-    return [year, month, day].join('-')+' '+hour+':'+min;
+    return mydate;
+    }
+    else return 0;
 }

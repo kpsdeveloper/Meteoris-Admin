@@ -92,6 +92,64 @@ Meteoris.ProductsController = Meteoris.Controller.extend({
             
         }
     },
+    updateProduct: function(e){
+        var name = e.target.name.value;
+        var price = e.target.price.value;
+        var discount = (e.target.discount.value != "")? parseInt(e.target.discount.value):0;
+        var sdate = e.target.sdate.value;
+        var edate = e.target.edate.value;
+        var category = e.target.category.value;
+        var description = e.target.description.value;
+        var metatitle = e.target.metatitle.value;
+        var metakey = e.target.metakey.value;
+        
+
+        var msg = '';
+        if( name == "" || price == "" || category == "" || (discount > 0 && (sdate == "" || edate == "")) ){
+            if( name == "")
+                msg += 'Product name is require.';
+            else if( price == "")
+                msg += 'Price is require.';
+    
+            else if( category == "")
+                msg += 'Category is require.';
+            else if(discount > 0 && (sdate == "" || edate == "") )
+                 msg += 'Start date or end date is require.';
+
+            Meteoris.Flash.set("danger", msg);
+            //Session.set('ADDADDRESS', {error:true,msg:msg});
+        }else{
+            //discount = parseInt(discount);
+            price = parseInt(price);
+            if( discount > 0){
+                discount = {discount:discount, startdate:getTimestamp(sdate),enddate:getTimestamp(edate)}
+            }else{
+                discount = {discount:0}
+            }
+            var obj = {
+                "title" : name,
+                "price" : price,
+                "discount" : discount,
+                "category" : category,
+                "description" : description,
+                'tags': [],
+                "metaTitle": metatitle,
+                "metaKeyword": metakey,
+                "date" : new Date(),
+            }
+            console.log(obj);
+             var id = FlowRouter.getParam("id");
+            Meteor.call('Meteoris.Products.Update', id, obj, function(err){
+                if(!err){
+                    Meteoris.Flash.set("success", "Product has been updated.");
+                   
+                    FlowRouter.go('/product/list');
+                    
+                }
+            })
+            
+        }
+    },
     removeProduct: function(e){
         var id = $(e.currentTarget).attr('data-id');
         Meteor.call('Meteoris.Products.Remove', [id]);
@@ -107,6 +165,13 @@ Meteoris.ProductsController = Meteoris.Controller.extend({
             Meteor.call('Meteoris.Products.Remove', listId);
         else
             Meteoris.Flash.set("warning", "Product not select.");
+    },
+    getProductUpdate: function(){
+        var id = FlowRouter.getParam("id");
+        console.log('id:', id);
+        var data = Meteoris.Products.findOne({_id:id});
+        console.log(data);
+        return data;
     },
     getPriceAfterDiscount:function(oldprice){
         var disc=Session.get("DISCOUNTVALUE");

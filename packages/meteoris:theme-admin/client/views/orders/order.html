@@ -1,0 +1,122 @@
+<template name="orderIndex">
+    <section class="content-header">
+        <h1>Order</h1>
+        <ol class="breadcrumb">
+            <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/meteoris/user">Order</a></li>
+            <li class="active">list</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <div class="toolbar">
+                    <div class="pull-left">
+                        <a class="btn btn-success" href="/product/insert">Insert</a>
+                        <a id="btnRemoveAll" class="btn btn-danger">Remove Selection</a>
+                        <!-- {{#if currentUser}}
+                        <a id="btnLogout" class="btn btn-danger">Logout</a>
+                        <a href="/meteoris/user/profile/{{currentUser._id}}" class="btn btn-success">Profile</a>
+                        {{/if}} -->
+                    </div>  
+                    
+                    <div class="quick-search pull-right col-xs-12 col-md-3">
+                        <div class="input-group">
+                            <input type="text" id="search" class="form-control" placeholder="Type ID to Search">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="pull-right col-xs-12 col-md-2"> 
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                End Date
+                            </span>
+                            <input type="text" id="end-date" name="edate" class="form-control">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" id="browsebydate" type="button">Filter</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="pull-right col-xs-12 col-md-2"> 
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                Start Date
+                            </span>
+                            <input type="text" id="start-date" name="sdate" class="form-control" >
+                            
+                        </div>
+                    </div>
+                    <div class="pull-right col-xs-12 col-md-2"> 
+                        <select class="form-control" id="browse-status"> 
+                            <option value="">Browse by Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="delivering">Delivering</option>
+                            <option value="completed">Completed</option>
+                            <option value="canceled">Canceled</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+
+                {{#if Template.subscriptionsReady}}    
+                    {{#if isEmpty}}
+                        <p>No Data Found</p>
+                    {{else}}
+                    <div class=" table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30px;"><input type="checkbox" id="checkAll"/></th>                        
+                                    <th id="btnSortEmail" class="{{meteoris_gridViewSortClass 'email'}}">ID</th>
+                                    <th id="btnSortMugenRoleGroupId" class="{{meteoris_gridViewSortClass 'group'}}">User</th>
+                                    <th id="btnSortName" class="{{meteoris_gridViewSortClass 'name'}}">Total</th>
+                                    <th id="btnSortName" class="{{meteoris_gridViewSortClass 'name'}}">Status</th>
+                                    <th>Ordered At</th>
+                                    <th style="width: 145px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        
+                               {{#each getListOrders}}
+                                <tr>
+                                    <td><input type="checkbox" class="checkAll" value="{{_id}}"/></td>
+                                    <td>{{_id}}</td>
+                                    <td>{{username}}</td>
+                                    <td>{{total}}</td>
+                                    <td>{{status}}</td>
+                                    <td>{{date_formater date}}</td>
+                                    <td>
+                                        <a href="/order/view/{{_id}}" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                        <a id="btnRemove" data-id="{{_id}}" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        <ul id="pagination"></ul>
+                    </div>
+                      
+                    {{/if}}        
+                {{else}}  
+                    {{> spinner}}
+                {{/if}}
+
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+
+    </section><!-- /.content -->  
+    <script type="text/javascript">
+    $('#start-date').datetimepicker({
+      defaultDate: new Date(),
+      format:'YYYY/MM/DD'
+    });
+    $('#end-date').datetimepicker({
+      defaultDate: new Date(),
+      format:'YYYY/MM/DD'
+    });
+    </script>
+</template>

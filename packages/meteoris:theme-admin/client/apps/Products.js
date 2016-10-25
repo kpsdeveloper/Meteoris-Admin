@@ -8,12 +8,11 @@ itemSub = '';
 Tracker.autorun(function() {
     var path = Session.get('PATH');
     if( path ){
-        
-        var params = Session.get('PRODUCTPARAMS');
-        //var categoryId = getCategoryIdChildren( categorydata.name );
-        var page = (params.page)? parseInt(params.page):1;
-        console.log('params:', params);
         if( path == 'product'){
+            var params = Session.get('PRODUCTPARAMS');
+            //var categoryId = getCategoryIdChildren( categorydata.name );
+            var page = (params.hasOwnProperty('page'))? parseInt(params.page):1;
+
             var categoryId = '';
             var q = '';
             if( params.hasOwnProperty('categoryId') )
@@ -28,6 +27,30 @@ Tracker.autorun(function() {
                     }
                 })
             })    
+        }else if( path == 'order'){
+            var params = Session.get('PARAMS');
+            var page = (params.hasOwnProperty('page'))? parseInt(params.page):1;
+            var status = ( params.hasOwnProperty('status') )? params.status:'';
+            var q = ( params.hasOwnProperty('q') )? params.q:'';
+            var curdate = new Date(), year = curdate.getFullYear(), month = curdate.getMonth()+1, day = curdate.getDate()+1, sevenday = curdate.getDate() - 6;
+            
+            var curdate = new Date([month,day,year].join('/')+' 00:00:00');
+            var sevendate = new Date([month,sevenday,year].join('/')+' 23:59:59');
+            var timestamp = curdate.getTime();
+            var nextseventamp = sevendate.getTime();
+            
+            
+            var sdate = (params.hasOwnProperty('sdate'))? getTimestamp(params.sdate): timestamp;
+            var edate = (params.hasOwnProperty('edate'))? getTimestamp(params.edate): nextseventamp;
+            var date = {sdate:sdate, edate:edate};
+            
+            Meteor.subscribe('Orders', status, date, q, page,limit,function(){
+                Meteor.call('Meteoris.Orders.Count', status, date, q, function(err, count){
+                    if(!err){
+                        $('#pagination').pagination({ items: count, itemsOnPage: limit, currentPage:page, hrefTextPrefix:'?page=', cssStyle: 'light-theme' });
+                    }
+                })
+            })
         }else if( path == 'filter-product'){
             if( categorydata ){
                 categorydata.categoryId = categoryId;
@@ -112,6 +135,19 @@ Template.productInsert.events({
     'submit #product_form': function(e){
         e.preventDefault();
         ctrl.insertProduct(e);
+    }
+})
+
+Template.productUpdate.helpers({
+    getProductUpdate: function(){
+        return ctrl.getProductUpdate();
+    },
+    
+})
+Template.productUpdate.events({
+    'submit #productUpdate_form': function(e){
+        e.preventDefault();
+        ctrl.updateProduct(e);
     }
 })
 /*

@@ -96,10 +96,34 @@ groupProduct.route('/insert', {
 });
 groupProduct.route('/update/:id', {
     subscriptions:function(params){
-        return [TAPi18n.subscribe('Categories'), Meteor.subscribe('ParentAttribute')];
+        return [TAPi18n.subscribe('Categories'), Meteor.subscribe('SingleProduct', params.id), Meteor.subscribe('ParentAttribute')];
     },
     name:'product',
     action: function( params, queryParams ) {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "productUpdate"});
+    },
+});
+var groupOrder = FlowRouter.group({
+    prefix: '/order',
+    name: 'order'
+});
+groupOrder.route('/list', {
+    name:'product',
+    action: function( params, queryParams ) {
+        var groupname = FlowRouter.current().route.group.prefix;
+        //console.log('group:', FlowRouter.current().route.group);
+        //var pageslug = path.split('/')
+        Session.set('PARAMS',  queryParams);
+        Session.set('PATH', groupname.replace('/','') );
+        BlazeLayout.render('meteoris_themeAdminMain', {content: "orderIndex"});
+    },
+});
+groupOrder.route('/view/:id', {
+    subscriptions:function(params){
+        return [Meteor.subscribe('SingleOrders', params.id)];
+    },
+    name:'product',
+    action: function( params, queryParams ) {
+        BlazeLayout.render('meteoris_themeAdminMain', {content: "orderView"});
     },
 });

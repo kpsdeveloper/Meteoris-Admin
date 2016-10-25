@@ -1,0 +1,107 @@
+<template name="orderView">    
+    <section class="content-header">
+        <h1>Order - Details</h1>
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><a href="/meteor/user">Order</a></li>
+            <li class="active">Details</li>
+        </ol>
+    </section>
+    {{#if Template.subscriptionsReady}} 
+        {{#with getOrderDetails}}  
+            <section class="content">
+                <div class="box">
+                    <div class="box-body">
+                        
+                        <div class="col-md-6 col-xs-12">
+                            <div class=" table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 145px;">Supplier</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                
+                                        <tr>
+                                            <td>Safirperfumery Inc.</td>
+                                        </tr>
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <div class=" table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 145px;">Customer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                
+                                        <tr>
+                                            <td><input type="checkbox" class="checkAll" value=""/></td>
+                                        </tr>
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12">
+                            <div class=" table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            
+                                            <th style="width: 145px;">Payment Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Transaction ID:</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Payment Method</td>
+                                        </tr>
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12">
+                            <div class=" table-responsive">
+
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 145px;">Image</th>
+                                            <th style="width: 145px;">Product</th>
+                                            <th style="width: 60px;">Qty</th>
+                                            <th style="width: 60px;">Price</th>
+                                            <th style="width: 60px;">Subtotal</th>
+                                        </tr>
+                                        
+                                    </thead>
+                                    <tbody>
+                                
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> 
+        {{/with}}
+    {{/if}}
+    
+</template>

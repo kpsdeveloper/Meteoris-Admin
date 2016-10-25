@@ -47,6 +47,7 @@ Package.onUse(function(api) {
         'lib/controllers/ThemeAdminController.js',
         'lib/controllers/BannersController.js',
         'lib/controllers/ProductsController.js',
+        'lib/controllers/OrdersController.js',
         
     ], ['client', 'server']);
 
@@ -55,6 +56,7 @@ Package.onUse(function(api) {
         'server/Publish.js',
         'server/Banner.js',
         'server/Products.js',
+        'server/Orders.js',
     ], 'server');
 
     api.addFiles([
@@ -87,9 +89,12 @@ Package.onUse(function(api) {
         'client/apps/banner.js',
         'client/views/products/product.html',
         'client/views/products/insert.html',
-         'client/views/products/update.html',
+        'client/views/products/update.html',
         'client/apps/Products.js',
         'client/apps/helper.js',
+        'client/views/orders/order.html',
+        'client/views/orders/view.html',
+        'client/apps/Orders.js',
     ], 'client');
 
 });

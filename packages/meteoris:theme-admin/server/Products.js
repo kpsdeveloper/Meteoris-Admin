@@ -18,5 +18,8 @@ Meteor.methods({
     },
     "Meteoris.Products.Remove": function(id){
     	Meteoris.Products.remove({_id:{$in:id}});
-    }
+    },
+    "Meteoris.Products.Update": function(id, obj){
+    	Meteoris.Products.update(id, {$set:obj});
+    },
 });
