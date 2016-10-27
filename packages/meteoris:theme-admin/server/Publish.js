@@ -123,3 +123,21 @@ Meteor.publish('editBanner', function(id) {
     
     return banner;
 });
+
+Meteor.publish('allproducts', function(limit) {
+
+    if (limit != -1) {
+        return Meteoris.Products.find({}, { limit: limit });
+    } else {
+        return Meteoris.Products.find({});
+    }
+});
+Meteor.publish('alldiscount', function() {
+    return Meteoris.Discount.find({}); 
+});
+Meteor.publish('oneProduct', function(id) {
+    return Meteoris.Products.find({_id:id}); 
+});
+Meteor.publish('onediscount', function(id) {
+    return Meteoris.Discount.find({_id:id}); 
+});

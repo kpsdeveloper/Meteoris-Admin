@@ -7,7 +7,6 @@
 
 Namespace('Meteoris.ThemeAdmin');
 Banners = new Mongo.Collection("banner");
-Discount=new Mongo.Collection("discount");
 Meteoris.ThemeAdmin = new Mongo.Collection("meteoris_themeAdmin");
 
 var schemas = new SimpleSchema({

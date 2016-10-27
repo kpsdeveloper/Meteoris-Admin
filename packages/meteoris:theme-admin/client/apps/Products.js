@@ -1,5 +1,8 @@
 var ctrl = new Meteoris.ProductsController();
-
+var bannerCtrl = new Meteoris.BannersController();
+Template.productInsert.onCreated(function() {
+    Meteor.Loader.loadJs("//api.filestackapi.com/filestack.js");
+});
 //Session.set('PAGE', 1);
 //Session.set('SUBSCRIBELISTPRO', '');
 //Session.set('SORTKEY','title');
@@ -131,10 +134,15 @@ Template.productIndex.events({
         
     }
 })
+
 Template.productInsert.events({
     'submit #product_form': function(e){
         e.preventDefault();
         ctrl.insertProduct(e);
+    },
+    'click #uploadimg': function(e, t) {
+        e.preventDefault();
+        bannerCtrl.getImageUrlFilestack();
     }
 })
 
