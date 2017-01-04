@@ -1,0 +1,47 @@
+<template name="reviewdetail">
+	<div class=" table-responsive">
+	    <table class="table table-bordered">
+	    	<tbody>
+	    	{{#with getProduct}}
+	    		<tr>
+		    		<td>Product Image</td>
+		    		<td><img class="img-responsive" src="{{getProductImage _id 'true'}}"></td>
+		    	</tr>
+		    	<tr>
+		    		<td>Product Title</td>
+		    		<td>{{title}}</td>
+		    	</tr>
+		    	{{#with getOneReview}}
+			    	<!-- {{#each review}} -->
+				    	<tr>
+				    		<td>Title</td>
+				    		<td>{{title}}</td>
+				    	</tr>
+				    	
+				    	<tr>
+				    		<td>Comment</td>
+				    		<td>{{comment}}</td>
+				    	</tr>
+				    	<tr>
+				    		<td>Grade</td>
+				    		<td>{{grade}}</td>
+				    	</tr>
+				    	<tr>
+				    		<td>user</td>
+				    		<td>{{getdisplayName user}}</td>
+				    	</tr>
+				    	<tr>
+				    		<td>Admin Approve</td>
+				    		<td>{{checkAdminApprove approve}}</td>
+				    	</tr>
+				    <!-- {{/each}} -->
+		    	{{/with}}
+	    	{{/with}}
+	    	<tr>
+	    		<td></td>
+	    		<td><a href="/review/list"><b>Back</b></a></td>
+	    	</tr>
+	    	</tbody>
+	    </table>
+    </div>
+</template>

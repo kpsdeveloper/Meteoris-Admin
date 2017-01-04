@@ -22,4 +22,19 @@ Meteor.methods({
     "Meteoris.Products.Update": function(id, obj){
     	Meteoris.Products.update(id, {$set:obj});
     },
+    updateViewStatus:function(idreview){
+        //Meteoris.Products.update({_id:idproduct}, {$set:{"review.viewstatus":"1"}});
+        return  Meteoris.Products.update({"review.idreview":idreview},{$set:{"review.$.viewstatus":"1"}})
+    },
+    approveReview:function(idreview,status){
+         return  Meteoris.Products.update({"review.idreview":idreview},{$set:{"review.$.approve":status}})
+    },
+    TestOnereview:function(idproduct,idreview){
+        //var pro= Meteoris.Products.find({_id:idproduct,"review.idreview": idreview},{_id: 0, review: {$elemMatch: {idreview: idreview}}});
+        var pro=Meteoris.Products.find({"review.idreview":"bznpo837uZSKthGsW"},{"review.$":1})
+        console.log("=====");
+        console.log(pro.review);
+        console.log(pro);
+        return pro;
+    }
 });

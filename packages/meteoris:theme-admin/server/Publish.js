@@ -141,3 +141,59 @@ Meteor.publish('oneProduct', function(id) {
 Meteor.publish('onediscount', function(id) {
     return Meteoris.Discount.find({_id:id}); 
 });
+
+//2017-jan-01
+Meteor.publish('allfavoritepage', function() {
+    var allfav=Meteoris.Favorites.find({});
+    var idprods=[];
+    var idusers=[];
+    allfav.forEach(function(res){
+        var id=res.proId;
+        idprods.push(id);
+        var oneuser=res.userId;
+        idusers.push(oneuser);
+    });
+    var listproduct=Meteoris.Products.find({_id: {$in: idprods}});
+    var listuser=Meteor.users.find({_id: {$in: idusers}});
+    return [allfav,listproduct,listuser]
+});
+
+Meteor.publish("allreviewproduct",function(){
+    return Meteoris.Products.find({review:{$exists:true}});
+});
+Meteor.publish("userReview",function(id_product){
+    if(id_product==1){
+        var oneproduct=Meteoris.Products.find({review:{$exists:true}})
+        if(oneproduct){
+            var alluser=[];
+           oneproduct.forEach(function(obj){
+                var allreview=obj.review;
+                if(allreview){
+                    allreview.forEach(function(d){
+                        var oneuser=d.user;
+                        alluser.push(oneuser);
+                    });
+                }
+           });
+           console.log("11111user ");
+           console.log(alluser);
+            var getuserreview=Meteor.users.find({_id: {$in: alluser}});
+            return getuserreview;
+        }
+    }else{
+        var oneproduct=Meteoris.Products.find({_id:id_product})
+        if(oneproduct){
+            var alluser=[];
+            var data=oneproduct.fetch()[0];
+            var allreview=data.review;
+            allreview.forEach(function(da){
+                var oneuser=da.user;
+                alluser.push(oneuser)
+            });
+            console.log(alluser);
+            var getuserreview=Meteor.users.find({_id: {$in: alluser}});
+            return getuserreview;
+        }
+    }
+
+});

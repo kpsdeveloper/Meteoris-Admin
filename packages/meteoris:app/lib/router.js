@@ -227,3 +227,13 @@ groupDiscountRoutes.route('/edit-product/:id', {
         BlazeLayout.render('mainLayout', {content: "editdiscountProduct"});
     },
 });
+
+//2017-jan-03
+FlowRouter.route('/favorite/list', {
+   /* subscriptions:function(){
+        Meteor.subscribe("allfavoritepage");
+    },*/
+    action: function() {
+        BlazeLayout.render('mainLayout', {content: "favoritelist"});
+    }
+});

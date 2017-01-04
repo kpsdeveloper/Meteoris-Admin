@@ -386,3 +386,4 @@ publishImage = function(listobjPro){
 
     return [dataimg,dataAttr];
 }
+

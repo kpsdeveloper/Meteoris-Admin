@@ -1,0 +1,26 @@
+<template name="favoritelist">
+	
+	<h3>All Favorite</h3>
+	<div class="container">
+		<table class="table">
+		  <thead>
+		    <tr>
+		    	<th>image</th>
+		      <th>Product Title</th>
+		      <th>User</th>
+		  
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	{{#each getAllFavorite}}
+		    <tr>
+		     	<td><img  src="{{getProductImage proId 'true'}}" style="width:32px;height:32px;"></td>
+		      	<td>{{getproductname proId}}</td>
+		   		<td>{{getdisplayName userId}}</td>
+		    
+		    </tr>
+		    {{/each}}
+		  </tbody>
+		</table>
+	</div>
+</template>

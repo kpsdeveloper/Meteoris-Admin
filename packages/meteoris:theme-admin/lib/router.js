@@ -164,3 +164,30 @@ groupDiscountRoutes.route('/edit-product/:id', {
 });
 
 /*END DISCOUNT*/
+
+//2017-jan-03
+FlowRouter.route('/favorite/list', {
+    subscriptions:function(){
+        Meteor.subscribe("allfavoritepage");
+    },
+    action: function() {
+        BlazeLayout.render('meteoris_themeAdminMain', {content: "favoritelist"});
+    }
+});
+
+FlowRouter.route('/review/list', {
+     subscriptions:function(){
+        [Meteor.subscribe("allreviewproduct"),Meteor.subscribe("userReview",1)];
+    },
+    action: function() {
+        BlazeLayout.render('meteoris_themeAdminMain', {content: "reviewlist"});
+    }
+});
+FlowRouter.route('/review/view/:id/:idreview', {
+    subscriptions:function(params){
+        [Meteor.subscribe("oneProduct",params.id),Meteor.subscribe("userReview",params.id)];
+    },
+    action: function() {
+        BlazeLayout.render('meteoris_themeAdminMain', {content: "reviewdetail"});
+    }
+});
