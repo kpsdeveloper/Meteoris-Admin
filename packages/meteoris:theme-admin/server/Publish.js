@@ -34,20 +34,40 @@ Meteor.publish('SingleProduct', function( id ) {
 		return Meteoris.Products.find({_id:id});
 	else return [];
 });
+Meteor.publish("allOrders",function(){
+    var allorder= Meteoris.Orders.find({});
+    var listUser=[];
+    allorder.forEach(function(da){
+        var oneuser=da.usersid;
+        listUser.push(oneuser);
+    });
+    var datauser = Meteor.users.find({_id:{$in:listUser}},{fields:{_id:1,profile:1}})
+    return [allorder,datauser];
+
+});
 Meteor.publish('Orders', function(status, date, q, page , limit) {
 	
 	var skip = (page<=1)? 0 : (page - 1) * limit;
-	var fields = { fields:{_id:1, userId:1,total:1,status:1,date:1}, sort:{date:-1},skip: skip, limit:limit};
+	var fields = { fields:{_id:1, userid:1,total:1,status:1,time:1}, sort:{time:-1},skip: skip, limit:limit};
 	if( status && q == ""){
-		var data = Meteoris.Orders.find({status:status, date:{$gte:date.sdate}, date:{$lte:date.edate}, date:{$exists:1}}, fields);
+		var data = Meteoris.Orders.find({status:status},fields)
+        //var data = Meteoris.Orders.find({status:status, time:{$gte:date.sdate}, time:{$lte:date.edate}, time:{$exists:1}}, fields);
 	}else if( status == "" && q ){
-		var data = Meteoris.Orders.find({_id: { $regex: new RegExp(q, "i") }, date:{$gte:date.sdate}, date:{$lte:date.edate}, date:{$exists:1}}, fields);
+        var data = Meteoris.Orders.find({_id: { $regex: new RegExp(q, "i") }},fields)
+		//var data = Meteoris.Orders.find({_id: { $regex: new RegExp(q, "i") }, time:{$gte:date.sdate}, time:{$lte:date.edate}, time:{$exists:1}}, fields);
 	}else if( status && q ){
-		var data = Meteoris.Orders.find({status:status, _id: { $regex: new RegExp(q, "i") }, date:{$gte:date.sdate}, date:{$lte:date.edate}, date:{$exists:1}}, fields);
-	}else
-    	var data = Meteoris.Orders.find({date:{$gte:date.sdate}, date:{$lte:date.edate}, date:{$exists:1}}, fields);
-   
-    var listUser = data.map(function(p) { return p.userId });
+        var data = Meteoris.Orders.find({status:status, _id: { $regex: new RegExp(q, "i") }},fields)
+		//var data = Meteoris.Orders.find({status:status, _id: { $regex: new RegExp(q, "i") }, time:{$gte:date.sdate}, time:{$lte:date.edate}, time:{$exists:1}}, fields);
+	}else{
+    	//var data = Meteoris.Orders.find({time:{$gte:date.sdate}, time:{$lte:date.edate}, time:{$exists:1}}, fields);
+        var data = Meteoris.Orders.find({},{limit:16});
+        
+    }
+    var listUser=[];
+    data.forEach(function(re){
+        listUser.push(re.userid);
+    });
+    //var listUser = data.map(function(p) { return p.userid });
     var datauser = Meteor.users.find({_id:{$in:listUser}},{fields:{_id:1,profile:1}})
     return [data,datauser];
 });
@@ -55,10 +75,10 @@ Meteor.publish('SingleOrders', function( id ) {
 	var data = Meteoris.Orders.find({_id:id});
 	if( data ){
 		var newData = data.fetch()[0];
-		var addressId = (newData.hasOwnProperty('addressBook'))? newData.addressBook.addressId:'';
+		/*var addressId = (newData.hasOwnProperty('addressBook'))? newData.addressBook.addressId:'';
 		var userAddress = [];
 		if( addressId )
-			userAddress = Meteoris.Accounts.find({_id:addressId});
+			userAddress = Meteoris.Accounts.find({_id:addressId});*/
 	
 		
 		var productId = newData.items.map( function(doc){ return doc.id_product;})
@@ -75,12 +95,14 @@ Meteor.publish('SingleOrders', function( id ) {
 	    var imgattrId = dataattr.map(function(p) { if( p.productImage ) return p.productImage });
 	    var imgId = proimgId.concat(imgattrId);
 	    var dataimg = Meteoris.Images.find({_id: {$in: imgId}},{fields:{_id:1, copies:1}})
-	    console.log('order:', data.fetch());
-	    console.log('userAddress:', userAddress.count());
+	    /*console.log('order:', data.fetch());
+	    //console.log('userAddress:', userAddress.count());
 	    console.log('dataimg:', dataimg.count());
 	    console.log('product:', product.count());
-	    console.log('dataattr:', dataattr.count());
-		return [data, userAddress, dataimg, product, dataattr];
+	    console.log('dataattr:', dataattr.count());*/
+		//return [data, userAddress, dataimg, product, dataattr];
+        var oneuser=Meteor.users.find({_id:newData.userid});
+        return [data, dataimg, product, dataattr,oneuser];
 	}
 })
 TAPi18n.publish('Categories', function() {

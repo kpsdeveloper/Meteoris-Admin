@@ -107,8 +107,24 @@ var groupOrder = FlowRouter.group({
     prefix: '/order',
     name: 'order'
 });
+
 groupOrder.route('/list', {
     name:'product',
+    subscriptions:function(params){
+        //return [Meteor.subscribe('allOrders')];
+         var curdate = new Date(), year = curdate.getFullYear(), month = curdate.getMonth(), day = curdate.getDate(), sevenday = curdate.getDate() - 6;
+        var curdate = new Date([month,day,year].join('/'));
+        var sevendate = new Date([month,sevenday,year].join('/'));
+        var timestamp = curdate.getTime();
+        //var nextseventamp = sevendate.getTime();
+        var date = new Date();
+        var nextseventamp= new Date(new Date().getTime()+(7*24*60*60*1000));
+        var sdate = timestamp;
+        var edate =nextseventamp.getTime();
+        console.log("EDATE "+edate);
+        var date = {sdate:sdate, edate:edate};
+        [Meteor.subscribe("Orders","",date,"","","")]
+    },
     action: function( params, queryParams ) {
         var groupname = FlowRouter.current().route.group.prefix;
         //console.log('group:', FlowRouter.current().route.group);
@@ -191,3 +207,12 @@ FlowRouter.route('/review/view/:id/:idreview', {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "reviewdetail"});
     }
 });
+//PAGE ORDER
+/*FlowRouter.route('/order/list', {
+    subscriptions:function(){
+        Meteor.subscribe("allfavoritepage");
+    },
+    action: function() {
+        BlazeLayout.render('meteoris_themeAdminMain', {content: "orderlist"});
+    }
+});*/

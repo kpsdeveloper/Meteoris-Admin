@@ -13,4 +13,7 @@ Meteor.methods({
 	    	
         return total.count();
     },
+    "deleteOneorder":function(id){
+    	return Meteoris.Orders.remove(id);
+    }
 });

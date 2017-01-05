@@ -3,7 +3,7 @@
         <h1>Order - Details</h1>
         <ol class="breadcrumb">
             <li><a href="/">Home</a></li>
-            <li><a href="/meteor/user">Order</a></li>
+            <li><a href="/order/list">Order</a></li>
             <li class="active">Details</li>
         </ol>
     </section>
@@ -13,7 +13,7 @@
                 <div class="box">
                     <div class="box-body">
                         
-                        <div class="col-md-6 col-xs-12">
+                    <!--     <div class="col-md-6 col-xs-12">
                             <div class=" table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
@@ -30,25 +30,29 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                        <div class="col-md-6 col-xs-12">
+                        </div> -->
+                       <!--  <div class="col-md-6 col-xs-12">
                             <div class=" table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th style="width: 145px;">Customer</th>
+                                            <th style="width: 145px;">username</th>
+                                            <th style="width: 145px;">phone</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                 
                                         <tr>
                                             <td><input type="checkbox" class="checkAll" value=""/></td>
+                                            <td>{{userid}}</td>
+                                             <td>{{phone}}</td>
                                         </tr>
                                     
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-12 col-xs-12">
                             <div class=" table-responsive">
                                 <table class="table table-bordered">
@@ -60,11 +64,27 @@
                                     </thead>
                                     <tbody>
                                         <tr>
+                                             <td>username</td>
+                                            <td>{{getusername userid}}</td>
+                                             
+                                        </tr>
+                                        <tr>
+                                            <td>Phone</td>
+                                            <td>{{phone}}</td>
+                                        </tr>
+                                        <tr>
                                             <td>Transaction ID:</td>
+                                            <td>{{orderId}}</td>
                                         </tr>
                                         <tr>
                                             <td>Payment Method</td>
+                                            <td>No Field</td>
                                         </tr>
+                                        <tr>
+                                            <td>Shipping Address</td>
+                                            <td>{{address}}</td>
+                                        </tr>
+
                                     
                                     </tbody>
                                 </table>
@@ -78,22 +98,33 @@
                                         <tr>
                                             <th style="width: 145px;">Image</th>
                                             <th style="width: 145px;">Product</th>
+                                            <th style="width: 145px;">Barcode</th>
                                             <th style="width: 60px;">Qty</th>
-                                            <th style="width: 60px;">Price</th>
+                                            <th style="width: 60px;">price</th>
                                             <th style="width: 60px;">Subtotal</th>
+
                                         </tr>
                                         
                                     </thead>
                                     <tbody>
-                                
+                                        {{#each items }}
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td><img src="{{getProductImage id_product}}"></td>
+                                            <td>{{getProductTitle id_product}}</td>
+                                             <td>{{getProductBarcode id_product}}</td>
+                                            <td>{{qty}}</td>
+                                            <td>{{getProductPrice id_product}}</td>
+                                            <td>{{subtotal}}</td>
                                         </tr>
-                                    
+                                       {{/each}} 
+                                       <tr>
+                                          <!--  <td></td>
+                                           <td></td>
+                                           <td></td> -->
+                                         <!--   <td rowspan="3"></td> -->
+                                           <td colspan="5" align="right">Total :</td>
+                                           <td><b>{{total}}</b></td>
+                                       </tr>
                                     </tbody>
                                 </table>
                             </div>

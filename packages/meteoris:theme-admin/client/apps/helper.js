@@ -157,3 +157,33 @@ Template.registerHelper("convertMsTimeStamp", function(tms) {
     hTime = yyyy + '/' + mm + '/' + dd + ', ' + h + ':' + min + ' ' + ampm;
     return hTime;
 });
+
+Template.registerHelper('getProductPrice', function(id) {
+   return getProductPrice(id);
+});
+Template.registerHelper('getProductBarcode', function(id) {
+   return getProductPrice(id);
+});
+getProductPrice=function(id){
+    if(id){
+        var oneproduct=Meteoris.Products.findOne({_id:id});
+        if(oneproduct){
+            var getatrr=Meteoris.Attributes.find({product:oneproduct.oldId});
+            if(getatrr){
+                var data=getatrr.fetch()[0];
+                return data.price;
+            }
+        }
+        
+    }
+}
+getProductBarcode=function(id){
+    if(id){
+        var oneproduct=Meteoris.Products.findOne({_id:id});
+        var getatrr=Meteoris.Attributes.find({product:oneproduct.oldId});
+        if(getatrr){
+            var data=getatrr.fetch()[0];
+            return data.barcode;
+        }
+    }
+}
