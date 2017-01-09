@@ -50,6 +50,7 @@ Package.onUse(function(api) {
         'lib/controllers/BannersController.js',
         'lib/controllers/ProductsController.js',
         'lib/controllers/OrdersController.js',
+         'lib/controllers/AppController.js',
         
     ], ['client', 'server']);
 
@@ -96,9 +97,19 @@ Package.onUse(function(api) {
         'client/views/discount/adddiscount.html',
         'client/views/discount/editdiscount.html',
         'client/views/favorite/favoritelist.html',
+         'client/views/favorite/favoriteview.html',
         'client/views/review/reviewlist.html',
         'client/views/review/reviewdetail.html',
-          'client/apps/review.js',
+        'client/views/cart/cart.html',
+         'client/views/manageuser/userTracklist.html',
+          'client/views/manageuser/tracklogin.html',
+           'client/views/manageuser/manageuser.html',
+            'client/views/manageuser/viewuser.html',
+               'client/views/manageuser/updateuser.html',
+              'client/views/manageuser/birthday.html',
+          'client/apps/manageuser.js',
+         'client/apps/cart.js',
+        'client/apps/review.js',
         'client/apps/favorite.js',
         'client/apps/discount.js',
         'client/apps/Products.js',

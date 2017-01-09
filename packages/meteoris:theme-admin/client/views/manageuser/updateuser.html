@@ -1,0 +1,111 @@
+<template name="updateuser">
+	  <section class="content-header">
+        <h1>User update</h1>
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><a href="/manageuser/list">Manageuser</a></li>
+            <li class="active">update</li>
+        </ol>
+    </section>
+    {{#if Template.subscriptionsReady}} 
+        {{#with getuserDetails}}  
+            <section class="content">
+                <div class="box">
+                    <div class="box-body">
+                        
+                        <div class="col-md-12 col-xs-12">
+                            <div class=" table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            
+                                            <th style="width: 145px;">User Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                    	<td>Change Image Profile</td>
+                                    	<td> <button id="uploadImg">UploadImage</button></td>
+                                    </tr>
+                                 
+                                        <tr>
+                                             <td>username</td>
+                                            <td><input type="text" id="username" value="{{profile.username}}" name=""></td>
+                                             
+                                        </tr>
+                                        <tr>
+                                        	<td>Email:</td>
+                                        	 <td><input type="email" id="email" value="{{emails.[0].address}}" name=""></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Firstname</td>
+                                             <td><input type="text" id="firstname" value="{{profile.firstname}}" name=""></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Last Name:</td>
+                                            <td><input type="text" id="lastname" value="{{profile.lastname}}" name=""></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Birth</td>
+                                            <td><input type="text" id="dob" value="{{profile.birth}}" name=""></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>Phone</td>
+                                            <td><input type="text" id="phone" value="{{profile.phone}}" name=""></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>Address</td>
+                                            <td><input type="text" id="address" value="{{profile.address}}"></td>
+                                        </tr>
+                                         <tr>
+                                            <td>Role:</td>
+                                            <td>{{roles.mygroup.[0]}}</td>
+                                        </tr>
+
+                                    	<tr>
+                                            <td>Admin Approve Profile:</td>
+                                            <td>{{profile.approve}}</td>
+                                            <input type="hidden" value="{{profile.image}}" id="imagefile" name="">
+                                        </tr>
+                                        <tr>
+
+                                        	<td colspan="2" style="padding-left: 250px"><button class="btn btn-default" id="btnupdate">UPDATE</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    <!--     <div class="col-md-12 col-xs-12">
+                            <div class=" table-responsive">
+
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 145px;">Image</th>
+                                            <th style="width: 145px;">Product</th>
+                                            
+
+                                        </tr>
+                                        
+                                    </thead>
+                                    <tbody>
+                                        {{#each getProductFavoriteByUser _id}}
+                                        <tr>
+                                            <td><img src="{{getProductImage proId}}"></td>
+                                            <td>{{getProductTitle proId}}</td>
+                                            
+                                        </tr>
+                                       {{/each}} 
+                                      
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </section> 
+        {{/with}}
+    {{/if}}
+</template>

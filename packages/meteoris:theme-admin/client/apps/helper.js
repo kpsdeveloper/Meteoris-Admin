@@ -187,3 +187,35 @@ getProductBarcode=function(id){
         }
     }
 }
+
+Template.registerHelper('getdisplayusername', function(id) {
+   return getdisplayusername(id);
+});
+
+window.getdisplayusername=function(id){
+    if(id){
+        var user=Meteor.users.findOne({_id:id});
+        if(user){
+            if(user.profile.username){
+                console.log("FOUNDSER");
+                return user.profile.username;
+            }else{
+                console.log("FOUND@22222");
+                return user.profile.name;
+            }
+        }
+        
+   }
+}
+
+/*Template.registerHelper("getProductTitle",function(id_product){
+    return getProductTitle1(id_product);
+});
+
+window.getProductTitle=function(id){
+    var oneprod=Meteoris.Products.findOne({_id:id});
+    if(oneprod){
+        return oneprod.title;
+    }
+    
+}*/

@@ -37,4 +37,21 @@ Meteor.methods({
     "Meteoris.ThemeAdmin.remove": function(doc) {
         Meteoris.ThemeAdmin.remove(doc);
     },
+    removeUserTracking:function(id){
+        return Meteoris.userTracking.remove(id);
+    },
+    approveprofile:function(uid,status){
+        return Meteor.users.update({_id:uid},{$set:{"profile.approve":status}})
+    },
+    "removeUser":function(uid){
+        return Meteor.users.remove({_id:uid});
+    },
+    updateProfileInfo:function (_id,doc) {
+        var id=Meteor.users.update(_id, {$set: doc});
+        return {_id:_id};
+    },
+    updateImgProfile:function(userid,imgurl){
+        var id=userid;
+        return Meteor.users.update({_id:id},{$set:{"profile.image":imgurl}});
+    }
 });

@@ -7,6 +7,7 @@
 
 Namespace('Meteoris.ThemeAdmin');
 Banners = new Mongo.Collection("banner");
+
 //users = new Mongo.Collection("users");
 Meteoris.ThemeAdmin = new Mongo.Collection("meteoris_themeAdmin");
 

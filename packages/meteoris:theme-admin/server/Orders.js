@@ -15,5 +15,8 @@ Meteor.methods({
     },
     "deleteOneorder":function(id){
     	return Meteoris.Orders.remove(id);
+    },
+    "removeOneCart":function(id){
+    	return Meteoris.Carts.remove(id);
     }
 });

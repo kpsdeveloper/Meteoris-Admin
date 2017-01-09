@@ -1,0 +1,46 @@
+<template name="cartlist">
+	<h3>All Cart</h3>
+	<div class="container">
+		<section class="content"> 
+		<div class="box" style="width: 92%">
+			<div class="box-body">
+				<div class=" table-responsive">
+		                        <table class="table table-bordered">
+		                            <thead>
+		                                <tr>
+		                                    <th style="width: 30px;"><input type="checkbox" id="checkAll"/></th>                        
+		                                    <th id="">Product</th>
+		                                    <th>User</th>
+		                                    <th>quantity</th>
+		                                     <th>subtotal</th>
+		                                    <th style="width: 145px;">Actions</th>
+		                                </tr>
+		                            </thead>
+		                            <tbody>
+		                        
+		                             	{{#each getAllCart}}
+		                             		
+		                                <tr>
+		                                    <td><input type="checkbox" class="checkAll" value="{{_id}}"/></td>
+		                                    <td>{{getProductTitle id_product}}</td>
+		                                   	<td>{{getdisplayusername userId}}</td>
+		                                  
+		                                    <td>{{quantity}}</td>
+		                                     <td>{{subtotal}}</td>
+		                                    <td>
+		                                        <a href="#" class="btn btn-default" id="btnview"><i class="glyphicon glyphicon-eye-open"></i></a>
+		                                       	 <a id="btnRemove" data-id="{{_id}}" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+		                                    </td>
+		                                </tr>
+
+		                                	
+		                                {{/each}}
+		                            </tbody>
+		                        </table>
+		                        <ul id="pagination"></ul>
+		        </div>
+		    </div>
+		</div>
+		</section>
+	</div>
+</template>

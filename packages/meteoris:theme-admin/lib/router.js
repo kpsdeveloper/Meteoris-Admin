@@ -190,10 +190,18 @@ FlowRouter.route('/favorite/list', {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "favoritelist"});
     }
 });
+FlowRouter.route('/favorite/view/:userid', {
+    subscriptions:function(params){
+        Meteor.subscribe("favoritedetail",params.userid);
+    },
+    action: function() {
+        BlazeLayout.render('meteoris_themeAdminMain', {content: "favoriteview"});
+    }
+});
 
 FlowRouter.route('/review/list', {
      subscriptions:function(){
-        [Meteor.subscribe("allreviewproduct"),Meteor.subscribe("userReview",1)];
+        [Meteor.subscribe("allreviewproduct"),Meteor.subscribe("userReview",1),Meteor.subscribe("categoryReviewProduct")];
     },
     action: function() {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "reviewlist"});
@@ -207,12 +215,64 @@ FlowRouter.route('/review/view/:id/:idreview', {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "reviewdetail"});
     }
 });
-//PAGE ORDER
-/*FlowRouter.route('/order/list', {
+//CART ORDER
+FlowRouter.route('/cart/list', {
     subscriptions:function(){
-        Meteor.subscribe("allfavoritepage");
+        Meteor.subscribe("allcart");
     },
     action: function() {
-        BlazeLayout.render('meteoris_themeAdminMain', {content: "orderlist"});
+        BlazeLayout.render('meteoris_themeAdminMain', {content: "cartlist"});
     }
-});*/
+});
+//USER ACTION TRACKING
+FlowRouter.route('/usertrack/list', {
+    subscriptions:function(){
+        Meteor.subscribe("userTrackingPage");
+    },
+    action: function() {
+        BlazeLayout.render('meteoris_themeAdminMain', {content: "userTracklist"});
+    }
+});
+FlowRouter.route('/usertrack/login', {
+    subscriptions:function(){
+        Meteor.subscribe("userTrackingLoginErrorPage");
+    },
+    action: function() {
+        BlazeLayout.render('meteoris_themeAdminMain', {content: "tracklogin"});
+    }
+});
+FlowRouter.route('/manageuser/list', {
+    subscriptions:function(){
+        var limit=16;
+        Meteor.subscribe("allusers",limit);
+    },
+    action: function() {
+        BlazeLayout.render('meteoris_themeAdminMain', {content: "manageuserlist"});
+    }
+});
+FlowRouter.route('/manageuser/view/:id', {
+    subscriptions:function(params){
+        Meteor.subscribe("oneuser",params.id);
+    },
+    action: function() {
+        BlazeLayout.render('meteoris_themeAdminMain', {content: "viewuser"});
+    }
+});
+FlowRouter.route('/manageuser/update/:id', {
+    subscriptions:function(params){
+        Meteor.subscribe("oneuser",params.id);
+    },
+    action: function() {
+        BlazeLayout.render('meteoris_themeAdminMain', {content: "updateuser"});
+    }
+});
+//BIRTHDAY
+FlowRouter.route('/manageuser/birthday', {
+    subscriptions:function(){
+        var limit=16;
+        Meteor.subscribe("allusers",limit);
+    },
+    action: function() {
+        BlazeLayout.render('meteoris_themeAdminMain', {content: "birthday"});
+    }
+});

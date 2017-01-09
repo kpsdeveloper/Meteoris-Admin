@@ -1,0 +1,59 @@
+<template name="manageuserlist">
+	<div class="container">
+		 <section class="content-header">
+	        <h1>Manage All User</h1>
+	        <ol class="breadcrumb">
+	            <li><a href="/">Home</a></li>
+	            <li><a href="/manageuser/list">Order</a></li>
+	        </ol>
+	    </section>
+		<section class="content"> 
+		<div class="box" style="width: 92%">
+			<div class="box-body">
+				<div class=" table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 30px;"><input type="checkbox" id="checkAll"/></th>                        
+                                <th id="">Image</th>
+                                <th>username</th>
+                                <th>firstname</th>
+                                <th>lastname</th>
+                                <th>Mobile</th>
+                               	<th>Admin Approve</th>
+                                <th style="width: 145px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    
+                         	{{#each getAllUser}}
+							    <tr>
+							    	<td><input type="checkbox" id="checkAll"/></td>
+							    	<td><img src="{{profile.image}}" style="width:32px;height:32px;"></td>
+							    	<td>{{profile.username}}</td>
+							    	<td>{{profile.firstname}}</td>
+							    	<td>{{profile.lastname}}</td>
+							    	<td>{{profile.phone}}</td>
+							    	<td>
+							    		{{#if adminApprove profile.approve}}
+	                                    	<a href="#" class="btn btn-default" id="btnapprove" dataid="{{this._id}}"><i class="glyphicon glyphicon-ok"></i></a>
+	                                    {{else}}
+	                                    	<a href="#" class="btn btn-default" dataid="{{this._id}}"  id="btnNotapprove"><i class="glyphicon glyphicon-remove"></i></a>
+                                   		{{/if}}
+                                   </td>
+							    	<td>
+					                    <a href="/manageuser/view/{{_id}}" class="btn btn-default" id="btnview"><i class="glyphicon glyphicon-eye-open"></i></a>
+					                     <a href="/manageuser/update/{{_id}}" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i></a>
+					                   	 <a id="btnRemove" data-id="{{_id}}" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+					                </td>
+							    </tr>
+							    {{/each}}
+                        </tbody>
+                    </table>
+                    <ul id="pagination"></ul>
+		        </div>
+		    </div>
+		</div>
+		</section>
+	</div>
+</template>

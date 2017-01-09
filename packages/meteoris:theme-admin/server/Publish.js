@@ -219,3 +219,58 @@ Meteor.publish("userReview",function(id_product){
     }
 
 });
+Meteor.publish("categoryReviewProduct",function(){
+    var allprod=Meteoris.Products.find({review:{$exists:true}});
+    var allcat=[];
+    allprod.forEach(function(val){
+        allcat.push(val.category);
+    });
+    var listcat=Meteoris.Categories.find({_id:{$in:allcat}});
+    return listcat;
+});
+
+Meteor.publish("allcart",function(){
+    var allcart= Meteoris.Carts.find({});
+    var alluser=[];
+    var allproduct=[];
+    allcart.forEach(function(obj){
+        alluser.push(obj.userId);
+        allproduct.push(obj.id_product)
+    });
+    var listproduct=Meteoris.Products.find({_id:{$in:allproduct}});
+    var listuser=Meteor.users.find({_id:{$in:alluser}});
+    return [allcart,listproduct,listuser];
+});
+
+Meteor.publish("favoritedetail",function(uid){ 
+    var user=Meteor.users.find({_id:uid});
+    var allfav=Meteoris.Favorites.find({userId:uid})
+    var allproduct=[];
+    allfav.forEach(function(res){
+        allproduct.push(res.proId);
+    });
+    var listprod=Meteoris.Products.find({_id:{$in:allproduct}});
+    return [user,allfav,listprod];
+});
+
+Meteor.publish("userTrackingPage",function(){
+    var urllastpage="http://www.safirperfumery.com/confirmation";
+    var alltrack=Meteoris.userTracking.find({currenturl:urllastpage});
+    var alluser=[]
+    alltrack.forEach(function(da){
+        alluser.push(da.userId);
+    });
+    var listUser=Meteor.users.find({_id:{$in:alluser}});
+    return [alltrack,listUser];
+});
+Meteor.publish("userTrackingLoginErrorPage",function(){
+    var alltrack=Meteoris.userTracking.find({$and : [{ $or : [ { event : "loginerror" }, { event : "forgetpassword" } ] },{ event: { $exists: true } } ]} )
+    return alltrack;
+});
+
+Meteor.publish("allusers",function(limit){
+    return Meteor.users.find({},{limit:limit});
+});
+Meteor.publish("oneuser",function(id){
+    return Meteor.users.find({_id:id});
+});

@@ -12,3 +12,19 @@ Template.favoritelist.helpers({
     	
     }
 });
+Template.favoriteview.helpers({
+    getfavoriteDetails:function(){
+        var id = FlowRouter.getParam('userid');
+        return Meteor.users.findOne({_id:id});
+    },
+    getProductFavoriteByUser:function(uid){
+        return Meteoris.Favorites.find({userId:uid});
+    },
+     getProductTitle:function(id){
+        var oneprod=Meteoris.Products.findOne({_id:id});
+        if(oneprod){
+            return oneprod.title;
+        }
+        
+    }
+});
