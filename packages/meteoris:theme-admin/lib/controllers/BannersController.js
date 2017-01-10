@@ -27,7 +27,7 @@ Meteoris.BannersController = Meteoris.Controller.extend({
             if(err){
                 Meteoris.Flash.set('danger', err.message);
             }else{
-                FlowRouter.go("/banner/all");
+                FlowRouter.go("/banner/list");
             }
         });
 	},

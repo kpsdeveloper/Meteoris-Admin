@@ -1,0 +1,95 @@
+<template name="viewuser">
+	  <section class="content-header">
+        <h1>User Details</h1>
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><a href="/manageuser/list">Manageuser</a></li>
+            <li class="active">Details</li>
+        </ol>
+    </section>
+    {{#if Template.subscriptionsReady}} 
+        {{#with getuserDetails}}  
+            <section class="content">
+                <div class="box">
+                    <div class="box-body">
+                        
+                        <div class="col-md-12 col-xs-12">
+                            <div class=" table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            
+                                            <th style="width: 145px;">User Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                             <td>username</td>
+                                            <td>{{profile.username}}</td>
+                                             
+                                        </tr>
+                                        <tr>
+                                        	<td>Email:</td>
+                                        	<td>{{emails.[0].address}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Firstname</td>
+                                            <td>{{profile.firstname}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Last Name:</td>
+                                            <td>{{profile.lastname}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Phone</td>
+                                            <td>{{profile.phone}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Address</td>
+                                            <td>{{profile.address}}</td>
+                                        </tr>
+                                      <!--    <tr>
+                                            <td>Role:</td>
+                                            <td>{{roles.mygroup.[0]}}</td>
+                                        </tr> -->
+
+                                    	<tr>
+                                            <td>Admin Approve Profile:</td>
+                                            <td>{{profile.approve}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-12 col-xs-12">
+                            <div class=" table-responsive">
+
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 145px;">Image</th>
+                                            <th style="width: 145px;">Product</th>
+                                            
+
+                                        </tr>
+                                        
+                                    </thead>
+                                    <tbody>
+                                        {{#each getProductFavoriteByUser _id}}
+                                        <tr>
+                                            <td><img src="{{getProductImage proId}}"></td>
+                                            <td>{{getProductTitle proId}}</td>
+                                            
+                                        </tr>
+                                       {{/each}} 
+                                      
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </section> 
+        {{/with}}
+    {{/if}}
+</template>

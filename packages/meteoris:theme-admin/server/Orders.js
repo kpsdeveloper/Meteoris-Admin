@@ -16,5 +16,11 @@ Meteor.methods({
     "Meteoris.Orders.SearchProduct.Count": function(keyword){
     	var total = Meteoris.Products.find({ title: { $regex: new RegExp(keyword, "i") } },{fields:{_id:1}});
         return total.count();
+    },
+    "deleteOneorder":function(id){
+    	return Meteoris.Orders.remove(id);
+    },
+    "removeOneCart":function(id){
+    	return Meteoris.Carts.remove(id);
     }
 });

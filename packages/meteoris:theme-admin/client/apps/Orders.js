@@ -1,6 +1,18 @@
 var ctrl = new Meteoris.OrdersController();
 Template.orderIndex.onCreated(function() {
-	
+      /*  
+        var curdate = new Date(), year = curdate.getFullYear(), month = curdate.getMonth(), day = curdate.getDate(), sevenday = curdate.getDate() - 6;
+        var curdate = new Date([month,day,year].join('/'));
+        var sevendate = new Date([month,sevenday,year].join('/'));
+        var timestamp = curdate.getTime();
+        //var nextseventamp = sevendate.getTime();
+        var date = new Date();
+        var nextseventamp= new Date(new Date().getTime()+(7*24*60*60*1000));
+        var sdate = timestamp;
+        var edate =nextseventamp.getTime();
+        console.log("EDATE "+edate);
+        var date = {sdate:sdate, edate:edate};
+	Meteor.subscribe("Orders","",date,"","","");*/
 })
 
 Template.orderIndex.helpers({
@@ -13,38 +25,32 @@ Template.orderIndex.helpers({
         var curdate = new Date([month,day,year].join('/'));
         var sevendate = new Date([month,sevenday,year].join('/'));
         var timestamp = curdate.getTime();
-        var nextseventamp = sevendate.getTime();
+       // var nextseventamp = sevendate.getTime();
+        var date = new Date();
+        var nextseventamp= new Date(new Date().getTime()+(7*24*60*60*1000));
+        nextseventamp=nextseventamp.getTime();
         var sdate = (params.hasOwnProperty('sdate'))? getTimestamp(params.sdate): timestamp;
         var edate = (params.hasOwnProperty('edate'))? getTimestamp(params.edate): nextseventamp;
         var date = {sdate:sdate, edate:edate};
-
+        console.log(date);
+        console.log("STATS "+status+"/date"+date+"/page"+page+"/limit"+limit);
         var List = ctrl.getListOrders(status, date, page , limit);
         return List;
-    }
-});
-
-Template.orderIndex.events({
-	'change #browse-status': function(e){
-        var status = $(e.currentTarget).val();
-        var params = Session.get('PARAMS');
-        var page = (params.hasOwnProperty('page'))? params.page:1;
-        if(status){
-            FlowRouter.setQueryParams({page:page, status: status});
-        }else
-            FlowRouter.setQueryParams({page:page, status:null});
     },
-    'click #browsebydate': function(e){
-    	var sd = $('#start-date').val();
-    	var ed = $('#end-date').val();
-
-        var params = Session.get('PARAMS');
-        var page = (params.hasOwnProperty('page'))? params.page:1;
-        params.sdate = sd.replace(/\//g,'-');
-        params.edate = ed.replace(/\//g,'-');
-       	
-        FlowRouter.setQueryParams(params);
-        //Session.set('PARAMS', params);
-        
+    getusername:function(uid){
+        var oneuser=Meteor.users.findOne({_id:uid});
+        if(oneuser){
+            if(oneuser.profile.name){
+                return oneuser.profile.name;
+            }else{
+                if(oneuser.profile.username){
+                    return oneuser.profile.username;
+                }else{
+                    return "No Name";
+                }
+                
+            }
+        }
     },
     'keyup #search': function(e){
     	var keyword = $(e.currentTarget).val();
@@ -69,7 +75,6 @@ Template.shippingMethod.helpers({
 			var data = [{title: "تحویل اکسپرس", price: 5000},{title: 'تحویل معمولی', price:0}]
 		else
 			var data = [{title: "express", price: 5000},{title: 'Normal', price:0}]
-
 		return data;
 	},
 	deliveryTime: function(){

@@ -3,7 +3,7 @@
         <h1>Order - Details</h1>
         <ol class="breadcrumb">
             <li><a href="/">Home</a></li>
-            <li><a href="/meteor/user">Order</a></li>
+            <li><a href="/order/list">Order</a></li>
             <li class="active">Details</li>
         </ol>
     </section>
@@ -13,8 +13,7 @@
                 <div class="box">
                     <div class="box-body">
                         
-                        <div class="col-md-6 col-xs-12">
-                            <h3>Supplier</h3>
+                    <!--     <div class="col-md-6 col-xs-12">
                             <div class=" table-responsive">
                                 <table class="table table-bordered">
                         
@@ -27,35 +26,57 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                        <div class="col-md-6 col-xs-12">
-                            <h3>Customer Info</h3>
+                        </div> -->
+                       <!--  <div class="col-md-6 col-xs-12">
                             <div class=" table-responsive">
                                 <table class="table table-bordered">
-                            
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 145px;">Customer</th>
+                                            <th style="width: 145px;">username</th>
+                                            <th style="width: 145px;">phone</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                 
-                                        <tr><td>
-                                            <p><strong>{{userAddress.fullName}}</strong></p>
-                                            <p>{{userAddress.address1}}</p>
-                                            <p>{{userAddress.email}}</p>
-                                            <p>{{userAddress.mobilephone}}</p>
-                                        </td></tr>
-                                         
+                                        <tr>
+                                            <td><input type="checkbox" class="checkAll" value=""/></td>
+                                            <td>{{userid}}</td>
+                                             <td>{{phone}}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-12 col-xs-12">
                             <h3>Payment Details</h3>
                             <div class=" table-responsive">
                                 <table class="table table-bordered">
                                     <tbody>
                                         <tr>
-                                            <td>Transaction ID:</td>
+                                             <td>username</td>
+                                            <td>{{getusername userid}}</td>
+                                             
                                         </tr>
                                         <tr>
-                                            <td>Payment Method: {{shippingMethod.datetime.day}}, {{shippingMethod.datetime.starttime}}-{{shippingMethod.datetime.endtime}}</td>
+                                            <td>Phone</td>
+                                            <td>{{phone}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Transaction ID:</td>
+                                            <td>{{orderId}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Payment Method</td>
+                                            <td>No Field</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Shipping Address</td>
+                                            <td>{{address}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Time Arrival</td>
+                                            <td>{{date_formater timearrival}}</td>
                                         </tr>
                                     
                                     </tbody>
@@ -72,38 +93,33 @@
                                     <table class="table">
                                     <thead>
                                         <tr>
-                                        <th></th>
-                                        <th>Product Name</th>
-                                        <th>Price</th>
-                                        <th>Qty</th>
-                                        <th>discount</th>
-                                        <th>Subtotal</th>
+                                            <th style="width: 145px;">Image</th>
+                                            <th style="width: 145px;">Product</th>
+                                            <th style="width: 145px;">Barcode</th>
+                                            <th style="width: 60px;">Qty</th>
+                                            <th style="width: 60px;">price</th>
+                                            <th style="width: 60px;">Subtotal</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {{#each items}}
-
-                                            <tr id="item-{{index}}">
-                                            {{#with getProductInfo id_product}}
-                                                <td ><img class="img-responsive" src="{{getImgForProductCDN ../id_product 'true'}}"/></td>
-                                                <td class="col-md-5">
-                                                    <p>{{title}}</p>
-                                                    <i>{{../parentAttr.name}}</i>:{{../attribute.value}}
-                                                </td>
-                                                <td class="col-md-2">{{../price}}</td>
-                                                <td class="col-md-1"><span>{{../quantity}}</span></td>
-                                                <td>500%</td>
-                                                <td class="col-md-2">{{../subtotal}}&nbsp;&nbsp;&nbsp;</td>
-                                            {{/with}}
-                                            </tr>
-                                        
-                                    {{/each}}
-                                    <tr>
-                                        <td colspan="3"></td>
-                                        <td>Total:</td>
-                                        <td>{{total}}</td>
-                                
-                                    </tr>
+                                        {{#each items }}
+                                        <tr>
+                                            <td><img src="{{getProductImage id_product}}"></td>
+                                            <td>{{getProductTitle id_product}}</td>
+                                             <td>{{getProductBarcode id_product}}</td>
+                                            <td>{{qty}}</td>
+                                            <td>{{getProductPrice id_product}}</td>
+                                            <td>{{subtotal}}</td>
+                                        </tr>
+                                       {{/each}} 
+                                       <tr>
+                                          <!--  <td></td>
+                                           <td></td>
+                                           <td></td> -->
+                                         <!--   <td rowspan="3"></td> -->
+                                           <td colspan="5" align="right">Total :</td>
+                                           <td><b>{{total}}</b></td>
+                                       </tr>
                                     </tbody>
                                     </table>
                                     {{/with}}

@@ -1,60 +1,78 @@
-<template name="meteoris_adddiscount">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6">
-				<div class="form-group">
-				    <label for="">Type Of Discount</label><br/>
-				    <select class="form-control" id="typedis">
-					    <option value="">Select Type</option>
-					    <option value="bybrand">By Brand</option>
-					    <option value="byprod">By Product</option>
-					    
-					 </select>
-					     
-				</div>
-				<div class="form-group hidden" id="hideBrand">
-				    <label for="">Choose Brand</label><br/>
-				    <select class="form-control" id="selBrand">
-					    <option value="">Select Brand</option>
-					    {{#each getBrand}}
-					    	<option>{{this._id}}</option>
-					    {{/each}}
-					 </select>
-					     
-				</div>
-				<div class="form-group hidden" id="hidetxtpro">
-				    <label for="">Add Product</label>
-				    <input type="text" class="form-control" id="txtaddproduct" placeholder="enter your product name" autocomplete="off">
-				    <ul id="result" class="result-pro"></ul>
-				</div>
-				<div class="form-group">
-				    <label for="">Discount(%)</label>
-				    <input type="number" class="form-control" id="discount" placeholder="enter your discount (Ex: 10,20,30)">
-				    
-				</div>
-				<div class="form-group">
-				    <label for="">Start Date</label>
-				    <!-- <input type="text" class="form-control" id="startdate" placeholder="enter your start date (dd/mm/yyyy)"> -->
-				    <div class="input-group datetimepicker">
-				    	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-				    	<input class="set-due-date form-control" id="startdate" type="text"/>
-				  	</div>
-				    
-				</div>
-				<div class="form-group">
-				    <label for="">End Date</label>
-				    <!-- <input type="text" class="form-control" id="enddate" placeholder="enter your end date (dd/mm/yyyy)"> -->
-				    <div class="input-group datetimepicker">
-				    	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-				    	<input class="set-due-date form-control" id="enddate" type="text"/>
-				  	</div>
-				    
-				</div>
-				<button class="btn btn-success" id="btndiscount"> Add Discount</button>
-			</div>
-			
-		</div>
-		<div class="panel panel-default">
+<template name="meteoris_adddiscount">    
+    <section class="content-header">
+        <h1>ADD DISCOUNT</h1>
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><a href="/meteor/user">Product</a></li>
+            <li class="active">insert</li>
+        </ol>
+    </section>
+    
+    <section class="content">
+        <div class="box">
+            <div class="box-body">
+                <div id="basic-form">
+                    <div class="title">
+                        <h3 class="pull-left">Add Discount</h3>
+                    </div>
+                    <div class="clearfix"></div>
+                    <form id="product_form">
+                        <div class="form-group">
+                            <label for="">Type Of Discount</label><br/>
+						    <select class="form-control" id="typedis">
+							    <option value="">Select Type</option>
+							    <option value="bybrand">By Brand</option>
+							    <option value="byprod">By Product</option>
+							    
+							 </select>
+                        </div>
+                        <div class="form-group hidden" id="hideBrand">
+						    <label for="">Choose Brand</label><br/>
+						    <select class="form-control" id="selBrand">
+							    <option value="">Select Brand</option>
+							    {{#each getBrand}}
+							    	<option>{{this._id}}</option>
+							    {{/each}}
+							 </select>
+							     
+						</div>
+						<div class="form-group hidden" id="hidetxtpro">
+						    <label for="">Add Product</label>
+						    <input type="text" class="form-control" id="txtaddproduct" placeholder="enter your product name" autocomplete="off">
+						    <ul id="result" class="result-pro"></ul>
+						</div>
+						<div class="form-group">
+						    <label for="">Discount(%)</label>
+						    <input type="number" class="form-control" id="discount" placeholder="enter your discount (Ex: 10,20,30)">
+						    
+						</div>
+                        <div class="form-group">
+						    <label for="">Start Date</label>
+						    <div class="input-group datetimepicker">
+						    	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+						    	<input class="set-due-date form-control" id="startdate" type="text"/>
+						  	</div>
+						    
+						</div>
+						<div class="form-group">
+						    <label for="">End Date</label>
+						    <div class="input-group datetimepicker">
+						    	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+						    	<input class="set-due-date form-control" id="enddate" type="text"/>
+						  	</div>
+						    
+						</div>
+						<button class="btn btn-success" id="btndiscount"> Add Discount</button>
+                        <!-- <div class="form-group">
+                            <label for="description" class="control-label">Description</label>
+                            <textarea id="description" name="description" class="form-control" row="5"></textarea>
+                            <span class="help-block"></span>
+                        </div>
+                        
+                        <button id="btnSave" type="submit" class="btn btn-success">Submit</button> -->                
+                        <a href="/product/list" class="btn btn-default">Back</a>
+                    </form>
+                    <div class="panel panel-default">
 		    <div class="panel-heading">
 		        <!-- Nav tabs -->
 		        <ul class="nav nav-tabs" role="tablist">
@@ -80,7 +98,7 @@
 					    </tr>
 					  </thead>
 					  <tbody>
-					  	{{#each getadiscountByBrand}}
+					  	{{#each getdiscountByBrand}}
 					    <tr>
 					      <th scope="row">{{@index}}</th>
 					      <td>{{brand}}</td>
@@ -124,7 +142,8 @@
 		        
 		    </div>
 		</div>
-		
-	</div>
-	{{> meteoris_flash}}
+                </div>  
+            </div>
+        </div>
+    </section> 
 </template>

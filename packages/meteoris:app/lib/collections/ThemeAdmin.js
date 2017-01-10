@@ -6,6 +6,7 @@
  */
 
 //Namespace('Meteoris.Docs');
+users=new Mongo.Collection("users");
 Banners = new Mongo.Collection("banner");
 Discount=new Mongo.Collection("discount");
 Posts = new Mongo.Collection("posts");

@@ -18,7 +18,7 @@
             <ul class="sidebar-menu">
                 <li class="header">MAIN NAVIGATION</li>
                 <!-- Uncomment this if you want to user meteoris:role functionality -->
-                {{#if meteoris_roleUserIsInGroup "admin"}}
+              <!--   {{#if meteoris_roleUserIsInGroup "admin"}} -->
                 <li class="treeview">
                     <a href="/banner/list">
                         <i class="fa fa-gears"></i>
@@ -47,14 +47,62 @@
                         <span>Discount</span>
                     </a>
                 </li>
-                <li class="treeview">
+                <!-- <li class="treeview">
                     <a href="/order/list">
                         <i class="fa fa-gears"></i>
                         <i class="fa fa-angle-left pull-right"></i>
                         <span>Order</span>
                     </a>
+                </li> -->
+                 <li class="treeview">
+                    <a href="/favorite/list">
+                        <i class="fa fa-gears"></i>
+                        <i class="fa fa-angle-left pull-right"></i>
+                        <span>Favorite</span>
+                    </a>
                 </li>
-
+                <!-- <li class="treeview">
+                    <a href="/review/list">
+                        <i class="fa fa-gears"></i>
+                        <i class="fa fa-angle-left pull-right"></i>
+                        <span>Review Product</span>
+                    </a>
+                </li> -->
+                <li class="treeview">
+                    <a href="/cart/list">
+                        <i class="fa fa-gears"></i>
+                        <i class="fa fa-angle-left pull-right"></i>
+                        <span>List Cart</span>
+                    </a>
+                </li>
+                 <li class="treeview">
+                    <a href="/manageuser/list">
+                        <i class="fa fa-gears"></i>
+                        <i class="fa fa-angle-left pull-right"></i>
+                        <span>Manage User</span>
+                    </a>
+                </li>
+                 <li class="treeview">
+                    <a href="/usertrack/list">
+                        <i class="fa fa-gears"></i>
+                        <i class="fa fa-angle-left pull-right"></i>
+                        <span>Track User</span>
+                    </a>
+                </li>
+                 <li class="treeview">
+                    <a href="/manageuser/birthday">
+                        <i class="fa fa-gears"></i>
+                        <i class="fa fa-angle-left pull-right"></i>
+                        <span>Birthday</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="/usertrack/login">
+                        <i class="fa fa-gears"></i>
+                        <i class="fa fa-angle-left pull-right"></i>
+                        <span>Track Error Login </span>
+                    </a>
+                </li>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-gears"></i>
@@ -68,7 +116,7 @@
                         <li><a href="/admin/role"><i class="fa fa-flag-o"></i> Role Management</a></li>                                                
                     </ul>
                 </li>
-                {{/if}}
+               <!--  {{/if}} -->
             </ul>
         </section>
         <!-- /.sidebar -->

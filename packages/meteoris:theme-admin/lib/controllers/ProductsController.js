@@ -47,10 +47,11 @@ Meteoris.ProductsController = Meteoris.Controller.extend({
         var description = e.target.description.value;
         var metatitle = e.target.metatitle.value;
         var metakey = e.target.metakey.value;
+        var imageurl=Session.get("URLIMGBANNER")
         
 
         var msg = '';
-        if( name == "" || price == "" || category == "" || (discount > 0 && (sdate == "" || edate == "")) ){
+        if( name == "" || price == "" || category == "" || imageurl=="" ||(discount > 0 && (sdate == "" || edate == "")) ){
             if( name == "")
                 msg += 'Product name is require.';
             else if( price == "")
@@ -58,6 +59,8 @@ Meteoris.ProductsController = Meteoris.Controller.extend({
     
             else if( category == "")
                 msg += 'Category is require.';
+            else if (imageurl=="")
+                msg+= "Image is required ";
             else if(discount > 0 && (sdate == "" || edate == "") )
                  msg += 'Start date or end date is require.';
 
@@ -80,6 +83,7 @@ Meteoris.ProductsController = Meteoris.Controller.extend({
                 'tags': [],
                 "metaTitle": metatitle,
                 "metaKeyword": metakey,
+                'imageurl':imageurl,
                 "date" : new Date(),
             }
             console.log(obj);
@@ -247,9 +251,11 @@ Meteoris.ProductsController = Meteoris.Controller.extend({
                 startdate:doc.startdate,
                 enddate:doc.enddate
             }
+            //alert(doc.startdate);
             if(brand=='' || doc.discount=='' || doc.startdate=='' || doc.enddate==''){
                 Meteoris.Flash.set('danger', 'fields is required !!!'); 
             }else{
+                alert("MMMMMMM"+doc.startdate);
                 Meteor.call("insertdiscount",data,function(err){
                     if(err){
                         Meteoris.Flash.set('danger', err.message);
@@ -288,11 +294,20 @@ Meteoris.ProductsController = Meteoris.Controller.extend({
     },
     getDatadiscount: function(t) {
         var startdate=t.find('#startdate').value;
-        var getstartdate=new Date(startdate);
-        var timestart=getstartdate.getTime();
+        if(startdate==''){
+            var timestart='';
+        }else{
+            var getstartdate=new Date(startdate);
+            var timestart=getstartdate.getTime();
+        }
         var enddate=t.find('#enddate').value
-        var getenddate=new Date(enddate);
-        var timeend=getenddate.getTime();
+        if(enddate==''){
+            var timeend='';
+        }else{
+            var getenddate=new Date(enddate);
+            var timeend=getenddate.getTime();
+        }
+        
         data= {
             discount:t.find('#discount').value,
             startdate:timestart,

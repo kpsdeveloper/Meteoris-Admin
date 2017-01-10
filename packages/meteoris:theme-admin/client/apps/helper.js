@@ -199,3 +199,89 @@ getImgForProductCDNv2 = function(id_product, thumb) {
         return id_product;
     }
 }
+Template.registerHelper("convertMsTimeStamp", function(tms) {
+    var d = new Date(tms), // Convert the passed timestamp to milliseconds
+        yyyy = d.getFullYear(),
+        mm = ('0' + (d.getMonth() + 1)).slice(-2), // Months are zero based. Add leading 0.
+        dd = ('0' + d.getDate()).slice(-2), // Add leading 0.
+        hh = d.getHours(),
+        h = hh,
+        min = ('0' + d.getMinutes()).slice(-2), // Add leading 0.
+        ampm = 'AM',
+        hTime;
+
+    if (hh > 12) {
+        h = hh - 12;
+        ampm = 'PM';
+    } else if (hh === 12) {
+        h = 12;
+        ampm = 'PM';
+    } else if (hh == 0) {
+        h = 12;
+    }
+    // ie: 2013-02-18, 8:35 AM 
+    hTime = yyyy + '/' + mm + '/' + dd + ', ' + h + ':' + min + ' ' + ampm;
+    return hTime;
+});
+
+Template.registerHelper('getProductPrice', function(id) {
+   return getProductPrice(id);
+});
+Template.registerHelper('getProductBarcode', function(id) {
+   return getProductPrice(id);
+});
+getProductPrice=function(id){
+    if(id){
+        var oneproduct=Meteoris.Products.findOne({_id:id});
+        if(oneproduct){
+            var getatrr=Meteoris.Attributes.find({product:oneproduct.oldId});
+            if(getatrr){
+                var data=getatrr.fetch()[0];
+                return data.price;
+            }
+        }
+        
+    }
+}
+getProductBarcode=function(id){
+    if(id){
+        var oneproduct=Meteoris.Products.findOne({_id:id});
+        var getatrr=Meteoris.Attributes.find({product:oneproduct.oldId});
+        if(getatrr){
+            var data=getatrr.fetch()[0];
+            return data.barcode;
+        }
+    }
+}
+
+Template.registerHelper('getdisplayusername', function(id) {
+   return getdisplayusername(id);
+});
+
+window.getdisplayusername=function(id){
+    if(id){
+        var user=Meteor.users.findOne({_id:id});
+        if(user){
+            if(user.profile.username){
+                console.log("FOUNDSER");
+                return user.profile.username;
+            }else{
+                console.log("FOUND@22222");
+                return user.profile.name;
+            }
+        }
+        
+   }
+}
+
+/*Template.registerHelper("getProductTitle",function(id_product){
+    return getProductTitle1(id_product);
+});
+
+window.getProductTitle=function(id){
+    var oneprod=Meteoris.Products.findOne({_id:id});
+    if(oneprod){
+        return oneprod.title;
+    }
+    
+}*/

@@ -1,0 +1,67 @@
+<template name="favoritelist">
+	<!-- 
+	<h3>All Favorite</h3>
+	<div class="container">
+		<table class="table">
+		  <thead>
+		    <tr>
+		    	<th>image</th>
+		      <th>Product Title</th>
+		      <th>User</th>
+		  
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	{{#each getAllFavorite}}
+		    <tr>
+		     	<td><img  src="{{getProductImage proId 'true'}}" style="width:32px;height:32px;"></td>
+		      	<td>{{getproductname proId}}</td>
+		   		<td>{{getdisplayName userId}}</td>
+		    	<td>
+                    <a href="#" class="btn btn-default" id="btnview"><i class="glyphicon glyphicon-eye-open"></i></a>
+                   	 <a id="btnRemove" data-id="{{_id}}" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+                </td>
+		    </tr>
+		    {{/each}}
+		  </tbody>
+		</table>
+	</div> -->
+
+	<div class="container">
+		<section class="content"> 
+		<div class="box" style="width: 92%">
+			<div class="box-body">
+				<div class=" table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 30px;"><input type="checkbox" id="checkAll"/></th>                        
+                                <th id="">Image</th>
+                                <th>Product</th>
+                                <th>User</th>
+                                <th style="width: 145px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    
+                         	{{#each getAllFavorite}}
+							    <tr>
+							    	<td><input type="checkbox" id="checkAll"/></td>
+							     	<td><img  src="{{getProductImage proId 'true'}}" style="width:32px;height:32px;"></td>
+							      	<td>{{getproductname proId}}</td>
+							   		<td>{{getdisplayName userId}}</td>
+							    	<td>
+					                    <a href="/favorite/view/{{userId}}" class="btn btn-default" id="btnview"><i class="glyphicon glyphicon-eye-open"></i></a>
+					                   	<!--  <a id="btnRemove" data-id="{{_id}}" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a> -->
+					                </td>
+							    </tr>
+							    {{/each}}
+                        </tbody>
+                    </table>
+                    <ul id="pagination"></ul>
+		        </div>
+		    </div>
+		</div>
+		</section>
+	</div>
+</template>

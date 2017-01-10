@@ -1,0 +1,51 @@
+<template name="birthday">
+	<div class="container">
+		 <section class="content-header">
+	        <h1>Birthday System</h1>
+	       <!--  <ol class="breadcrumb">
+	            <li><a href="/">Home</a></li>
+	            <li><a href="/order/list">Order</a></li>
+	            <li class="active">Details</li>
+	        </ol> -->
+	    </section>
+		<section class="content"> 
+		<div class="box" style="width: 92%">
+			<div class="box-body">
+				<div class=" table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 30px;"><input type="checkbox" id="checkAll"/></th>                        
+                                <th id="">username</th>
+                                <th>Birthday</th>
+                                <th style="width: 145px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    <!-- 
+                         	{{#each getAllLoginError}}
+							    <tr>
+							    	<td><input type="checkbox" id="checkAll"/></td>
+							    	{{#if checkusername userId}}
+							      		<td>{{getusername userId}}</td>
+							      	{{else}}
+							      		<td>{{ip}}</td>
+							      	{{/if}}
+							   		<td>{{date_formater time}}</td>
+							   		<td>{{ip}}</td>
+							   		<td>{{event}}</td>
+							    	<td>
+					                    <a href="" class="btn btn-default" id="btnview"><i class="glyphicon glyphicon-eye-open"></i></a>
+					                   	 <a id="btnRemove" data-id="{{_id}}" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+					                </td>
+							    </tr>
+							    {{/each}} -->
+                        </tbody>
+                    </table>
+                    <ul id="pagination"></ul>
+		        </div>
+		    </div>
+		</div>
+		</section>
+	</div>
+</template>
