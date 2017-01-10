@@ -1,0 +1,88 @@
+<template name="shippingMethod">
+	<div class="col-md-12 form-group"><div style="height:1px;background:#333;"></div></div>
+  	<div class="col-md-12 form-group {{alignright}}"><strong>{{_ "Choose Shipping Method"}}</strong></div>
+  	
+	
+	{{#if isCurrentLangEng}}
+		<div class="col-md-12 form-group">
+			<table class="table table-inverse">
+				<tbody>
+					{{#each shippingMethods}}
+					<tr>
+						<td>ریال {{price}} </td>
+						<td style="text-transform:Capitalize">{{title}}</td>
+						<td><input type="radio" value="{{title}}+{{price}}" {{checkDefaultShipping title}} name="shippingmethod"> </td>
+						
+						
+					</tr>
+					{{/each}}
+					
+				</tbody>
+			</table>
+	    	
+		</div>
+		<div class="col-md-12 form-group"><div style="height:1px;background:#333;"></div></div>
+		<div class="col-md-12 form-group {{alignright}}"><strong>{{_"Choose Delivery Time"}}</strong></div>
+		{{#with deliveryTime}}
+			<div class="col-md-12 form-group">
+				<div class="table-time">
+					<div class="col-md-3 head"></div>
+					{{#each mytime}}
+						<div class="col-md-3 head">{{start}}{{end}}</div>
+					{{/each}}
+					
+				</div>
+				{{#each day}}
+					<div class="table-time">
+						<div class="col-md-3">{{day}}</div>
+						{{#each ../mytime}}
+							<div class="col-md-3"><input type="radio" value="{{start}}-{{end}}+{{../day}}" {{ checkDefaultTime start end ../day}} name="time"></div>
+						{{/each}}
+						
+					</div>
+				{{/each}}
+
+			</div>
+			
+		{{/with}}
+	{{else}}
+		<div class="col-md-12 form-group">
+			<table class="table table-inverse">
+				<tbody>
+					{{#each shippingMethods}}
+					<tr>
+						<td><input type="radio" value="{{title}}+{{price}}" {{checkDefaultShipping title}} name="shippingmethod"> </td>
+						<td style="text-transform:Capitalize">{{title}}</td>
+						<td>{{price}} Rails</td>
+					</tr>
+					{{/each}}
+					
+				</tbody>
+			</table>
+	    	
+		</div>
+		<div class="col-md-12 form-group"><div style="height:1px;background:#333;"></div></div>
+		<div class="col-md-12 form-group {{alignright}}"><strong>{{_"Choose Delivery Time"}}</strong></div>
+		{{#with deliveryTime}}
+			<div class="col-md-12 form-group">
+				<div class="table-time">
+					{{#each mytime}}
+						<div class="col-md-3 head">{{start}}-{{end}}</div>
+					{{/each}}
+					<div class="col-md-3 head"></div>
+				</div>
+				{{#each day}}
+					<div class="table-time">
+						{{#each ../mytime}}
+							<div class="col-md-3"><input type="radio" value="{{start}}-{{end}}+{{../day}}" {{ checkDefaultTime start end ../day}} name="time"></div>
+						{{/each}}
+						<div class="col-md-3">{{day}}</div>
+					</div>
+				{{/each}}
+			</div>
+			
+		{{/with}}
+
+		
+	{{/if}}
+</template>

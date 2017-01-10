@@ -10,7 +10,11 @@ Meteor.methods({
 			var total = Meteoris.Orders.find({status:status, _id: { $regex: new RegExp(q, "i") }, date:{$gte:date.sdate}, date:{$lte:date.edate}, date:{$exists:1}}, fields);
 		}else
 	    	var total = Meteoris.Orders.find({date:{$gte:date.sdate}, date:{$lte:date.edate}, date:{$exists:1}}, fields);
-	    	
+
         return total.count();
     },
+    "Meteoris.Orders.SearchProduct.Count": function(keyword){
+    	var total = Meteoris.Products.find({ title: { $regex: new RegExp(keyword, "i") } },{fields:{_id:1}});
+        return total.count();
+    }
 });

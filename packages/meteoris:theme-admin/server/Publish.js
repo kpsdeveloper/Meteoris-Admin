@@ -28,6 +28,34 @@ Meteor.publish('Products', function(categoryId, keyword, page , limit) {
     return [dataimg, data, dataattr];
     
 });
+Meteor.publish('AdminSearchProductsOrder', function(keyword,page,limit) {
+	if( keyword ){
+		var skip = (page<=1)? 0 : (page - 1) * limit;
+		var fields = { fields:{_id:1, title:1,price:1,category:1,discount:1, category:1, Brand:1, oldId:1,image:1,review:1,recommended:1,date:1}, sort:{date:-1},skip: skip, limit:limit};
+
+		var data = Meteoris.Products.find({ title: { $regex: new RegExp(keyword, "i") } },fields);
+		var prodID = data.map(function(p) { return p._id });
+	    var attrId = data.map(function(p) { return p.oldId });
+	    var proimgId = data.map(function(n) { 
+	    	if (n.image instanceof Array)
+	        	if(n.image[0]) return n.image[0];
+	    	else
+	        	if(n.image) return n.image;
+	    });
+	   
+	    var dataattr = Meteoris.Attributes.find({product: {$in: attrId}});
+	    //var datafavorite = Meteoris.Favorites.find({proId: {$in: prodID}, userId:userId});
+	    var imgattrId = dataattr.map(function(p) { if( p.productImage ) return p.productImage });
+	    var imgId = proimgId.concat(imgattrId);
+	    var dataimg = Meteoris.Images.find({_id: {$in: imgId}},{fields:{_id:1, copies:1}})
+	    console.log('products:', data.count());
+	    console.log('attr:', dataattr.count());
+	    console.log('dataimg:', dataimg.count());
+	    return [dataimg, data, dataattr];
+
+	}else return [];
+
+})
 
 Meteor.publish('SingleProduct', function( id ) {
 	if( id )
@@ -122,4 +150,7 @@ Meteor.publish('editBanner', function(id) {
     var banner=Banners.find({_id:id});
     
     return banner;
+});
+Meteor.publish('ParentAttribute', function( ) {
+    return Meteoris.ParentAttributes.find({});
 });

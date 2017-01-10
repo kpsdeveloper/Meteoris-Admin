@@ -18,11 +18,13 @@ Meteoris.ProductsController = Meteoris.Controller.extend({
     },
     getCategoryByID: function( id ){
         var cat = Meteoris.Categories.findOne({_id:id});
-        if (TAPi18n.getLanguage() == 'fa') 
-            cat.title = cat.title
-        else
-            cat.title = ( cat.hasOwnProperty('i18n') )? cat.i18n.en.title:cat.title;
-        return cat;
+        if( cat ){
+            if (TAPi18n.getLanguage() == 'fa') 
+                cat.title = cat.title
+            else
+                cat.title = ( cat.hasOwnProperty('i18n') )? cat.i18n.en.title:cat.title;
+            return cat;
+        }
     },
     getParentCategories: function(){
         var cats = Meteoris.Categories.find({parent:" "});

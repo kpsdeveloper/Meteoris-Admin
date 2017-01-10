@@ -63,4 +63,71 @@ Template.orderView.helpers({
 		return ctrl.getOrderDetails(id);
 	}
 })
+Template.shippingMethod.helpers({
+	shippingMethods: function(){
+		if (TAPi18n.getLanguage() == 'fa') 
+			var data = [{title: "تحویل اکسپرس", price: 5000},{title: 'تحویل معمولی', price:0}]
+		else
+			var data = [{title: "express", price: 5000},{title: 'Normal', price:0}]
 
+		return data;
+	},
+	deliveryTime: function(){
+		if (TAPi18n.getLanguage() == 'fa') {
+			var time = [{start:"9", end:"-12ساعت"},{start:"12",end:"-15ساعت"},{start:"15",end:"-18ساعت"}];
+			var day  = [{day:"یکشنبه"},{day:"سه شنبه"},{day:'پنجشنبه'},{day:'جمعه'}];
+			return {mytime:time, day:day};
+		}else{
+			var time = [{start:"9-", end:"12pm"},{start:"12-",end:"15pm"},{start:"15pm-",end:"6pm"}];
+			var day  = [{day:"sunday"},{day:"Tuesday"},{day:'Thursday'},{day:'friday'}];
+			return {mytime:time, day:day};
+		}
+		
+	},
+	checkDefaultTime: function(start, end, dayname){
+		var databuy = Session.get('DATABUYING');
+		if( databuy ){
+			var shipping = databuy.shippingMethod;
+			if( shipping ){
+	  			if(shipping.datetime.starttime == start && shipping.datetime.endtime == end && shipping.datetime.day == dayname)
+	  				return 'checked';
+	  			else return;
+	  		}
+		}
+	},
+	checkDefaultShipping: function( method ){
+		var databuy = Session.get('DATABUYING');
+		if( databuy ){
+			var shipping = databuy.shippingMethod;
+			if( shipping ){
+	  			if(shipping.option.title == method)
+	  				return 'checked';
+	  			else return;
+	  		}
+		}
+	}
+})
+Template.insertOrder.events({
+	'keyup #search-product': function(e){
+		var q = $(e.currentTarget).val();
+		if( q.length > 3){
+        	var params = Session.get('PARAMS');
+        	params.q = q;
+        	FlowRouter.setQueryParams(params);
+    	}else{
+    		FlowRouter.setQueryParams({q:null,page:null});
+    	}
+	}
+})
+Template.insertOrder.helpers({
+	getListProductsSearch: function(){
+		var params = Session.get('PARAMS');
+        var page = (params.hasOwnProperty('page'))? params.page:1;
+        var q = ( params.hasOwnProperty('q') )? params.q:'';
+          
+		return ctrl.getListProductsSearch(q, limit);
+	},
+	getListAttributeByProduct: function(oldId){
+		return ctrl.getListAttributeByProduct(oldId);
+	}
+})

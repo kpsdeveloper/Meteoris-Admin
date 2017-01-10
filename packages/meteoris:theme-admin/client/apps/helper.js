@@ -36,6 +36,24 @@ Template.registerHelper('getCategoryByID', function( categoryID ) {
 Template.registerHelper('getParentCategories', function( ) {
    return ctrl.getParentCategories( );
 });
+Template.registerHelper('getOrder', function(id) {
+    console.log('id', id);
+    var cart = Meteoris.Orders.findOne({_id:id});
+    if( cart ){
+        cart.items = cart.items.map( function(data, index){
+            data.index = index +1;
+            return data;
+        })
+        var obj = {hasCart:true, cart:cart};
+    }else
+         var obj = {hasCart:false}
+    
+    return obj;
+});
+Template.registerHelper('getProductInfo', function(id_product) {
+    var data = Meteoris.Products.findOne({_id:id_product});
+    return data;
+});
 addChildren = function(source, identifier, dest) {
   source.filter(function(val) {
     return val.parent == identifier;
@@ -131,4 +149,53 @@ getHumanDate = function( timestamp ){
     return mydate;
     }
     else return 0;
+}
+Template.registerHelper('getImgForProductCDN', function(id, thumb) {
+   return getImgForProductCDNv2(id, thumb);
+});
+getImgCDNv2 = function(id, thumb) {
+    if (id.indexOf('http') > -1) {
+        return id;
+    } else {
+        var img = Meteoris.Images.findOne({ _id: id });
+
+        //var currentdomain = Session.get('ABSOLUTEURL');
+        
+        //var localcdn = currentdomain;
+        var cdnurl = 'http://54.71.1.92/'; //(currentdomain.indexOf('localhost') > -1 )? 'http://54.171.217.142/':localcdn;
+        if (img){
+            if( thumb == 'true')
+                return cdnurl+ "upload/small/" + img.copies.images.key;
+            else
+               return cdnurl + "upload/large/" + img.copies.images.key;
+        
+        }else 
+            return id;
+        
+    }
+
+}
+getImgForProductCDNv2 = function(id_product, thumb) {
+    var prod = Meteoris.Products.findOne({ _id: id_product });
+    if (prod) {
+        if (!prod.image || prod.image.length == 0) {
+
+            var attr = Meteoris.Attributes.find({ product: prod.oldId });
+           
+            if (attr.count() > 0 ) {
+                var firstattr=attr.fetch()[0];
+                return getImgCDNv2(firstattr.productImage, thumb);
+                
+            } else {
+                return id_product;
+            }
+        } else {
+            if (!prod.image[0]) {
+                return id_product;
+            } else
+                return getImgCDNv2(prod.image[0], thumb);
+        }
+    } else {
+        return id_product;
+    }
 }
