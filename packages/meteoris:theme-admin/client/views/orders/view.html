@@ -16,11 +16,7 @@
                     <!--     <div class="col-md-6 col-xs-12">
                             <div class=" table-responsive">
                                 <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 145px;">Supplier</th>
-                                        </tr>
-                                    </thead>
+                        
                                     <tbody>
                                 
                                         <tr>
@@ -48,20 +44,14 @@
                                             <td>{{userid}}</td>
                                              <td>{{phone}}</td>
                                         </tr>
-                                    
                                     </tbody>
                                 </table>
                             </div>
                         </div> -->
                         <div class="col-md-12 col-xs-12">
+                            <h3>Payment Details</h3>
                             <div class=" table-responsive">
                                 <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            
-                                            <th style="width: 145px;">Payment Details</th>
-                                        </tr>
-                                    </thead>
                                     <tbody>
                                         <tr>
                                              <td>username</td>
@@ -94,9 +84,13 @@
                             </div>
                         </div>
                         <div class="col-md-12 col-xs-12">
-                            <div class=" table-responsive">
-
-                                <table class="table table-bordered">
+                            <h3>Items Details</h3>
+                             <p>Order ID : {{_id}}</p>
+                            {{#with getOrder _id}}
+                                {{#if hasCart}}
+                                    
+                                    {{#with cart}}
+                                    <table class="table">
                                     <thead>
                                         <tr>
                                             <th style="width: 145px;">Image</th>
@@ -105,9 +99,7 @@
                                             <th style="width: 60px;">Qty</th>
                                             <th style="width: 60px;">price</th>
                                             <th style="width: 60px;">Subtotal</th>
-
                                         </tr>
-                                        
                                     </thead>
                                     <tbody>
                                         {{#each items }}
@@ -129,8 +121,11 @@
                                            <td><b>{{total}}</b></td>
                                        </tr>
                                     </tbody>
-                                </table>
-                            </div>
+                                    </table>
+                                    {{/with}}
+                               
+                                {{/if}}
+                            {{/with}}
                         </div>
                     </div>
                 </div>

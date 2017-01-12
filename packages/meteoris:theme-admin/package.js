@@ -116,6 +116,9 @@ Package.onUse(function(api) {
         'client/apps/helper.js',
         'client/views/orders/order.html',
         'client/views/orders/view.html',
+        'client/views/orders/insert.html',
+        'client/views/orders/shippingMethod.html',
+        
         'client/apps/Orders.js',
     ], 'client');
 

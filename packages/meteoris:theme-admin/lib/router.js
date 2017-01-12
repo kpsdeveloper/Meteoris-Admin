@@ -136,11 +136,23 @@ groupOrder.route('/list', {
 });
 groupOrder.route('/view/:id', {
     subscriptions:function(params){
-        return [Meteor.subscribe('SingleOrders', params.id)];
+        return [Meteor.subscribe('SingleOrders', params.id), Meteor.subscribe('ParentAttribute')];
     },
     name:'product',
     action: function( params, queryParams ) {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "orderView"});
+    },
+});
+
+groupOrder.route('/insert', {
+    subscriptions:function(params){
+        return [TAPi18n.subscribe('Categories'),Meteor.subscribe('ParentAttribute')];
+    },
+    name:'product',
+    action: function( params, queryParams ) {
+        Session.set('PARAMS',  queryParams);
+        Session.set('PATH', 'insert-order' );
+        BlazeLayout.render('meteoris_themeAdminMain', {content: "insertOrder"});
     },
 });
 

@@ -54,7 +54,19 @@ Tracker.autorun(function() {
                     }
                 })
             })
-        }else if( path == 'filter-product'){
+        }else if( path == 'insert-order'){
+            var params = Session.get('PARAMS');
+            var q = ( params.hasOwnProperty('q') )? params.q:'';
+            var page = (params.hasOwnProperty('page'))? params.page:1;
+            Meteor.subscribe('AdminSearchProductsOrder',q, page, limit,function(){
+                Meteor.call('Meteoris.Orders.SearchProduct.Count', q, function(err, count){
+                    if(!err){
+                        $('#pagination').pagination({ items: count, itemsOnPage: limit, currentPage:page, hrefTextPrefix:'?page=', cssStyle: 'light-theme' });
+                    }
+                })
+            })   
+        }
+        else if( path == 'filter-product'){
             if( categorydata ){
                 categorydata.categoryId = categoryId;
                 categorydata.limit      = limit;
