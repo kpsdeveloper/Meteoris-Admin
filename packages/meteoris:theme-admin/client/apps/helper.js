@@ -162,7 +162,7 @@ Template.registerHelper('getProductPrice', function(id) {
    return getProductPrice(id);
 });
 Template.registerHelper('getProductBarcode', function(id) {
-   return getProductPrice(id);
+   return getProductBarcode(id);
 });
 getProductPrice=function(id){
     if(id){

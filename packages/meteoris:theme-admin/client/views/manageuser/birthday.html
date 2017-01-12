@@ -22,6 +22,7 @@
                             </tr>
                         </thead>
                         <tbody>
+
                     <!-- 
                          	{{#each getAllLoginError}}
 							    <tr>
@@ -44,8 +45,21 @@
                     </table>
                     <ul id="pagination"></ul>
 		        </div>
+		        <div>
+		        	<input id="date_input" type="text"><input id="date_btn" type="button">
+		        </div>
 		    </div>
 		</div>
 		</section>
 	</div>
+
+<script>
+	Calendar.setup({
+	    inputField: 'date_input',
+	    button: 'date_btn',
+	    ifFormat: '%Y/%m/%d',
+	    dateType: 'jalali'
+	});
+</script>
+
 </template>

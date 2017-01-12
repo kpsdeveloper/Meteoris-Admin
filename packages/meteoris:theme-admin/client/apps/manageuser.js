@@ -182,3 +182,20 @@ Template.updateuser.events = {
 Template.updateuser.onCreated(function() {
     Meteor.Loader.loadJs("//api.filestackapi.com/filestack.js");
 });
+
+/*Template.birthday.onCreated(function() {
+    Meteor.Loader.loadJs("/irancalendar/jalali.js",1000);
+     Meteor.Loader.loadJs("/irancalendar/calendar.js",1000);
+      Meteor.Loader.loadJs("/irancalendar/calendar-setup.js",1000);
+       Meteor.Loader.loadJs("/irancalendar/calendar-fa.js",1000);
+});*/
+
+Template.birthday.events = {
+    "keyup #date_input":function(e,t){
+        alert("value hchange");
+        /*var text=$(e.currentTarget).val()
+        var text=$("#date_input").val()
+        alert(text);
+*/
+    }
+}
