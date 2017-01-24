@@ -63,7 +63,8 @@
                                 <tr>
                                     <td><input type="checkbox" class="checkAll" value="{{_id}}"/></td>
                                     <td>{{title}}</td>
-                                    <td>{{#with getCategoryByID category}}{{title}}{{/with}}</td>
+                                   <!--  <td>{{#with getCategoryByID category}}{{title}}{{/with}}</td> -->
+                                   <td>{{category}}</td>
                                     <td><img src="{{getProductImage _id 'true'}}" style="width:32px;height:32px;"></td>
                                     <td>{{date_formater date}}</td>
                                     <td>

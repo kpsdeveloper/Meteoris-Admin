@@ -104,11 +104,13 @@
                                     <tbody>
                                         {{#each items }}
                                         <tr>
-                                            <td><img src="{{getProductImage id_product}}"></td>
+                                            <td><img width="35px" src="{{getProductImage id_product}}"></td>
                                             <td>{{getProductTitle id_product}}</td>
-                                             <td>{{getProductBarcode id_product}}</td>
+                                             <td>{{getProductBarcodeOrPrice id_product "barcode"}}</td>
+                                            
+
                                             <td>{{qty}}</td>
-                                            <td>{{getProductPrice id_product}}</td>
+                                            <td>{{getProductBarcodeOrPrice id_product "price"}}</td>
                                             <td>{{subtotal}}</td>
                                         </tr>
                                        {{/each}} 

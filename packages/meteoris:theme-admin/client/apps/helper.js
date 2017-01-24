@@ -230,6 +230,10 @@ Template.registerHelper('getProductPrice', function(id) {
 Template.registerHelper('getProductBarcode', function(id) {
    return getProductBarcode(id);
 });
+Template.registerHelper('getProductBarcodeOrPrice', function(id,status) {
+   return getProductBarcodeOrPrice(id,status);
+});
+
 getProductPrice=function(id){
     if(id){
         var oneproduct=Meteoris.Products.findOne({_id:id});
@@ -252,6 +256,37 @@ getProductBarcode=function(id){
             return data.barcode;
         }
     }
+}
+
+getProductBarcodeOrPrice=function(proid,status){
+    //if(status=="price"){
+        var oneproduct=Meteoris.Products.findOne({_id:proid});
+        console.log("=====M HEREEEE");
+        if(oneproduct){
+            var allprice=[];
+            var allattr=oneproduct.attribute;
+           /* allattr.forEach(function(val){
+                allprice.push(val.price);
+            });
+            
+            allprice.sort(function(a, b){return a-b});
+            return allprice[0];*/
+            allattr.sort(function(a, b){return a.price-b.price});
+            console.log(allattr);
+            if(status=="price"){
+                return allattr[0].price;
+            }else if(status=="barcode"){
+                 return allattr[0].barcode;
+            }else{
+                return;
+            }
+            
+        }
+    /*}else if(status=="barcode"){
+        return;
+    }else{
+        return;
+    }*/
 }
 
 Template.registerHelper('getdisplayusername', function(id) {
@@ -285,3 +320,32 @@ window.getProductTitle=function(id){
     }
     
 }*/
+Template.registerHelper('getProductThumbnail', function(id, barcode){
+    return getProductThumbnail(id, barcode);
+})
+getProductThumbnail = function( id_product, barcode){
+    var prod = products.findOne({_id:id_product, attribute: {"$elemMatch": {barcode: barcode}}});
+    var thumb = '';var fullimage = '';
+    if( prod ){
+        var attr = prod.attribute[0];
+        if (attr.image instanceof Array){
+            thumb = attr.image[0].replace('/CDN','/COMPRESSED');
+            fullimage = attr.image[0];
+        }else{
+            thumb = attr.image.replace('/CDN','/COMPRESSED');
+            fullimage = attr.image;
+        }
+         return {alt:'', src:thumb, fullimage:fullimage };
+    }else{
+        var prod = products.findOne({_id:id_product});
+        if( prod ){
+            if (prod.image instanceof Array){thumb = prod.image[0].replace('/CDN','/COMPRESSED');
+                fullimage = prod.image[0];
+            }else{
+                thumb = prod.image.replace('/CDN','/COMPRESSED');
+                fullimage = prod.image;
+            }
+            return {alt:'', src:thumb, fullimage:fullimage };
+        }
+    }
+}

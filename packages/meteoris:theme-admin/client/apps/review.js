@@ -37,7 +37,7 @@ Template.reviewlist.helpers({
 	    }
 	},
 	allcategory:function(){
-		return Meteoris.Categories.find({});
+		return Meteoris.Products.find({review:{$exists:true}});
 	}
 });
 Template.reviewlist.events = {

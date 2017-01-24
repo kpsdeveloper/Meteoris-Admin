@@ -110,7 +110,7 @@ Meteor.publish('SingleOrders', function( id ) {
 	
 		
 		var productId = newData.items.map( function(doc){ return doc.id_product;})
-		var product = Meteoris.Products.find({_id:{$in:productId}},{fields:{_id:1,title:1, oldId:1, price:1, CODE:1, image:1}});
+		var product = Meteoris.Products.find({_id:{$in:productId}},{fields:{_id:1,title:1, oldId:1, price:1,attribute:1 ,CODE:1, image:1}});
 		var proimgId = product.map(function(n) { 
 		    	if (n.image instanceof Array)
 		        	if(n.image[0]) return n.image[0];
