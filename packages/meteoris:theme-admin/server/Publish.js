@@ -107,7 +107,13 @@ Meteor.publish('SingleOrders', function( id ) {
 		var userAddress = [];
 		if( addressId )
 			userAddress = Meteoris.Accounts.find({_id:addressId});*/
-	
+        if(newData.addressBook){
+            var idAcc = newData.addressBook.addressId;
+            if(idAcc){
+                  var accountAddress = Meteoris.Accounts.find({_id:idAcc});
+            }
+        }
+	  
 		
 		var productId = newData.items.map( function(doc){ return doc.id_product;})
 		var product = Meteoris.Products.find({_id:{$in:productId}},{fields:{_id:1,title:1, oldId:1, price:1,attribute:1 ,CODE:1, image:1}});
@@ -130,7 +136,7 @@ Meteor.publish('SingleOrders', function( id ) {
 	    console.log('dataattr:', dataattr.count());*/
 		//return [data, userAddress, dataimg, product, dataattr];
         var oneuser=Meteor.users.find({_id:newData.userid});
-        return [data, dataimg, product, dataattr,oneuser];
+        return [data, dataimg, product, dataattr,oneuser,accountAddress];
 	}
 })
 TAPi18n.publish('Categories', function() {
@@ -220,6 +226,7 @@ Meteor.publish("userReview",function(id_product){
                 if(allreview){
                     allreview.forEach(function(d){
                         var oneuser=d.user;
+                        console.log('DUSER'+d.user);
                         alluser.push(oneuser);
                     });
                 }

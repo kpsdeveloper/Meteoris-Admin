@@ -116,6 +116,20 @@ Template.orderView.helpers({
             return oneprod.title;
         }
         
+    },
+    getShippingAddress:function(addressId,status){
+        var acc=Meteoris.Accounts.findOne({_id:addressId});
+        if(status == "address"){
+            if(acc.address1){
+                return acc.address1;
+            }else{
+                return "NO address"
+            }
+        }else if(status == "phone"){
+            return acc.mobilephone;
+        }
+        
+        
     }
 })
 
