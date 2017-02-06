@@ -110,7 +110,7 @@ Meteor.publish('SingleOrders', function( id ) {
         if(newData.addressBook){
             var idAcc = newData.addressBook.addressId;
             if(idAcc){
-                  var accountAddress = Meteoris.Accounts.find({_id:idAcc});
+                  accountAddress = Meteoris.Accounts.find({_id:idAcc});
             }
         }
 	  
@@ -136,7 +136,12 @@ Meteor.publish('SingleOrders', function( id ) {
 	    console.log('dataattr:', dataattr.count());*/
 		//return [data, userAddress, dataimg, product, dataattr];
         var oneuser=Meteor.users.find({_id:newData.userid});
-        return [data, dataimg, product, dataattr,oneuser,accountAddress];
+        if(accountAddress){
+            return [data, dataimg, product, dataattr,oneuser,accountAddress];
+        }else{
+            return [data, dataimg, product, dataattr,oneuser];
+        }
+        
 	}
 })
 TAPi18n.publish('Categories', function() {

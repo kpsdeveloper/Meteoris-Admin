@@ -78,7 +78,19 @@
                                             <td>Time Arrival</td>
                                             <td>StartTime: {{shippingMethod.datetime.starttime}}/EndTime:{{shippingMethod.datetime.starttime}}/Day:{{shippingMethod.datetime.day}}</td>
                                         </tr>
-                                    
+                                        <tr>
+                                            <td>update status</td>
+                                            <td>
+                                                <select id="sltstatus">
+                                                    <option style="display:none">{{status}}</option>
+                                                    <option value="pending">pending</option>   
+                                                    <option value="delivering">delivering</option>
+                                                    <option value="completed">completed</option>
+                                                    <option value="canceled">canceled</option> 
+                                                </select>
+                                                <button class="btn btn-sm" id="btnupdatestatus">update</button>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

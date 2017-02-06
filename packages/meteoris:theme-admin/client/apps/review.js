@@ -56,8 +56,8 @@ Template.reviewlist.events = {
     "click #btnapprove":function(e,t){  //approve=1 mean admin aprroved
     	e.preventDefault();
     	var idreview=$(e.currentTarget).attr("dataid-review");
-    	var approveStatus="0";
-    	Meteor.call("approveReview",idreview,function(err){
+    	var approveStatus=0;
+    	Meteor.call("approveReview",idreview,approveStatus,function(err){
     		if(!err){
     			console.log("success approved");
     		}
@@ -67,7 +67,7 @@ Template.reviewlist.events = {
     "click #btnNotapprove":function(e,t){
     	e.preventDefault();
     	var idreview=$(e.currentTarget).attr("dataid-review");
-    	var approveStatus="1";
+    	var approveStatus=1;
     	Meteor.call("approveReview",idreview,approveStatus,function(err){
     		if(!err){
     			console.log("success approved");
