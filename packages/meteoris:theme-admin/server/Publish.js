@@ -8,8 +8,9 @@ Meteor.publish('Products', function(categoryId, keyword, page , limit) {
 		var data = Meteoris.Products.find({ $or: [{ $and: [{ title: { $regex: new RegExp(keyword, "i") } }, { category: { $ne: 'tester' } }] }, { $and: [{ description: { $regex: new RegExp(keyword, "i") } }, { category: { $ne: 'tester' } }] }] }, fields);
 	}else if( categoryId && keyword ){
 		var data = Meteoris.Products.find({category:{$in:categoryId}, $or: [{ $and: [{ title: { $regex: new RegExp(keyword, "i") } }, { category: { $ne: 'tester' } }] }, { $and: [{ description: { $regex: new RegExp(keyword, "i") } }, { category: { $ne: 'tester' } }] }] }, fields);
-	}else
+	}else{
     	var data = Meteoris.Products.find({}, fields);
+    }
     //var dataattr = publishAttributeProducts( data );
     var prodID = data.map(function(p) { return p._id });
     var attrId = data.map(function(p) { return p.oldId });
@@ -72,6 +73,31 @@ Meteor.publish("allOrders",function(){
     var datauser = Meteor.users.find({_id:{$in:listUser}},{fields:{_id:1,profile:1}})
     return [allorder,datauser];
 
+});
+Meteor.publish('paginationOrders', function(status, date, q, page , limit) {
+    var skip = (page<=1)? 0 : (page - 1) * limit;
+    var fields = { fields:{_id:1, userid:1,total:1,status:1,time:1}, sort:{time:-1},skip: skip, limit:limit};
+    if( status && q == ""){
+        //var data = Meteoris.Orders.find({status:status},fields)
+        var data = Meteoris.Orders.find({status:status, time:{$gte:date.sdate}, time:{$lte:date.edate}, time:{$exists:1}}, fields);
+    }else if( status == "" && q ){
+        //var data = Meteoris.Orders.find({_id: { $regex: new RegExp(q, "i") }},fields)
+        var data = Meteoris.Orders.find({_id: { $regex: new RegExp(q, "i") }, time:{$gte:date.sdate}, time:{$lte:date.edate}, time:{$exists:1}}, fields);
+    }else if( status && q ){
+        //var data = Meteoris.Orders.find({status:status, _id: { $regex: new RegExp(q, "i") }},fields)
+        var data = Meteoris.Orders.find({status:status, _id: { $regex: new RegExp(q, "i") }, time:{$gte:date.sdate}, time:{$lte:date.edate}, time:{$exists:1}}, fields);
+    }else{
+        var data = Meteoris.Orders.find({time:{$gte:date.sdate}, time:{$lte:date.edate}, time:{$exists:1}}, fields);
+        //var data = Meteoris.Orders.find({},{limit:16});
+        
+    }
+    var listUser=[];
+    data.forEach(function(re){
+        listUser.push(re.userid);
+    });
+    //var listUser = data.map(function(p) { return p.userid });
+    var datauser = Meteor.users.find({_id:{$in:listUser}},{fields:{_id:1,profile:1}})
+    return [data,datauser];
 });
 Meteor.publish('Orders', function(status, date, q, page , limit) {
 	
@@ -203,8 +229,11 @@ Meteor.publish('onediscount', function(id) {
 });
 
 //2017-jan-01
-Meteor.publish('allfavoritepage', function() {
-    var allfav=Meteoris.Favorites.find({});
+Meteor.publish('allfavoritepage', function(q, page, limit) {
+    var limit=parseInt(limit);
+    page = (page)? page:1;
+    var skip = (page<=1)? 0 : (page - 1) * limit;
+    var allfav=Meteoris.Favorites.find({},{limit:limit, skip:skip})
     var idprods=[];
     var idusers=[];
     allfav.forEach(function(res){
@@ -216,6 +245,7 @@ Meteor.publish('allfavoritepage', function() {
     var listproduct=Meteoris.Products.find({_id: {$in: idprods}});
     var listuser=Meteor.users.find({_id: {$in: idusers}});
     return [allfav,listproduct,listuser]
+    //return allfav;
 });
 
 Meteor.publish("allreviewproduct",function(){
@@ -268,8 +298,22 @@ Meteor.publish("categoryReviewProduct",function(){
     return listcat;
 });
 
-Meteor.publish("allcart",function(){
-    var allcart= Meteoris.Carts.find({});
+Meteor.publish("allCartList",function(q, page, limit) {
+      page = (page)? page:1;
+    var skip = (page<=1)? 0 : (page - 1) * limit;
+    //return Meteor.users.find({},{limit:limit, skip:skip});
+    if(q){
+        //search by user
+        var alluser=Meteor.users.find({"profile.username": { $regex: new RegExp(q, "i") }});
+        userID=[];
+        alluser.forEach(function(val){
+            userID.push(val._id);
+        });
+        var allcart=Meteoris.Carts.find({userId:{$in:userID}},{limit:limit, skip:skip})
+    }else{
+        var allcart= Meteoris.Carts.find({},{limit:limit, skip:skip});
+    }
+    //var allcart= Meteoris.Carts.find({},{limit:limit, skip:skip});
     var alluser=[];
     var allproduct=[];
     allcart.forEach(function(obj){
@@ -309,6 +353,12 @@ Meteor.publish("userTrackingLoginErrorPage",function(){
 
 Meteor.publish("allusers",function(limit){
     return Meteor.users.find({},{limit:limit});
+});
+Meteor.publish("allManageUser",function(q, page, limit) {
+     page = (page)? page:1;
+    var skip = (page<=1)? 0 : (page - 1) * limit;
+    return Meteor.users.find({},{limit:limit, skip:skip});
+
 });
 Meteor.publish("oneuser",function(id){
     return Meteor.users.find({_id:id});

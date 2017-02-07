@@ -53,5 +53,8 @@ Meteor.methods({
     updateImgProfile:function(userid,imgurl){
         var id=userid;
         return Meteor.users.update({_id:id},{$set:{"profile.image":imgurl}});
+    },
+    countAllUser:function(qq){
+        return Meteor.users.find({}).count();
     }
 });

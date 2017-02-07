@@ -35,19 +35,30 @@ Tracker.autorun(function() {
             var page = (params.hasOwnProperty('page'))? parseInt(params.page):1;
             var status = ( params.hasOwnProperty('status') )? params.status:'';
             var q = ( params.hasOwnProperty('q') )? params.q:'';
-            var curdate = new Date(), year = curdate.getFullYear(), month = curdate.getMonth()+1, day = curdate.getDate()+1, sevenday = curdate.getDate() - 6;
+             /* var curdate = new Date(), year = curdate.getFullYear(), month = curdate.getMonth()+1, day = curdate.getDate()+1, sevenday = curdate.getDate() - 6;
             
-            var curdate = new Date([month,day,year].join('/')+' 00:00:00');
+          var curdate = new Date([month,day,year].join('/')+' 00:00:00');
             var sevendate = new Date([month,sevenday,year].join('/')+' 23:59:59');
             var timestamp = curdate.getTime();
             var nextseventamp = sevendate.getTime();
-            
-            
+            */
+           /* 
+            var sdate = (params.hasOwnProperty('sdate'))? getTimestamp(params.sdate): timestamp;
+            var edate = (params.hasOwnProperty('edate'))? getTimestamp(params.edate): nextseventamp;
+            var date = {sdate:sdate, edate:edate};*/
+             var curdate = new Date(), year = curdate.getFullYear(), month = curdate.getMonth(), day = curdate.getDate(), sevenday = curdate.getDate() - 6;
+            var curdate = new Date([month,day,year].join('/'));
+            var sevendate = new Date([month,sevenday,year].join('/'));
+            var timestamp = curdate.getTime();
+           // var nextseventamp = sevendate.getTime();
+            var date = new Date();
+            var nextseventamp= new Date(new Date().getTime()+(7*24*60*60*1000));
+            nextseventamp=nextseventamp.getTime();
             var sdate = (params.hasOwnProperty('sdate'))? getTimestamp(params.sdate): timestamp;
             var edate = (params.hasOwnProperty('edate'))? getTimestamp(params.edate): nextseventamp;
             var date = {sdate:sdate, edate:edate};
             
-            Meteor.subscribe('Orders', status, date, q, page,limit,function(){
+            Meteor.subscribe('paginationOrders', status, date, q, page,limit,function(){
                 Meteor.call('Meteoris.Orders.Count', status, date, q, function(err, count){
                     if(!err){
                         $('#pagination').pagination({ items: count, itemsOnPage: limit, currentPage:page, hrefTextPrefix:'?page=', cssStyle: 'light-theme' });
@@ -65,8 +76,7 @@ Tracker.autorun(function() {
                     }
                 })
             })   
-        }
-        else if( path == 'filter-product'){
+        }else if( path == 'filter-product'){
             if( categorydata ){
                 categorydata.categoryId = categoryId;
                 categorydata.limit      = limit;
@@ -86,6 +96,39 @@ Tracker.autorun(function() {
                     })
                 })    
             }
+        }else if(path == 'favorite'){
+            var params = Session.get('PARAMS');
+            var page = (params.hasOwnProperty('page'))? parseInt(params.page):1;
+            var q = ( params.hasOwnProperty('q') )? params.q:'';
+            Meteor.subscribe('allfavoritepage',q, page, limit,function(){
+                Meteor.call('countProductFavorite', q, function(err, count){
+                    if(!err){
+                        $('#pagination').pagination({ items: count, itemsOnPage: limit, currentPage:page, hrefTextPrefix:'?page=', cssStyle: 'light-theme' });
+                    }
+                })
+            })   
+        }else if(path == 'manageuser'){
+            var params = Session.get('PARAMS');
+            var page = (params.hasOwnProperty('page'))? parseInt(params.page):1;
+            var q = ( params.hasOwnProperty('q') )? params.q:'';
+            Meteor.subscribe('allManageUser',q, page, limit,function(){
+                Meteor.call('countAllUser', q, function(err, count){
+                    if(!err){
+                        $('#pagination').pagination({ items: count, itemsOnPage: limit, currentPage:page, hrefTextPrefix:'?page=', cssStyle: 'light-theme' });
+                    }
+                })
+            })   
+        }else if(path == 'cartlist'){
+            var params = Session.get('PARAMS');
+            var page = (params.hasOwnProperty('page'))? parseInt(params.page):1;
+            var q = ( params.hasOwnProperty('q') )? params.q:'';
+            Meteor.subscribe('allCartList',q, page, limit,function(){
+                Meteor.call('countAllCart', q, function(err, count){
+                    if(!err){
+                        $('#pagination').pagination({ items: count, itemsOnPage: limit, currentPage:page, hrefTextPrefix:'?page=', cssStyle: 'light-theme' });
+                    }
+                })
+            })   
         }
     }
 })

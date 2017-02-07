@@ -36,5 +36,8 @@ Meteor.methods({
         console.log(pro.review);
         console.log(pro);
         return pro;
+    },
+    countProductFavorite:function(q){
+        return Meteoris.Favorites.find({}).count();
     }
 });

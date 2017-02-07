@@ -123,14 +123,14 @@ groupOrder.route('/list', {
         var edate =nextseventamp.getTime();
         console.log("EDATE "+edate);
         var date = {sdate:sdate, edate:edate};
-        [Meteor.subscribe("Orders","",date,"","","")]
+       // [Meteor.subscribe("Orders","",date,"","","")]
     },
     action: function( params, queryParams ) {
         var groupname = FlowRouter.current().route.group.prefix;
         //console.log('group:', FlowRouter.current().route.group);
         //var pageslug = path.split('/')
         Session.set('PARAMS',  queryParams);
-        Session.set('PATH', groupname.replace('/','') );
+        Session.set('PATH', groupname.replace('/',''));
         BlazeLayout.render('meteoris_themeAdminMain', {content: "orderIndex"});
     },
 });
@@ -196,9 +196,12 @@ groupDiscountRoutes.route('/edit-product/:id', {
 //2017-jan-03
 FlowRouter.route('/favorite/list', {
     subscriptions:function(){
-        Meteor.subscribe("allfavoritepage");
+       // Meteor.subscribe("allfavoritepage");
     },
-    action: function() {
+    action: function(params, queryParams ) {
+        var groupname = '/favorite';//FlowRouter.current().route.group.prefix;
+        Session.set('PARAMS',  queryParams);
+        Session.set('PATH', groupname.replace('/',''));
         BlazeLayout.render('meteoris_themeAdminMain', {content: "favoritelist"});
     }
 });
@@ -230,9 +233,12 @@ FlowRouter.route('/review/view/:id/:idreview', {
 //CART ORDER
 FlowRouter.route('/cart/list', {
     subscriptions:function(){
-        Meteor.subscribe("allcart");
+       // Meteor.subscribe("allcart");
     },
-    action: function() {
+    action: function(params, queryParams) {
+         var groupname = '/cartlist';//FlowRouter.current().route.group.prefix;
+        Session.set('PARAMS',  queryParams);
+        Session.set('PATH', groupname.replace('/',''));
         BlazeLayout.render('meteoris_themeAdminMain', {content: "cartlist"});
     }
 });
@@ -256,9 +262,12 @@ FlowRouter.route('/usertrack/login', {
 FlowRouter.route('/manageuser/list', {
     subscriptions:function(){
         var limit=16;
-        Meteor.subscribe("allusers",limit);
+       // Meteor.subscribe("allusers",limit);
     },
-    action: function() {
+    action: function(params, queryParams) {
+         var groupname = '/manageuser';//FlowRouter.current().route.group.prefix;
+        Session.set('PARAMS',  queryParams);
+        Session.set('PATH', groupname.replace('/',''));
         BlazeLayout.render('meteoris_themeAdminMain', {content: "manageuserlist"});
     }
 });

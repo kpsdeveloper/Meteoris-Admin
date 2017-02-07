@@ -19,5 +19,19 @@ Template.cartlist.events({
             Meteor.call("removeOneCart",this._id);
             
         }
-	}
+	},
+    'keyup #searchuser':function(e){
+        var keyword=$("#searchuser").val();
+        keyword = keyword.replace(/\s/g,'+');
+        var params = Session.get('PARAMS');
+        //var page = (params.hasOwnProperty('page'))? params.page:1;
+        params.q = keyword;
+        console.log(params);
+        FlowRouter.setQueryParams(params);
+       /* Meteor.call("searchUserinCart",keyword,function(err,data){
+            if(!err){
+
+            }
+        });*/
+    }
 });
