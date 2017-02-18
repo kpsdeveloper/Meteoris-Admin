@@ -5,7 +5,7 @@
 		<div class="box" style="width: 92%">
 			<div class="box-header">
                 <div class="toolbar">
-                	<div class="quick-search pull-right col-xs-12 col-md-8">
+                	<div class="quick-search pull-right col-xs-12 col-md-6">
                         <div class="input-group">
                             <input type="text" id="txtsearch" class="form-control" placeholder="Type Product Name to Search">
                             <span class="input-group-btn">
@@ -26,41 +26,41 @@
             </div>
 			<div class="box-body">
 				<div class=" table-responsive">
-		                        <table class="table table-bordered">
-		                            <thead>
-		                                <tr>
-		                                    <th style="width: 30px;"><input type="checkbox" id="checkAll"/></th>                        
-		                                    <th id="">TITLE</th>
-		                                    <th>User</th>
-		                                    <th>Created At</th>
-		                                    <th style="width: 145px;">Actions</th>
-		                                </tr>
-		                            </thead>
-		                            <tbody>
-		                        
-		                             	{{#each getAllReview}}
-		                             		{{#each review}}
-		                                <tr style="{{setviewColor viewstatus}}">
-		                                    <td><input type="checkbox" class="checkAll" value="{{_id}}"/></td>
-		                                    <td>{{title}}</td>
-		                                   	<td>{{getdisplayName user}}</td>
-		                                    <!-- <td><img src="{{getProductImage _id 'true'}}" style="width:32px;height:32px;"></td> -->
-		                                    <td>{{date_formater date}}</td>
-		                                    <td>
-		                                        <a href="/review/view/{{../_id}}/{{idreview}}" dataid-review="{{idreview}}" class="btn btn-default" id="btnview"><i class="glyphicon glyphicon-eye-open"></i></a>
-		                                        {{#if adminApprove approve}}
-		                                        <a href="#" class="btn btn-default" id="btnapprove" dataid-review="{{idreview}}"><i class="glyphicon glyphicon-ok"></i></a>
-		                                        {{else}}
-		                                        <a href="#" class="btn btn-default" dataid-review="{{idreview}}"  id="btnNotapprove"><i class="glyphicon glyphicon-remove"></i></a>
-		                                       {{/if}}
-		                                    </td>
-		                                </tr>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 30px;"><input type="checkbox" id="checkAll"/></th>                        
+                                <th id="">TITLE</th>
+                                <th>User</th>
+                                <th>Created At</th>
+                                <th style="width: 145px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    
+                         	{{#each getAllReview}}
+                         		{{#each review}}
+		                            <tr style="{{setviewColor viewstatus}}">
+		                                <td><input type="checkbox" class="checkAll" value="{{_id}}"/></td>
+		                                <td>{{title}}</td>
+		                               	<td>{{getdisplayName user}}</td>
+		                                <!-- <td><img src="{{getProductImage _id 'true'}}" style="width:32px;height:32px;"></td> -->
+		                                <td>{{date_formater date}}</td>
+		                                <td>
+		                                    <a href="/review/view/{{../_id}}/{{idreview}}" dataid-review="{{idreview}}" class="btn btn-default" id="btnview"><i class="glyphicon glyphicon-eye-open"></i></a>
+		                                    {{#if adminApprove approve}}
+		                                    <a href="#" class="btn btn-default" id="btnapprove" dataid-review="{{idreview}}"><i class="glyphicon glyphicon-remove"></i></a>
+		                                    {{else}}
+		                                    <a href="#" class="btn btn-default" dataid-review="{{idreview}}"  id="btnNotapprove"><i class="glyphicon glyphicon-ok"></i></a>
+		                                   {{/if}}
+		                                </td>
+		                            </tr>
 
-		                                	{{/each}}
-		                                {{/each}}
-		                            </tbody>
-		                        </table>
-		                        <ul id="pagination"></ul>
+                            	{{/each}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    <ul id="pagination"></ul>
 		        </div>
 		    </div>
 		</div>

@@ -75,6 +75,7 @@ groupProduct.route('/list', {
     subscriptions:function(params){
         return [TAPi18n.subscribe('Categories'), Meteor.subscribe('ParentAttribute'), Meteor.Loader.loadJs("/js/bootbox.min.js")];
     },
+    triggersEnter:[paginationscript],
     name:'product',
     action: function( params, queryParams ) {
         var groupname = FlowRouter.current().route.group.prefix;
@@ -89,6 +90,7 @@ groupProduct.route('/insert', {
     subscriptions:function(params){
         return [TAPi18n.subscribe('Categories'), Meteor.subscribe('ParentAttribute')];
     },
+    triggersEnter:[paginationscript],
     name:'product',
     action: function( params, queryParams ) {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "productInsert"});
@@ -98,6 +100,7 @@ groupProduct.route('/update/:id', {
     subscriptions:function(params){
         return [TAPi18n.subscribe('Categories'), Meteor.subscribe('SingleProduct', params.id), Meteor.subscribe('ParentAttribute')];
     },
+    triggersEnter:[paginationscript],
     name:'product',
     action: function( params, queryParams ) {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "productUpdate"});
@@ -125,6 +128,7 @@ groupOrder.route('/list', {
         var date = {sdate:sdate, edate:edate};
        // [Meteor.subscribe("Orders","",date,"","","")]
     },
+    triggersEnter:[paginationscript],
     action: function( params, queryParams ) {
         var groupname = FlowRouter.current().route.group.prefix;
         //console.log('group:', FlowRouter.current().route.group);
@@ -138,6 +142,7 @@ groupOrder.route('/view/:id', {
     subscriptions:function(params){
         return [Meteor.subscribe('SingleOrders', params.id), Meteor.subscribe('ParentAttribute')];
     },
+    triggersEnter:[paginationscript],
     name:'product',
     action: function( params, queryParams ) {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "orderView"});
@@ -263,18 +268,25 @@ FlowRouter.route('/manageuser/list', {
     subscriptions:function(){
         var limit=16;
        // Meteor.subscribe("allusers",limit);
+
     },
+    triggersEnter:[paginationscript],
     action: function(params, queryParams) {
-         var groupname = '/manageuser';//FlowRouter.current().route.group.prefix;
+        //var script  = IRLibLoader.load('/js/jquery.simplePagination.js');
+        //if( script ){
+        Session.set('PATH', 'manageuser');
+        var groupname = '/manageuser';//FlowRouter.current().route.group.prefix;
         Session.set('PARAMS',  queryParams);
-        Session.set('PATH', groupname.replace('/',''));
         BlazeLayout.render('meteoris_themeAdminMain', {content: "manageuserlist"});
+        //}
+      
     }
 });
 FlowRouter.route('/manageuser/view/:id', {
     subscriptions:function(params){
         Meteor.subscribe("oneuser",params.id);
     },
+    triggersEnter:[paginationscript],
     action: function() {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "viewuser"});
     }
@@ -283,17 +295,24 @@ FlowRouter.route('/manageuser/update/:id', {
     subscriptions:function(params){
         Meteor.subscribe("oneuser",params.id);
     },
+    triggersEnter:[paginationscript],
     action: function() {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "updateuser"});
     }
 });
 //BIRTHDAY
-FlowRouter.route('/manageuser/birthday', {
+FlowRouter.route('/birthday', {
     subscriptions:function(){
-        var limit=16;
-        Meteor.subscribe("allusers",limit);
+        //var params = FlowRouter.getQueryParam("date");
+        //var q = getbirthDate(params);
+        Session.set('PATH','birthday');
+        //console.log('params:', q);
+        //Meteor.subscribe("birthDayUser",q);
     },
     action: function() {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "birthday"});
     }
 });
+function paginationscript (){
+    return IRLibLoader.load('/js/jquery.simplePagination.js');
+}

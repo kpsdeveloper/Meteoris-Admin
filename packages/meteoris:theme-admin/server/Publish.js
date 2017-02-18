@@ -357,7 +357,19 @@ Meteor.publish("allusers",function(limit){
 Meteor.publish("allManageUser",function(q, page, limit) {
      page = (page)? page:1;
     var skip = (page<=1)? 0 : (page - 1) * limit;
-    return Meteor.users.find({},{limit:limit, skip:skip});
+    var data = Meteor.users.find({},{limit:limit, skip:skip});
+    console.log('data:', data.count());
+    console.log('page:', page);
+    console.log('limit:', limit);
+    return data;
+
+});
+Meteor.publish("birthDayUser",function(q) {
+    //page = (page)? page:1;
+    //var skip = (page<=1)? 0 : (page - 1) * limit;
+    q = new RegExp('\\b'+q);
+    var data = Meteor.users.find({'profile.birth':{$regex:q, $options:'i'}});
+    return data;
 
 });
 Meteor.publish("oneuser",function(id){

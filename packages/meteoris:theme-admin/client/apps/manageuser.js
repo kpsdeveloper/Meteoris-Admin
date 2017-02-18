@@ -71,6 +71,11 @@ Template.manageuserlist.helpers({
 		}
 	}
 });
+Template.manageuserlist.onCreated( function(){
+    //Tracker.autorun( function(){
+        //IRLibLoader.load('/js/jquery.simplePagination.js')
+    //})
+})
 Template.manageuserlist.events = {
  	"click #btnapprove":function(e,t){  //approve=true mean admin aprroved
     	e.preventDefault();
@@ -197,5 +202,31 @@ Template.birthday.events = {
         var text=$("#date_input").val()
         alert(text);
 */
+    }
+},
+Template.birthday.helpers({
+    getBirthdate:function(){
+        var limit=16;
+        var birth_date = FlowRouter.getQueryParam("date");
+        var q = getbirthDate( birth_date );
+        q = new RegExp('\\b'+q);
+        var data = Meteor.users.find({'profile.birth':{$regex:q, $options:'i'}});
+        return data;
+    }
+})
+getbirthDate = function( birth_date ){
+    if( birth_date ){
+        var arr_birth_date = birth_date.split('-');
+        var persianMonth = ["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور","مهر ","آبان","آذر","دی ","بهمن","اسفند"];
+        var name_of_month = '';
+        persianMonth.forEach( function(m, index){
+            if(arr_birth_date[1] - 1 == index ){
+                console.log('month:', m, ', index:', index)
+                name_of_month = m;
+            }
+        })
+        var d = parseInt(arr_birth_date[0])+'-'+name_of_month;
+        //d = birth_date.replace(/\s/,'');
+        return d;
     }
 }

@@ -10,44 +10,33 @@
 	    </section>
 		<section class="content"> 
 		<div class="box" style="width: 92%">
+			
 			<div class="box-body">
+				<input id="date_input" type="text"><button id="date_btn" type="button">Choose Date</button>
+	        	<div id="output_2"></div>
 				<div class=" table-responsive">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th style="width: 30px;"><input type="checkbox" id="checkAll"/></th>                        
+                                                  
                                 <th id="">username</th>
-                                <th>Birthday</th>
-                                <th style="width: 145px;">Actions</th>
+                                <th>Registered Date</th>
+                  
                             </tr>
                         </thead>
                         <tbody>
 
-                    <!-- 
-                         	{{#each getAllLoginError}}
+                    		{{#each getBirthdate}}
 							    <tr>
-							    	<td><input type="checkbox" id="checkAll"/></td>
-							    	{{#if checkusername userId}}
-							      		<td>{{getusername userId}}</td>
-							      	{{else}}
-							      		<td>{{ip}}</td>
-							      	{{/if}}
-							   		<td>{{date_formater time}}</td>
-							   		<td>{{ip}}</td>
-							   		<td>{{event}}</td>
-							    	<td>
-					                    <a href="" class="btn btn-default" id="btnview"><i class="glyphicon glyphicon-eye-open"></i></a>
-					                   	 <a id="btnRemove" data-id="{{_id}}" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
-					                </td>
+							      	<td>{{profile.firstname}}</td>
+							   		<td>{{date_formater createdAt}}</td>
 							    </tr>
-							    {{/each}} -->
+							{{/each}}
                         </tbody>
                     </table>
                     <ul id="pagination"></ul>
 		        </div>
-		        <div>
-		        	<input id="date_input" type="text"><input id="date_btn" type="button">
-		        </div>
+		        
 		    </div>
 		</div>
 		</section>
@@ -57,9 +46,35 @@
 	Calendar.setup({
 	    inputField: 'date_input',
 	    button: 'date_btn',
-	    ifFormat: '%Y/%m/%d',
-	    dateType: 'jalali'
+	    ifFormat: "%Y-%m-%d",
+	    dateType: 'jalali',
+	    onSelect : dateChanged,
 	});
+	function dateChanged(calendar) {
+		var el = document.getElementById("output_2");
+		el.innerHTML = "";
+		//console.log(calendar);
+		var date = calendar.date.print('%d-%m', 'jalali');
+		var strdate = getbirthDate(date);
+		$('#date_input').val( strdate );
+		FlowRouter.go('/birthday?date='+date);
+	}
+	getbirthDate = function( birth_date ){
+	    if( birth_date ){
+	        var arr_birth_date = birth_date.split('-');
+	        var persianMonth = ["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور","مهر ","آبان","آذر","دی ","بهمن","اسفند"];
+	        var name_of_month = '';
+	        persianMonth.forEach( function(m, index){
+	            if(arr_birth_date[1] - 1 == index ){
+	                console.log('month:', m, ', index:', index)
+	                name_of_month = m;
+	            }
+	        })
+	        var d = parseInt(arr_birth_date[0])+'-'+name_of_month;
+	        //d = birth_date.replace(/\s/,'');
+	        return d;
+	    }
+	}
 </script>
 
 </template>

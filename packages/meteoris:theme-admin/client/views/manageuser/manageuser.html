@@ -16,11 +16,11 @@
                             <tr>
                                 <th style="width: 30px;"><input type="checkbox" id="checkAll"/></th>                        
                                 <th id="">Image</th>
-                                <th>username</th>
+                                <th>email</th>
                                 <th>firstname</th>
                                 <th>lastname</th>
                                 <th>Mobile</th>
-                               	<th>Admin Approve</th>
+                          
                                 <th style="width: 145px;">Actions</th>
                             </tr>
                         </thead>
@@ -30,19 +30,17 @@
 							    <tr>
 							    	<td><input type="checkbox" id="checkAll"/></td>
 							    	<td><img src="{{profile.image}}" style="width:32px;height:32px;"></td>
-							    	<td>{{profile.username}}</td>
+							    	<td>{{#each emails}}{{address}}{{/each}}</td>
 							    	<td>{{profile.firstname}}</td>
 							    	<td>{{profile.lastname}}</td>
 							    	<td>{{profile.phone}}</td>
+							    	
 							    	<td>
-							    		{{#if adminApprove profile.approve}}
+					                    {{#if adminApprove profile.approve}}
 	                                    	<a href="#" class="btn btn-default" id="btnapprove" dataid="{{this._id}}"><i class="glyphicon glyphicon-ok"></i></a>
 	                                    {{else}}
 	                                    	<a href="#" class="btn btn-default" dataid="{{this._id}}"  id="btnNotapprove"><i class="glyphicon glyphicon-remove"></i></a>
                                    		{{/if}}
-                                   </td>
-							    	<td>
-					                    <a href="/manageuser/view/{{_id}}" class="btn btn-default" id="btnview"><i class="glyphicon glyphicon-eye-open"></i></a>
 					                     <a href="/manageuser/update/{{_id}}" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i></a>
 					                   	 <a id="btnRemove" data-id="{{_id}}" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
 					                </td>

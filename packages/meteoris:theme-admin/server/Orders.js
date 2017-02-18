@@ -23,8 +23,43 @@ Meteor.methods({
     "removeOneCart":function(id){
     	return Meteoris.Carts.remove(id);
     },
-    "updateStatus":function(id,status){
-        return Meteoris.Orders.update({_id:id},{$set:{status:status}});
+    "updateStatus":function(id,status, transactionID, myorder){
+        var status = Meteoris.Orders.update({_id:id},{$set:{status:status, transactionID:transactionID }});
+        var user = Meteor.users.findOne({_id:myorder.userid});
+        
+        //console.log('status:', user);
+        var email = user.emails[0].address;
+        //console.log('email:', email);
+        if( status ){
+            Mandrill.messages.sendTemplate({
+                "template_name": 'admin-update-status-order',
+                "template_content": [
+                  {
+                    name: "body",
+                    content: "Your shipment for order with Safir"
+                  }
+                ],
+                message: {
+                    subject: 'Verified your account with Safirperfumery',
+                    from_email: "contact@safirperfumery.com",
+                    to: [
+                        { email:email }
+                    ],
+                    global_merge_vars: [
+                        {
+
+                            "name": "orderId",
+                            "content": transactionID
+                        },
+                        {
+
+                            "name": "statusId",
+                            "content": status
+                        }
+                    ]
+                }
+            });
+        }
     },
     countAllCart:function(q){
         if(q){

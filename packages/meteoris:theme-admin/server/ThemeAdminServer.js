@@ -12,6 +12,12 @@ Meteor.startup(function() {
             footerText: "<strong>Copyright © 2015 <a href='http://yourcompany.com'>Your Company</a>.</strong><div class='pull-right hidden-xs'><b>Version</b> 1.0.0 </div>",
         });
     }
+
+    return Mandrill.config({
+      username: "chroeng",
+      key: "axr2dyh_xL7Kt0uexa5KQQ"
+    });
+
 });
 
 Meteor.publish('meteoris_themeAdmin', function(doc, sort) {
@@ -55,6 +61,8 @@ Meteor.methods({
         return Meteor.users.update({_id:id},{$set:{"profile.image":imgurl}});
     },
     countAllUser:function(qq){
-        return Meteor.users.find({}).count();
+        var user = Meteor.users.find({}).count();
+        console.log('count user:', user);
+        return user;
     }
 });

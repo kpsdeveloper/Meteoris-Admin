@@ -29,7 +29,7 @@ mrt:fs
 tap:i18n
 random
 u2622:persistent-session
-#manuelschoebel:wait-on-lib
+manuelschoebel:wait-on-lib
 meteorhacks:npm
 wylio:mandrill
 npm-container

@@ -10,6 +10,7 @@ Template.productInsert.onCreated(function() {
 itemSub = '';
 Tracker.autorun(function() {
     var path = Session.get('PATH');
+
     if( path ){
         if( path == 'product'){
             var params = Session.get('PRODUCTPARAMS');
@@ -111,9 +112,11 @@ Tracker.autorun(function() {
             var params = Session.get('PARAMS');
             var page = (params.hasOwnProperty('page'))? parseInt(params.page):1;
             var q = ( params.hasOwnProperty('q') )? params.q:'';
+
             Meteor.subscribe('allManageUser',q, page, limit,function(){
                 Meteor.call('countAllUser', q, function(err, count){
                     if(!err){
+                        console.log('count:', count);
                         $('#pagination').pagination({ items: count, itemsOnPage: limit, currentPage:page, hrefTextPrefix:'?page=', cssStyle: 'light-theme' });
                     }
                 })
@@ -128,6 +131,20 @@ Tracker.autorun(function() {
                         $('#pagination').pagination({ items: count, itemsOnPage: limit, currentPage:page, hrefTextPrefix:'?page=', cssStyle: 'light-theme' });
                     }
                 })
+            })   
+        }
+        else if(path == 'birthday'){
+            var params = FlowRouter.getQueryParam("date");
+            var q = getbirthDate(params);
+            
+            //var page = (params.hasOwnProperty('page'))? parseInt(params.page):1;
+            //var q = ( params.hasOwnProperty('q') )? params.q:'';
+            Meteor.subscribe('birthDayUser',q,function(){
+                /*Meteor.call('countAllCart', q, function(err, count){
+                    if(!err){
+                        $('#pagination').pagination({ items: count, itemsOnPage: limit, currentPage:page, hrefTextPrefix:'?page=', cssStyle: 'light-theme' });
+                    }
+                })*/
             })   
         }
     }

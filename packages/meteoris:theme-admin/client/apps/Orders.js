@@ -140,6 +140,10 @@ Template.orderView.helpers({
         }
         
         
+    },
+    isNewOrder: function( status ){
+        if( status == 'pending') return true;
+        else return false;
     }
 })
 
@@ -225,10 +229,20 @@ Template.orderView.events({
     "click #btnupdatestatus":function(e){
         e.preventDefault();
         var status=$("#sltstatus").val();
-        Meteor.call("updateStatus",this._id,status,function(err){
+        var transactionID = $("#code").val();
+        var myorder = Meteoris.Orders.findOne({_id:this._id});
+        Meteor.call("updateStatus",this._id,status, transactionID, myorder,function(err){
             if(!err){
                 alert("success update status")
             }
         });
+    },
+    'change #sltstatus': function(e){
+        e.preventDefault();
+        var status = $(e.currentTarget).val();
+        if( status == 'delivering')
+            $('#text-code').show();
+        else
+            $('#text-code').hide();
     }
 });
