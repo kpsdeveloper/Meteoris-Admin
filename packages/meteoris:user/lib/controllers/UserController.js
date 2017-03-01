@@ -52,25 +52,30 @@ Meteoris.UserController = Meteoris.Controller.extend({
         var email = t.find('#email').value;
         var password = t.find('#password').value;
         //var SessionID =  getSessionUserID();
-        Meteor.loginWithPassword(email, password, function(err) {
-            if (err) {
-                Meteoris.Flash.set('danger', err.message);
-            } else {
-                //var currentUserID = Meteor.userId();
-                //Meteor.call('Meteoris.Orders.UpdateOrderUserID', currentUserID, SessionID );
+        Meteor.call('isRoleAdminUser', email, function(err, data){
+            if( data ){
+                if( data.roles.mygroup == 'safir_admin'){
+                    Meteor.loginWithPassword(email, password, function(err) {
+                        if (err) {
+                            Meteoris.Flash.set('danger', err.message);
+                        } else {
+                            //var currentUserID = Meteor.userId();
+                            //Meteor.call('Meteoris.Orders.UpdateOrderUserID', currentUserID, SessionID );
 
-                Meteoris.Flash.set('success', 'login success');
-                if( redirecturl = Session.get('REDIRECTURL') ){
-                    Session.set('REDIRECTURL','')
-                    FlowRouter.go( redirecturl );
-                }else
-                    FlowRouter.go('/');
-            }
-        });
+                            Meteoris.Flash.set('success', 'login success');
+                            FlowRouter.go('/order/list');
+                        }
+                    });
+                }else{
+                    Meteoris.Flash.set("danger", "403 Unauthenticated");
+                }
+            }else 
+                Meteoris.Flash.set("danger", "403 Email or Password is invalid.");
+        })
     },
     logout: function() {
         Meteor.logout(function() {
-            FlowRouter.go('/user/login');
+            FlowRouter.go('/');
         });
     },
     loginWithFacebook: function() {

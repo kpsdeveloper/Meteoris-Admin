@@ -355,12 +355,25 @@ Meteor.publish("allusers",function(limit){
     return Meteor.users.find({},{limit:limit});
 });
 Meteor.publish("allManageUser",function(q, page, limit) {
-     page = (page)? page:1;
+    page = (page)? page:1;
     var skip = (page<=1)? 0 : (page - 1) * limit;
-    var data = Meteor.users.find({},{limit:limit, skip:skip});
-    console.log('data:', data.count());
-    console.log('page:', page);
-    console.log('limit:', limit);
+    limit = page * limit;
+    var s = '';
+    if( q ){
+        var q = q.split('+');
+        for(i=0; i < q.length; i++){
+            if( q[i] ){
+                s += '\\b'+q[i];
+                s += (i < q.length - 1)? '|':'';
+            }
+        }
+        s = new RegExp(s);
+        console.log('s:',s)
+        var data = Meteor.users.find({$or:[{'profile.firstname':{$regex:s, $options:'i'}}, {'profile.lastname':{$regex:s, $options:'i'}}]},{limit:limit});
+    }
+    else
+        var data = Meteor.users.find({},{limit:limit});
+    console.log('count user:',data.count())
     return data;
 
 });

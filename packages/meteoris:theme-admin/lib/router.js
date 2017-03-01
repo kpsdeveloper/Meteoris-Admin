@@ -1,4 +1,4 @@
-var groupRoutes = FlowRouter.group({
+var admin = FlowRouter.group({
     prefix: '',
     name: 'meteoris',
     triggersEnter: [authenticating]
@@ -6,22 +6,28 @@ var groupRoutes = FlowRouter.group({
 
 /* router level validation, only allow user with group "admin" to access this page */
 function authenticating() {    
-    /*if (!Meteoris.Role.userIsInGroup("admin")){
+    if (!Meteor.userId()){
         Meteoris.Flash.set("danger", "403 Unauthenticated");
-        FlowRouter.go("/user/login");
-    }*/
+        FlowRouter.go("/");
+    }
 }
-groupRoutes.route('/admin', {
+admin.route('/dashboard', {
     action: function() {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "meteoris_siteIndex"});
     },   
 });
-groupRoutes.route('/', {
+admin.route('/profile', {
     action: function() {
-        BlazeLayout.render('meteoris_themeAdminMain', {content: "index"});
+        BlazeLayout.render('meteoris_themeAdminMain', {content: "meteoris_userProfile"});
     },   
 });
-groupRoutes.route('/theme-admin/setting', {
+
+FlowRouter.route('/', {
+    action: function() {
+        BlazeLayout.render('meteoris_themeAdminLogin', {content: "meteoris_userLogin"}); 
+    },   
+});
+admin.route('/theme-admin/setting', {
     action: function() {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "meteoris_themeAdminSetting"});
     },
@@ -33,7 +39,7 @@ var groupBannerRoutes = FlowRouter.group({
     //triggersEnter: [authenticating]
 });
 
-groupBannerRoutes.route('/add', {
+admin.route('/banner/add', {
     subscriptions:function(){
         Meteor.subscribe("allproducts");
     },
@@ -41,7 +47,7 @@ groupBannerRoutes.route('/add', {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "meteoris_addbanner"});
     },
 });
-groupBannerRoutes.route('/list', {
+admin.route('/banner/list', {
     subscriptions:function(){
         Meteor.subscribe("allBanner");
     },
@@ -49,7 +55,7 @@ groupBannerRoutes.route('/list', {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "meteoris_allbanner"});
     },
 });
-groupBannerRoutes.route('/edit/:id', {
+admin.route('/banner/edit/:id', {
     subscriptions:function(params){
         Meteor.subscribe("editBanner",params.id);
     },
@@ -57,7 +63,7 @@ groupBannerRoutes.route('/edit/:id', {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "meteoris_editbanner"});
     },
 });
-groupBannerRoutes.route('/view', {
+admin.route('/banner/view', {
     subscriptions:function(){
         var pagename='webzine/favorite';
         [Meteor.subscribe("bannerBypage",pagename),Meteor.subscribe("productInbanner",pagename)]
@@ -71,7 +77,7 @@ var groupProduct = FlowRouter.group({
     prefix: '/product',
     name: 'product'
 });
-groupProduct.route('/list', {
+admin.route('/product/list', {
     subscriptions:function(params){
         return [TAPi18n.subscribe('Categories'), Meteor.subscribe('ParentAttribute'), Meteor.Loader.loadJs("/js/bootbox.min.js")];
     },
@@ -82,11 +88,11 @@ groupProduct.route('/list', {
         //console.log('group:', FlowRouter.current().route.group);
         //var pageslug = path.split('/')
         Session.set('PRODUCTPARAMS',  queryParams);
-        Session.set('PATH', groupname.replace('/','') );
+        Session.set('PATH', 'product' );
         BlazeLayout.render('meteoris_themeAdminMain', {content: "productIndex"});
     },
 });
-groupProduct.route('/insert', {
+admin.route('/product/insert', {
     subscriptions:function(params){
         return [TAPi18n.subscribe('Categories'), Meteor.subscribe('ParentAttribute')];
     },
@@ -96,7 +102,7 @@ groupProduct.route('/insert', {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "productInsert"});
     },
 });
-groupProduct.route('/update/:id', {
+admin.route('/product/update/:id', {
     subscriptions:function(params){
         return [TAPi18n.subscribe('Categories'), Meteor.subscribe('SingleProduct', params.id), Meteor.subscribe('ParentAttribute')];
     },
@@ -111,7 +117,7 @@ var groupOrder = FlowRouter.group({
     name: 'order'
 });
 
-groupOrder.route('/list', {
+admin.route('/order/list', {
     name:'product',
     subscriptions:function(params){
         //return [Meteor.subscribe('allOrders')];
@@ -134,11 +140,11 @@ groupOrder.route('/list', {
         //console.log('group:', FlowRouter.current().route.group);
         //var pageslug = path.split('/')
         Session.set('PARAMS',  queryParams);
-        Session.set('PATH', groupname.replace('/',''));
+        Session.set('PATH', 'order');
         BlazeLayout.render('meteoris_themeAdminMain', {content: "orderIndex"});
     },
 });
-groupOrder.route('/view/:id', {
+admin.route('/order/view/:id', {
     subscriptions:function(params){
         return [Meteor.subscribe('SingleOrders', params.id), Meteor.subscribe('ParentAttribute')];
     },
@@ -149,7 +155,7 @@ groupOrder.route('/view/:id', {
     },
 });
 
-groupOrder.route('/insert', {
+admin.route('/order/insert', {
     subscriptions:function(params){
         return [TAPi18n.subscribe('Categories'),Meteor.subscribe('ParentAttribute')];
     },
@@ -168,7 +174,7 @@ var groupDiscountRoutes = FlowRouter.group({
     name: 'banner',
     //triggersEnter: [authenticating]
 });
-groupDiscountRoutes.route('/add', {
+admin.route('/discount/add', {
     subscriptions:function(){
         [Meteor.subscribe("allproducts"),Meteor.subscribe("alldiscount")]
     },
@@ -177,7 +183,7 @@ groupDiscountRoutes.route('/add', {
     },
 });
 
-groupDiscountRoutes.route('/edit-brand/:id', {
+admin.route('/discount/edit-brand/:id', {
     subscriptions:function(params){
        Meteor.subscribe("onediscount",params.id);
     },
@@ -185,7 +191,7 @@ groupDiscountRoutes.route('/edit-brand/:id', {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "editdiscountBrand"});
     },
 });
-groupDiscountRoutes.route('/edit-product/:id', {
+admin.route('/discount/edit-product/:id', {
     subscriptions:function(params){
         //Meteor.subscribe("allproducts")
         Meteor.subscribe("oneProduct",params.id);
@@ -199,7 +205,7 @@ groupDiscountRoutes.route('/edit-product/:id', {
 /*END DISCOUNT*/
 
 //2017-jan-03
-FlowRouter.route('/favorite/list', {
+admin.route('/favorite/list', {
     subscriptions:function(){
        // Meteor.subscribe("allfavoritepage");
     },
@@ -210,7 +216,7 @@ FlowRouter.route('/favorite/list', {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "favoritelist"});
     }
 });
-FlowRouter.route('/favorite/view/:userid', {
+admin.route('/favorite/view/:userid', {
     subscriptions:function(params){
         Meteor.subscribe("favoritedetail",params.userid);
     },
@@ -219,7 +225,7 @@ FlowRouter.route('/favorite/view/:userid', {
     }
 });
 
-FlowRouter.route('/review/list', {
+admin.route('/review/list', {
      subscriptions:function(){
         [Meteor.subscribe("allreviewproduct"),Meteor.subscribe("userReview",1),Meteor.subscribe("categoryReviewProduct")];
     },
@@ -227,7 +233,7 @@ FlowRouter.route('/review/list', {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "reviewlist"});
     }
 });
-FlowRouter.route('/review/view/:id/:idreview', {
+admin.route('/review/view/:id/:idreview', {
     subscriptions:function(params){
         [Meteor.subscribe("oneProduct",params.id),Meteor.subscribe("userReview",params.id)];
     },
@@ -236,19 +242,19 @@ FlowRouter.route('/review/view/:id/:idreview', {
     }
 });
 //CART ORDER
-FlowRouter.route('/cart/list', {
+admin.route('/cart/list', {
     subscriptions:function(){
        // Meteor.subscribe("allcart");
     },
     action: function(params, queryParams) {
-         var groupname = '/cartlist';//FlowRouter.current().route.group.prefix;
+        //FlowRouter.current().route.group.prefix;
         Session.set('PARAMS',  queryParams);
-        Session.set('PATH', groupname.replace('/',''));
+        Session.set('PATH', 'cartlist');
         BlazeLayout.render('meteoris_themeAdminMain', {content: "cartlist"});
     }
 });
 //USER ACTION TRACKING
-FlowRouter.route('/usertrack/list', {
+admin.route('/usertrack/list', {
     subscriptions:function(){
         Meteor.subscribe("userTrackingPage");
     },
@@ -256,7 +262,7 @@ FlowRouter.route('/usertrack/list', {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "userTracklist"});
     }
 });
-FlowRouter.route('/usertrack/login', {
+admin.route('/usertrack/login', {
     subscriptions:function(){
         Meteor.subscribe("userTrackingLoginErrorPage");
     },
@@ -264,7 +270,7 @@ FlowRouter.route('/usertrack/login', {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "tracklogin"});
     }
 });
-FlowRouter.route('/manageuser/list', {
+admin.route('/manageuser/list', {
     subscriptions:function(){
         var limit=16;
        // Meteor.subscribe("allusers",limit);
@@ -273,7 +279,6 @@ FlowRouter.route('/manageuser/list', {
     triggersEnter:[paginationscript],
     action: function(params, queryParams) {
         //var script  = IRLibLoader.load('/js/jquery.simplePagination.js');
-        //if( script ){
         Session.set('PATH', 'manageuser');
         var groupname = '/manageuser';//FlowRouter.current().route.group.prefix;
         Session.set('PARAMS',  queryParams);
@@ -282,7 +287,7 @@ FlowRouter.route('/manageuser/list', {
       
     }
 });
-FlowRouter.route('/manageuser/view/:id', {
+admin.route('/manageuser/view/:id', {
     subscriptions:function(params){
         Meteor.subscribe("oneuser",params.id);
     },
@@ -291,7 +296,7 @@ FlowRouter.route('/manageuser/view/:id', {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "viewuser"});
     }
 });
-FlowRouter.route('/manageuser/update/:id', {
+admin.route('/manageuser/update/:id', {
     subscriptions:function(params){
         Meteor.subscribe("oneuser",params.id);
     },
@@ -301,7 +306,7 @@ FlowRouter.route('/manageuser/update/:id', {
     }
 });
 //BIRTHDAY
-FlowRouter.route('/birthday', {
+admin.route('/birthday', {
     subscriptions:function(){
         //var params = FlowRouter.getQueryParam("date");
         //var q = getbirthDate(params);

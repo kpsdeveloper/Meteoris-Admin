@@ -60,8 +60,21 @@ Meteor.methods({
         var id=userid;
         return Meteor.users.update({_id:id},{$set:{"profile.image":imgurl}});
     },
-    countAllUser:function(qq){
-        var user = Meteor.users.find({}).count();
+    countAllUser:function(q){
+        if( q ){
+            var q = q.split('+');
+            var s = '';
+            for(i=0; i < q.length; i++){
+                if( q[i] ){
+                    s += '\\b'+q[i];
+                    s += (i < q.length - 1)? '|':'';
+                }
+            }
+            s = new RegExp(s);
+            var user = Meteor.users.find({$or:[{'profile.firstname':{$regex:s, $options:'i'}}, {'profile.lastname':{$regex:s, $options:'i'}}]}).count();
+        }else{
+            var user = Meteor.users.find({}).count();
+        }
         console.log('count user:', user);
         return user;
     }

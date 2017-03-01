@@ -61,7 +61,30 @@ Template.tracklogin.events = {
 
 Template.manageuserlist.helpers({
 	getAllUser:function(){
-		return Meteor.users.find({});
+        var params = Session.get('PARAMS');
+        var page = (params.hasOwnProperty('page'))? parseInt(params.page):1;
+        var q = ( params.hasOwnProperty('q') )? params.q:'';
+
+        page = (page)? page:1;
+        var skip = (page<=1)? 0 : (page - 1) * limit;
+        if( q ){
+            var q = q.split('+');
+            var s = '';
+            for(i=0; i < q.length; i++){
+                if( q[i] ){
+                    s += '\\b'+q[i];
+                    s += (i < q.length - 1)? '|':'';
+                }
+            }
+            s = new RegExp(s);
+            var data = Meteor.users.find({$or:[{'profile.firstname':{$regex:s, $options:'i'}}, {'profile.lastname':{$regex:s, $options:'i'}}]},{limit:limit, skip:skip});
+        }
+        else
+            var data = Meteor.users.find({},{limit:limit, skip:skip});
+
+        return data;
+
+		//return Meteor.users.find({});
 	},
 	adminApprove:function(status){
 		if(status==true){
@@ -103,6 +126,18 @@ Template.manageuserlist.events = {
     	if(confirm("Are You sure to delete this user ?")){
     		Meteor.call("removeUser",this._id);
     	}
+    },
+    'keyup #search-user': function(e){
+        var keyword = $(e.currentTarget).val();
+        var params = Session.get('PARAMS');
+        console.log('pa:', params)
+        var page = (params.hasOwnProperty('page'))? parseInt(params.page):1;
+       
+        if(keyword !="" && keyword.length > 3){
+            params.q = keyword.replace(/\s/,'+');
+            FlowRouter.setQueryParams(params);
+        }else
+            FlowRouter.setQueryParams({page:page, q:null});
     }
 }
 

@@ -1,5 +1,5 @@
 var ctrl = new Meteoris.ProductsController();
-limit = 16;
+limit = 30;
 Template.meteoris_themeAdminMain.events({
     'change #chooseCategory': function(e){
         var id = $(e.currentTarget).val();

@@ -79,6 +79,12 @@ Meteor.methods({
         }else return null; 
       
     },
+    isRoleAdminUser: function(email){
+        var user = Meteor.users.findOne({'emails.address':email});
+        if( user ){
+            return user;
+        }else return;
+    }
 });
 
 

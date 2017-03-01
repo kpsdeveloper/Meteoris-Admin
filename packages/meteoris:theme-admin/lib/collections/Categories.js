@@ -1,1 +1,0 @@
-Meteoris.Categories = new Mongo.Collection("tmp_cat");
