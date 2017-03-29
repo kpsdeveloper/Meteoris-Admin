@@ -119,25 +119,22 @@ Meteor.methods({
             MongoClient.connect( mongourl , function(err, db) {
                 new sql.Request().query("select TOP 1 * from CustomerTransacionDetailView AS CTD WHERE CTD.Barcode IN ("+barcode+") AND CTD.MemberID ="+memberId).then(function(recordset) {
                     if(recordset.length > 0){
-                        db.collection('tmp_products').find({_id:data.productId}).limit(1).toArray(function(err, docs) {
-                            if(docs){
-                                docs.forEach( function(da){
-                                    var reviews = da.review;
-                                    var dataReview = [];
-                                    reviews.forEach( function(daa){
-                                        if(data.userId == daa.user){
-                                            daa.verifypurchase = true;
-                                            dataReview.push(daa)   
-                                        }else{
-                                            dataReview.push(daa)  
-                                        }
-                                    })
-                                    products.update({_id:data.productId},{$set:{review:dataReview}});
-                                    //db.collection('tmp_products').update({_id:data.productId},{$set:{review:dataReview}});
-                                })
-
-                            }
-                        });
+                        var docs = products.findOne({_id:data.productId});
+                        if(docs){
+                            var reviews = da.review;
+                            var dataReview = [];
+                            reviews.forEach( function(daa){
+                                if(data.userId == daa.user){
+                                    daa.verifypurchase = true;
+                                    dataReview.push(daa)   
+                                }else{
+                                    dataReview.push(daa)  
+                                }
+                            })
+                            products.update({_id:data.productId},{$set:{review:dataReview}});
+                            //db.collection('tmp_products').update({_id:data.productId},{$set:{review:dataReview}}); 
+                        }
+        
 
                     }
                 }).catch(function(err) {
