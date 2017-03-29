@@ -5,7 +5,7 @@ Picker.middleware(bodyParser.json());
 Picker.route('/api/v1/insertuser', function(params, req, res, next) {
   if(req.body) {
     var data = req.body;
-    var profile = {CustomerID:data.CustomerID, mobile:data.pass, firstname:data.firstname, lastname:data.lastname, shipcard:{point:data.point, membershipId:data.membershipId, membertype:'physical_store'} }
+    var profile = {CustomerID:data.CustomerID, MemberID:data.MemberID, mobile:data.pass, firstname:data.firstname, lastname:data.lastname, shipcard:{point:data.point, membershipId:data.membershipId, membertype:'physical_store'} }
     var doc = {email: data.email,password: data.pass,username:data.MemberID,profile:profile};
     //var userId = Meteor.call('createUser', doc);
     //var roles = {roles : {mygroup : [ "safir_admin"]}}

@@ -108,7 +108,7 @@ Meteor.methods({
         var MongoClient = Meteor.npmRequire('mongodb').MongoClient;
         var absurl = Meteor.absoluteUrl();
         var ip_address  = (absurl.indexOf("localhost") > -1)? "localhost:3001":"139.59.150.209:27017" ;
-        
+        console.log('DB:', ip_address)
         var mongourl = "mongodb://"+ip_address+"/meteor";//getMongourl();
         var barcode = "'"+data.barcode.join("','")+"'";
         var memberId = "'"+data.memberId+"'";
@@ -132,7 +132,8 @@ Meteor.methods({
                                             dataReview.push(daa)  
                                         }
                                     })
-                                    db.collection('tmp_products').update({_id:data.productId},{$set:{review:dataReview}});
+                                    products.update({_id:data.productId},{$set:{review:dataReview}});
+                                    //db.collection('tmp_products').update({_id:data.productId},{$set:{review:dataReview}});
                                 })
 
                             }
