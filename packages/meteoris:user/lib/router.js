@@ -103,6 +103,20 @@ userRoutes.route('/newpassword', {
         BlazeLayout.render('meteoris_themeAdminMain', {content: "meteoris_resetpwd"});
     },
 });
-
+/*
+FlowRouter.route('/api/v1/:email/:pass', {
+    subscriptions:function(params, queryParams){
+        var doc = {email: params.email,password: params.pass};
+       
+        Accounts.createUser(doc, function(err) {
+            if (err) {
+                throw new Meteor.Error(err);
+            } else {
+                console.log('User created.');
+            }
+        });
+    }
+});
+*/
 /* EOF USERS */
 

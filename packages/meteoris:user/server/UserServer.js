@@ -84,6 +84,67 @@ Meteor.methods({
         if( user ){
             return user;
         }else return;
+    },
+    createUserAccount: function(doc,roles){
+        var id = Accounts.createUser(doc);
+        Meteor.users.update({_id:id},{$set:roles})
+    },
+    verifyPurchase: function(userId, barcode){
+        var product = Meteoris.Products.findOne({barcode:parseInt(barcode),'review.user':userId});
+        if( product ){
+           
+            var objreview = product.review;
+            var data = objreview.map( function(d){
+                if(d.user == userId){
+                    d.verifypurchase = true
+                }
+                return d;
+            })
+            var upid = Meteoris.Products.update({_id:product._id},{$set:{review:data}});
+        }
+    }, 
+    InstandVerifyPurchase:function( data ){
+        var sql = Meteor.npmRequire('mssql');
+        var MongoClient = Meteor.npmRequire('mongodb').MongoClient;
+        var absurl = Meteor.absoluteUrl();
+        var ip_address  = (absurl.indexOf("localhost") > -1)? "localhost:3001":"139.59.150.209:27017" ;
+        
+        var mongourl = "mongodb://"+ip_address+"/meteor";//getMongourl();
+        var barcode = "'"+data.barcode.join("','")+"'";
+        var memberId = "'"+data.memberId+"'";
+        //var databarcode = "'"+data.barcode.join("','")+"'";
+        //memberId = (memberId).toString();
+       
+        sql.connect("mssql://sa:kyan@123@84.241.62.223:1433/CMSDB").then(function() {
+            MongoClient.connect( mongourl , function(err, db) {
+                new sql.Request().query("select TOP 1 * from CustomerTransacionDetailView AS CTD WHERE CTD.Barcode IN ("+barcode+") AND CTD.MemberID ="+memberId).then(function(recordset) {
+                    if(recordset.length > 0){
+                        db.collection('tmp_products').find({_id:data.productId}).limit(1).toArray(function(err, docs) {
+                            if(docs){
+                                docs.forEach( function(da){
+                                    var reviews = da.review;
+                                    var dataReview = [];
+                                    reviews.forEach( function(daa){
+                                        if(data.userId == daa.user){
+                                            daa.verifypurchase = true;
+                                            dataReview.push(daa)   
+                                        }else{
+                                            dataReview.push(daa)  
+                                        }
+                                    })
+                                    db.collection('tmp_products').update({_id:data.productId},{$set:{review:dataReview}});
+                                })
+
+                            }
+                        });
+
+                    }
+                }).catch(function(err) {
+                    console.log(err)
+                });
+            })
+
+        })
     }
 });
 
@@ -93,7 +154,7 @@ function validateParams(params) {
         if (key == "profile") {
             for (var keyProfile in params[key]) {
                 value = params[key][keyProfile];
-//                console.log("UsersServer.js " + value);
+                //console.log("UsersServer.js " + value);
                 if (value == "") {
                     throw new Meteor.Error('Please enter your ' + keyProfile, keyProfile);
                 }
