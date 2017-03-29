@@ -38,6 +38,7 @@ Picker.route('/api/v1/verifyPurchase', function(params, req, res, next) {
 Picker.route('/api/v1/InstandVerifyPurchase', function(params, req, res, next) {
   if(req.body) {
     var data = req.body;
+    console.log('verify purchase param:', data)
     Meteor.call('InstandVerifyPurchase', data);
     res.end('Updated verify purchase');
   }
