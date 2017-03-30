@@ -87,7 +87,7 @@ Meteor.methods({
     },
     createUserAccount: function(doc,roles){
         var id = Accounts.createUser(doc);
-        Meteor.users.update({_id:id},{$set:roles})
+        if(id) Meteor.users.update({_id:id},{$set:roles})
     },
     verifyPurchase: function(userId, barcode){
         var product = Meteoris.Products.findOne({barcode:parseInt(barcode),'review.user':userId});
