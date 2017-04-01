@@ -36,7 +36,7 @@ Picker.route('/api/v1/instantInsertuser', function(params, req, res, next) {
               var email = (data.Email)? data.Email:data.MemberID+'@safir.store';
               var profile = {mobile:pass, CustomerID:data.CustomerID, MemberID:data.MemberID, firstname:data.CustomerName, lastname:data.CustomerLastName, shipcard:{point:data.Point, membershipId:data.GroupName, membertype:'physical_store'}}
               docs = {email:email, password:pass, username:data.MemberID, profile:profile, roles:{"mygroup" : ["member"]}}
-              var user = Meteor.users.findOne({username:docs.username});
+              var user = Meteor.users.findOne({$or:[{username:docs.username},{'emails.address':email}]});
               if(user)
                   res.end('true');
               else{
