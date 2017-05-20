@@ -9,6 +9,10 @@ Meteor.methods({
         	var total = Meteoris.Products.find({category:{$in:categoryId}, $or: [{ $and: [{ title: { $regex: new RegExp(keyword, "i") } }, { category: { $ne: 'tester' } }] }, { $and: [{ description: { $regex: new RegExp(keyword, "i") } }, { category: { $ne: 'tester' } }] }] }, fields);
         }else
         	var total = Meteoris.Products.find({}, fields);
+            
+        if(total.count() <= 0)
+            var total = Meteoris.Products.find({'attribute.barcode':parseInt(keyword)}, fields);
+
         if( total.count() > 0 )
         	return total.count();
     	return 0;

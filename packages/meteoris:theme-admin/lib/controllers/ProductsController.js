@@ -4,17 +4,21 @@ Meteoris.ProductsController = Meteoris.Controller.extend({
     getListProducts: function(categoryId, keyword, page, limit){
         var skip = (page<=1)? 0 : (page - 1) * limit;
         var fields = { fields:{_id:1, title:1,price:1,category:1,discount:1, category:1, Brand:1, oldId:1,image:1,review:1,recommended:1,date:1}, sort:{date:-1},limit:limit};
-        if( categoryId && keyword == ""){
+        /*if( categoryId && keyword == ""){
             var data = Meteoris.Products.find({category:{$in:categoryId}}, fields);
         }else if( categoryId == "" && keyword ){
-            var data = Meteoris.Products.find({ $or: [{ $and: [{ title: { $regex: new RegExp(keyword, "i") } }, { category: { $ne: 'tester' } }] }, { $and: [{ description: { $regex: new RegExp(keyword, "i") } }, { category: { $ne: 'tester' } }] }] }, fields);
+            console.log('search...')
+            var data = Meteoris.Products.find({ $or: [{'attribute.barcode':keyword}, {title: { $regex: new RegExp(keyword, "i") }} ] }, fields);
         }else if( categoryId && keyword ){
             var data = Meteoris.Products.find({category:{$in:categoryId}, $or: [{ $and: [{ title: { $regex: new RegExp(keyword, "i") } }, { category: { $ne: 'tester' } }] }, { $and: [{ description: { $regex: new RegExp(keyword, "i") } }, { category: { $ne: 'tester' } }] }] }, fields);
-        }else
-            var data = Meteoris.Products.find({}, fields);
+        }else*/
 
-      
+        var data = Meteoris.Products.find({}, fields);
+
+        console.log(data.count())
         return data;
+       
+        
     },
     getCategoryByID: function( id ){
         var cat = Meteoris.Categories.findOne({_id:id});
@@ -128,7 +132,7 @@ Meteoris.ProductsController = Meteoris.Controller.extend({
             //discount = parseInt(discount);
             price = parseInt(price);
             if( discount > 0){
-                discount = {discount:discount, startdate:getTimestamp(sdate),enddate:getTimestamp(edate)}
+                discount = {discount:discount, start_date:getTimestamp(sdate),end_date:getTimestamp(edate)}
             }else{
                 discount = {discount:0}
             }

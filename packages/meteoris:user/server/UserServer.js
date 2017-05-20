@@ -119,6 +119,7 @@ Meteor.methods({
             MongoClient.connect( mongourl , function(err, db) {
                 new sql.Request().query("select TOP 1 * from CustomerTransacionDetailView AS CTD WHERE CTD.Barcode IN ("+barcode+") AND CTD.MemberID ="+memberId).then(function(recordset) {
                     if(recordset.length > 0){
+                        console.log(recordset)
                         var docs = Meteoris.Products.findOne({_id:data.productId});
                         if(docs){
                             var reviews = docs.review;
